@@ -1,0 +1,101 @@
+{
+  "version": "4.16.6",
+  "time": 0.029,
+  "errors": [],
+  "tasks": [
+    {
+      "resource": {
+        "description": "Insira a descrição/explicação detalhada deste recurso.",
+        "dialect": {
+          "delimiter": ";"
+        },
+        "encoding": "utf-8-sig",
+        "format": "csv",
+        "hashing": "md5",
+        "name": "estrutura_governamental",
+        "path": "data/estrutura_governamental.csv",
+        "profile": "tabular-data-resource",
+        "schema": {
+          "fields": [
+            {
+              "name": "orgao",
+              "type": "string"
+            },
+            {
+              "name": "sigla",
+              "type": "string"
+            },
+            {
+              "name": "tipo",
+              "type": "string"
+            },
+            {
+              "name": "vinculacao",
+              "type": "string"
+            },
+            {
+              "name": "responsavel_legal",
+              "type": "string"
+            },
+            {
+              "name": "endereco",
+              "type": "string"
+            },
+            {
+              "name": "telefone",
+              "type": "string"
+            },
+            {
+              "name": "competencias",
+              "type": "string"
+            },
+            {
+              "name": "site_orgao",
+              "type": "string"
+            }
+          ]
+        },
+        "scheme": "file",
+        "title": "Insira um título humanamente legível para este recurso.",
+        "stats": {
+          "hash": "085c592965676f8d492260d16a8c7d0c",
+          "bytes": 17079,
+          "fields": 9,
+          "rows": 62
+        }
+      },
+      "time": 0.017,
+      "scope": [
+        "hash-count-error",
+        "byte-count-error",
+        "field-count-error",
+        "row-count-error",
+        "blank-header",
+        "extra-label",
+        "missing-label",
+        "blank-label",
+        "duplicate-label",
+        "incorrect-label",
+        "blank-row",
+        "primary-key-error",
+        "foreign-key-error",
+        "extra-cell",
+        "missing-cell",
+        "type-error",
+        "constraint-error",
+        "unique-error"
+      ],
+      "partial": false,
+      "errors": [],
+      "stats": {
+        "errors": 0
+      },
+      "valid": true
+    }
+  ],
+  "stats": {
+    "errors": 0,
+    "tasks": 1
+  },
+  "valid": true
+}
