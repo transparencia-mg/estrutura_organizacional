@@ -1809,7 +1809,9 @@
                                 <div class="mb-3">
                                     <label for="formatoDownload" class="form-label filter-label">Formato de Download</label>
                                     <select class="form-select" id="formatoDownload">
-                                        <option value="csv">CSV</option>
+                                        <option value="csv">CSV (Valores separados por vírgula)</option>
+                                        <option value="json">JSON (JavaScript Object Notation)</option>
+                                        <option value="excel">Excel (XLSX)</option>
                                     </select>
                                 </div>
                             </div>
@@ -1817,6 +1819,9 @@
                                 <div class="d-flex gap-3 flex-wrap">
                                     <button class="btn-primary-custom flex-grow-1" id="downloadCompleto">
                                         <i class="material-icons me-2">download</i>Baixar Dados Completos
+                                    </button>
+                                    <button class="btn-legislacao flex-grow-1" id="btn-legislacao-estrutura">
+                                        <i class="material-icons me-2">gavel</i>Legislação
                                     </button>
                                 </div>
                             </div>
@@ -2337,7 +2342,7 @@
                             
                             // Normalizar vinculação
                             if (orgao.vinculacao === '-' || orgao.vinculacao === '' || !orgao.vinculacao) {
-                                orgao.vinculacao = '-';
+                                orgao.vinculacao = 'Sem Vinculação';
                             }
                         });
                         
@@ -2410,7 +2415,7 @@
                                     
                                     // Normalizar vinculação
                                     if (orgao.vinculacao === '-' || orgao.vinculacao === '' || !orgao.vinculacao) {
-                                        orgao.vinculacao = '-';
+                                        orgao.vinculacao = 'Sem vinculação';
                                     }
                                 });
                                 
