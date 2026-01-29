@@ -1,1046 +1,3018 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estrutura Organizacional - Governo de Minas Gerais</title>
     
-    <!-- Bootstrap CSS -->
+    <!-- ==================== ESTILOS E BIBLIOTECAS ==================== -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <!-- Material Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
     
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
+        /* ==================== VARIÁVEIS DE CORES ==================== */
         :root {
-            --primary-dark: #1a5276;
-            --accent-blue: #3498db;
-            --light-bg: #f8f9fa;
-            --text-dark: #333;
+            --primary-dark: #1A5276;
+            --primary-darker: #0E2F44;
+            --accent-blue: #3498DB;
+            --accent-bright: #2980B9;
+            --accent-red: #E74C3C;
+            --button-red: #E74C3C;
+            --button-red-hover: #3498DB;
+            --background-light: #F2F4F7;
+            --success-green: #27AE60;
+            --warning-yellow: #F39C12;
+            --info-blue: #17A589;
+            --secondary-purple: #8E44AD;
+            --secondary-orange: #E67E22;
+            --secondary-teal: #16A085;
+            --danger-red: #E74C3C;
         }
         
+        /* ==================== ESTILOS GERAIS ==================== */
         body {
-            background-color: #f5f7fa;
-            color: var(--text-dark);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 0;
-            margin: 0;
-            line-height: 1.5;
-        }
-        
-        /* Container principal - CORRIGIDO */
-        .nav-tabs-container {
-            background: white;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-            margin-top: 10px;
-            overflow-x: auto; /* Adicionado para controlar overflow */
-            -webkit-overflow-scrolling: touch; /* Melhor rolagem no iOS */
+            font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-light);
+            padding-bottom: 15px;
+            overflow-y: visible !important;  /* IMPEDIR SCROLL NO BODY */
+            overflow-x: hidden !important;
+            min-height: auto !important;
+            height: auto !important;
+            position: relative;
         }
 
-        /* Nav tabs - CORRIGIDO */
-        .nav-tabs {
-            border: none !important; /* !important para sobrescrever Bootstrap */
-            gap: 4px;
-            flex-wrap: nowrap; /* Mantém em uma linha */
-            min-width: max-content; /* Garante largura mínima baseada no conteúdo */
-            padding-bottom: 5px; /* Espaço para scrollbar */
-            margin-bottom: 0 !important;
+        html {
+            overflow-y: visible !important; /* IMPEDIR SCROLL NO HTML */
+            height: auto !important;
         }
 
-        /* Itens dos tabs - NOVO, necessário */
-        .nav-tabs .nav-item {
-            flex-shrink: 0; /* Não permite que os tabs encolham */
+        /* Garantir que o container principal não imponha restrições */
+        .main-container {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+            position: relative;
         }
 
-        /* Links dos tabs - CORRIGIDO */
-        .nav-tabs .nav-link {
-            border: none !important;
-            border-radius: 6px !important;
-            padding: 10px 15px !important;
-            font-weight: 600;
-            color: #1a5276 !important; /* Fallback para var(--primary-dark) */
-            transition: all 0.3s ease;
-            font-size: 13px;
-            white-space: nowrap;
-            display: inline-flex !important; /* Mudado de flex para inline-flex */
-            align-items: center;
-            background: none !important;
+        /* Container principal do conteúdo */
+        .container.dashboard-spacing {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+            position: relative;
         }
 
-        .nav-tabs .nav-link:hover {
-            background-color: rgba(26, 82, 118, 0.05) !important;
-            color: #3498db !important; /* Fallback para var(--accent-blue) */
+        /* Remover qualquer restrição de altura dos elementos pais */
+        .tab-content {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+            position: relative;
         }
 
-        .nav-tabs .nav-link.active {
-            background: linear-gradient(135deg, #1a5276 0%, #154360 100%) !important;
-            color: white !important;
-            border: none !important;
+        /* Garantir que as tabelas possam expandir */
+        .table-container {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+            position: relative;
         }
 
-        /* Ícones - CORRIGIDO */
-        .nav-tabs .nav-link .material-icons {
-            font-size: 16px !important;
-            margin-right: 8px !important;
-            vertical-align: middle;
-            line-height: 1;
-        }
-
-        .nav-tabs .nav-link.active .material-icons {
-            color: white !important;
-        }
-
-        /* Estilizar a scrollbar para ficar discreta */
-        .nav-tabs-container::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .nav-tabs-container::-webkit-scrollbar-track {
-            background: #f8f9fa;
-            border-radius: 4px;
-        }
-
-        .nav-tabs-container::-webkit-scrollbar-thumb {
-            background: #dee2e6;
-            border-radius: 4px;
-        }
-
-        .nav-tabs-container::-webkit-scrollbar-thumb:hover {
-            background: #adb5bd;
-        }
-
-        /* Para Firefox */
-        .nav-tabs-container {
-            scrollbar-width: thin;
-            scrollbar-color: #dee2e6 #f8f9fa;
-        }
-
-        /* Remover a borda inferior padrão do Bootstrap */
-        .nav-tabs {
-            border-bottom: none !important;
+        /* Corrigir o container das tabelas com cabeçalho fixo */
+        .table-fixed-header-container {
+            max-height: 500px; /* Mantém o limite apenas para a tabela, não para a página */
+            overflow-y: auto; /* Scroll apenas na tabela, não na página toda */
+            position: relative;
         }
         
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-        
-        .card-header {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            font-weight: 600;
-            color: var(--primary-dark);
-            border-radius: 10px 10px 0 0 !important;
-            padding: 15px 20px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, #154360 100%);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-dark) 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
-        }
-        
-        .stat-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .stat-value {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin: 10px 0;
-        }
-        
-        .stat-label {
-            color: #6c757d;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .search-container {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-        
-        .orgao-card {
-            border-left: 4px solid var(--primary-dark);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .orgao-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-        
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .data-table th {
-            background-color: #f8f9fa;
-            font-weight: 600;
-            color: var(--primary-dark);
-            padding: 12px 15px;
-            border-bottom: 2px solid #e9ecef;
-            text-align: left;
-        }
-        
-        .data-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #f1f1f1;
-        }
-        
-        .data-table tr:hover {
-            background-color: rgba(26, 82, 118, 0.03);
-        }
-        
-        .pagination-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        
-        .download-buttons .btn {
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .orgao-type-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        
-        .type-autonomo {
-            background-color: rgba(52, 152, 219, 0.15);
-            color: var(--accent-blue);
-        }
-        
-        .type-secretaria {
-            background-color: rgba(46, 204, 113, 0.15);
-            color: #27ae60;
-        }
-        
-        .type-vinculado {
-            background-color: rgba(155, 89, 182, 0.15);
-            color: #8e44ad;
-        }
-        
-        .contact-info {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-        
-        .contact-info .material-icons {
-            color: var(--primary-dark);
-            margin-right: 10px;
-            font-size: 18px;
-        }
-        
-        .page-title {
-            color: var(--primary-dark);
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-        
-        .page-subtitle {
-            color: #6c757d;
+        /* ==================== HEADER PRINCIPAL ==================== */
+        .main-header {
+            background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 20px 0;
             margin-bottom: 25px;
-            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-bottom: 4px solid var(--accent-blue);
+            flex-shrink: 0; /* EVITA QUE O HEADER ENCOLHA */
+            position: relative;
+            z-index: 1;
         }
         
         .logo-container {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            gap: 15px;
         }
         
-        .logo-img {
-            height: 40px;
-            margin-right: 15px;
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-bright) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            box-shadow: 0 3px 8px rgba(52, 152, 219, 0.25);
         }
         
+        .header-title {
+            font-weight: 700;
+            font-size: 22px;
+            margin: 0;
+            line-height: 1.2;
+        }
+        
+        .header-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin: 5px 0 0 0;
+        }
+
+        .header-info {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .link-legislacao {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.3s;
+        }
+        
+        .link-legislacao:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        .badge-atualizacao-header {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 11px;
+        }
+        
+        /* ==================== FILTROS ==================== */
         .filter-container {
             background: white;
             border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
             padding: 20px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
             margin-bottom: 20px;
+            border-left: 5px solid var(--accent-blue);
+        }
+        
+        .filter-label {
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            height: 42px;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.15);
+        }
+        
+        /* ==================== CARDS DE MÉTRICAS ==================== */
+        .metric-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px 15px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            border-top: 4px solid var(--accent-blue);
+            transition: all 0.3s ease;
+            height: 100%;
+            position: relative;
+            cursor: default;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metric-card.primary {
+            border-top-color: var(--primary-dark);
+        }
+        
+        .metric-card.success {
+            border-top-color: var(--success-green);
+        }
+        
+        .metric-card.warning {
+            border-top-color: var(--warning-yellow);
+        }
+        
+        .metric-card.info {
+            border-top-color: var(--info-blue);
+        }
+        
+        .metric-card.purple {
+            border-top-color: var(--secondary-purple);
+        }
+        
+        .metric-card.orange {
+            border-top-color: var(--secondary-orange);
+        }
+        
+        .metric-card.teal {
+            border-top-color: var(--secondary-teal);
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 8px 0;
+            line-height: 1;
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            color: var(--primary-darker);
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .metric-change {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+        
+        .metric-change.positive {
+            background-color: rgba(39, 174, 96, 0.1);
+            color: var(--success-green);
+        }
+        
+        .metric-change.warning {
+            background-color: rgba(243, 156, 18, 0.1);
+            color: var(--warning-yellow);
+        }
+        
+        /* ==================== CONTAINER DE GRÁFICOS ==================== */
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            height: 100%;
+            min-height: 280px;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--background-light);
+        }
+        
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin: 0;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 220px;
+            width: 100%;
+        }
+        
+        /* ==================== TABELAS ==================== */
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .table-header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .table-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .table-badge {
+            background: var(--accent-red);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        /* Container para tabela com cabeçalho fixo */
+        .table-fixed-header-container {
+            position: relative;
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 0;
+        }
+        
+        /* Cabeçalho fixo para todas as tabelas */
+        .table-fixed-header-container table thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: var(--primary-dark) !important;
+        }
+        
+        .table-fixed-header-container table thead th {
+            background-color: var(--primary-dark) !important;
+            color: white !important;
+            position: sticky;
+            top: 0;
+            z-index: 20;
         }
         
         .table-responsive {
-            border-radius: 10px;
-            overflow: hidden;
+            padding: 0;
+            overflow-x: auto;
+            overflow-y: visible !important; /* IMPORTANTE: sem scroll vertical aqui */
         }
         
+        .table {
+            margin: 0;
+            width: 100%;
+            font-size: 13px;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid #dee2e6;
+        }
+        
+        /* Adicionar bordas verticais ao cabeçalho da tabela */
+        .table thead th {
+            background-color: var(--primary-dark) !important;
+            color: white !important;
+            font-weight: 600;
+            border: none;
+            padding: 12px 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s ease;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            white-space: nowrap;
+            border-left: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+        
+        .table thead th:first-child {
+            border-left: none !important;
+        }
+        
+        .table thead th:last-child {
+            border-right: none !important;
+        }
+        
+        .sort-icon {
+            opacity: 0.8;
+            margin-left: 4px;
+            font-size: 9px;
+            transition: opacity 0.2s ease;
+            color: white;
+        }
+        
+        .table thead th:hover {
+            background-color: var(--primary-darker) !important;
+        }
+        
+        .table thead th:hover .sort-icon {
+            opacity: 1;
+        }
+        
+        .table thead th.sorted-asc .sort-icon,
+        .table thead th.sorted-desc .sort-icon {
+            opacity: 1;
+        }
+        
+        .table thead th.sorted-asc .sort-icon::after {
+            content: "↑";
+        }
+        
+        .table thead th.sorted-desc .sort-icon::after {
+            content: "↓";
+        }
+        
+        /* Aplicar bordas verticais a TODAS as tabelas */
+        .table-container table th, 
+        .table-container table td {
+            border-left: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            vertical-align: middle;
+        }
+        
+        .table-container table th:first-child,
+        .table-container table td:first-child {
+            border-left: none;
+        }
+        
+        .table-container table th:last-child,
+        .table-container table td:last-child {
+            border-right: none;
+        }
+        
+        /* Borda inferior para linhas */
+        .table-container table tbody tr {
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        .table-container table tbody tr:last-child {
+            border-bottom: none;
+        }
+        
+        .table tbody tr {
+            transition: background-color 0.2s ease;
+        }
+        
+        .table tbody tr:hover {
+            background-color: rgba(41, 67, 90, 0.04);
+        }
+        
+        .table tbody td {
+            padding: 12px 10px;
+            vertical-align: middle;
+            font-size: 13px;
+        }
+        
+        /* Coluna de quantidade centralizada - DASHBOARD 1 */
+        .table tbody td.quantidade {
+            text-align: center !important;
+            font-weight: 600;
+        }
+        
+        /* Garantir que todas as colunas do dashboard 1 sejam centralizadas */
+        #visaoGeralTable tbody td {
+            text-align: center;
+        }
+        
+        #visaoGeralTable tbody td:first-child {
+            text-align: left;
+        }
+
+        /* Adicione isso ao seu CSS, se já não existir */
+        #visaoGeralTable .quantidade,
+        #acordosTable .quantidade {
+            text-align: center !important;
+            font-weight: 600;
+        }
+
+        /* E também para as células do rodapé */
+        .table-total-row td.quantidade {
+            text-align: center !important;
+            font-weight: 600;
+        }
+        
+        /* Coluna de ações na tabela */
+        .actions-column {
+            width: 100px;
+            text-align: center;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+        
+        .btn-action {
+            padding: 4px 8px;
+            font-size: 11px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+        }
+        
+        .btn-history {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+        
+        .btn-history:hover {
+            background-color: var(--primary-darker);
+            transform: translateY(-1px);
+        }
+        
+        /* ==================== BOTÕES ==================== */
+        .btn-primary-custom {
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-bright));
+            border: none;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .btn-primary-custom:hover {
+            background: linear-gradient(to right, var(--accent-bright), var(--accent-blue));
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+            color: white;
+        }
+        
+        /* Botão de pesquisa com cor vermelha - ALINHADO */
+        .btn-pesquisa {
+            background: linear-gradient(to right, var(--button-red), #C0392B);
+            border: none;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .btn-pesquisa:hover {
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-bright));
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+            color: white;
+        }
+        
+        /* Botão secundário - ALINHADO */
+        .btn-secondary-custom {
+            background: white;
+            border: 2px solid var(--primary-dark);
+            color: var(--primary-dark);
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .btn-secondary-custom:hover {
+            background-color: var(--primary-dark);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(26, 82, 118, 0.15);
+        }
+        
+        .btn-export {
+            background: white;
+            border: 2px solid var(--primary-dark);
+            color: var(--primary-dark);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        
+        .btn-export:hover {
+            background: var(--primary-dark);
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        /* ==================== MENU DE NAVEGAÇÃO ==================== */
+        /* Container principal - CORRIGIDO */
+.nav-tabs-container {
+    background: white;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+    margin-top: 10px;
+    overflow-x: auto; /* Adicionado para controlar overflow */
+    -webkit-overflow-scrolling: touch; /* Melhor rolagem no iOS */
+}
+
+/* Nav tabs - CORRIGIDO */
+.nav-tabs {
+    border: none !important; /* !important para sobrescrever Bootstrap */
+    gap: 4px;
+    flex-wrap: nowrap; /* Mantém em uma linha */
+    min-width: max-content; /* Garante largura mínima baseada no conteúdo */
+    padding-bottom: 5px; /* Espaço para scrollbar */
+    margin-bottom: 0 !important;
+}
+
+/* Itens dos tabs - NOVO, necessário */
+.nav-tabs .nav-item {
+    flex-shrink: 0; /* Não permite que os tabs encolham */
+}
+
+/* Links dos tabs - CORRIGIDO */
+.nav-tabs .nav-link {
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 10px 15px !important;
+    font-weight: 600;
+    color: #1a5276 !important; /* Fallback para var(--primary-dark) */
+    transition: all 0.3s ease;
+    font-size: 13px;
+    white-space: nowrap;
+    display: inline-flex !important; /* Mudado de flex para inline-flex */
+    align-items: center;
+    background: none !important;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgba(26, 82, 118, 0.05) !important;
+    color: #3498db !important; /* Fallback para var(--accent-blue) */
+}
+
+.nav-tabs .nav-link.active {
+    background: linear-gradient(135deg, #1a5276 0%, #154360 100%) !important;
+    color: white !important;
+    border: none !important;
+}
+
+/* Ícones - CORRIGIDO */
+.nav-tabs .nav-link .material-icons {
+    font-size: 16px !important;
+    margin-right: 8px !important;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.nav-tabs .nav-link.active .material-icons {
+    color: white !important;
+}
+
+/* Estilizar a scrollbar para ficar discreta */
+.nav-tabs-container::-webkit-scrollbar {
+    height: 4px;
+}
+
+.nav-tabs-container::-webkit-scrollbar-track {
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.nav-tabs-container::-webkit-scrollbar-thumb {
+    background: #dee2e6;
+    border-radius: 4px;
+}
+
+.nav-tabs-container::-webkit-scrollbar-thumb:hover {
+    background: #adb5bd;
+}
+
+/* Para Firefox */
+.nav-tabs-container {
+    scrollbar-width: thin;
+    scrollbar-color: #dee2e6 #f8f9fa;
+}
+
+/* Remover a borda inferior padrão do Bootstrap */
+.nav-tabs {
+    border-bottom: none !important;
+}
+        
+        /* ==================== AÇÕES ==================== */
+        .actions-container {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .right-aligned-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        
+        /* Alinhar itens por página e contador */
+        .items-per-page-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .items-per-page {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .items-per-page select {
+            border: 2px solid var(--primary-dark);
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 12px;
+            width: auto;
+            min-width: 70px;
+            background-color: white;
+            color: var(--primary-dark);
+        }
+        
+        .items-per-page select option {
+            background-color: white;
+            color: var(--primary-dark);
+        }
+        
+        /* ==================== LOADING OVERLAY ==================== */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(26, 82, 118, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--accent-blue);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* ==================== RODAPÉ DA TABELA ==================== */
+        .table-total-row {
+            background-color: #f8f9fa !important;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .table-total-row td {
+            border-top: 2px solid #dee2e6 !important;
+        }
+
+        /* ==================== LINK CLICÁVEL ==================== */
+        .orgao-link {
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-block;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 13px;
+            border-bottom: 1px solid transparent;
+        }
+
+        .orgao-link:hover {
+            color: var(--accent-red);
+            background-color: rgba(231, 76, 60, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .orgao-link:active {
+            transform: translateY(0);
+        }
+
+        /* Para a tabela específica da visão geral */
+        #visaoGeralTable .orgao-link {
+            padding: 4px 8px;
+            margin: -4px -8px;
+        }
+        
+        /* ==================== PAGINAÇÃO ==================== */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-top: 1px solid #dee2e6;
+            background-color: #f8f9fa;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .pagination-info {
+            font-size: 12px;
+            color: var(--primary-darker);
+            font-weight: 600;
+        }
+        
+        .pagination .page-link {
+            border: 1px solid #dee2e6;
+            color: var(--primary-dark);
+            padding: 6px 10px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            color: white;
+        }
+        
+        .pagination .page-link:hover {
+            background-color: var(--background-light);
+            color: var(--primary-dark);
+        }
+        
+        /* ==================== CARDS ==================== */
+        .card-stats {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card-stats .value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin: 8px 0;
+        }
+
+        .card-stats .label {
+            font-size: 12px;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .card-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* ==================== BUSCA RÁPIDA ==================== */
+        .search-box-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0;
+        }
+        
+        .search-box-container label {
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        
+        .search-box-container input {
+            border: 2px solid var(--primary-dark) !important;
+            border-radius: 6px !important;
+            padding: 8px 12px !important;
+            font-size: 13px !important;
+            transition: all 0.3s ease !important;
+            width: 100% !important;
+            max-width: 300px !important;
+        }
+        
+        .search-box-container input:focus {
+            border-color: var(--accent-blue) !important;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.15) !important;
+            outline: none !important;
+        }
+        
+        /* ==================== BADGES DE SITUAÇÃO ==================== */
+        .badge-situacao {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: inline-block;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .badge-ativo {
+            background-color: rgba(39, 174, 96, 0.15);
+            color: var(--success-green);
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+        
+        .badge-vigente {
+            background-color: rgba(39, 174, 96, 0.15);
+            color: var(--success-green);
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+        
+        .badge-encerrado {
+            background-color: rgba(52, 152, 219, 0.15);
+            color: var(--accent-blue);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+        
+        .badge-rescindido {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: var(--danger-red);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+        
+        /* ==================== DOCUMENTO LINK ==================== */
+        .documento-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .documento-link:hover {
+            color: var(--primary-dark);
+            background-color: rgba(52, 152, 219, 0.08);
+            text-decoration: underline;
+        }
+        
+        /* ==================== NOVO MODAL CRIATIVO ==================== */
+        .modal-creative {
+            border-radius: 15px;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-creative .modal-header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
+            color: white;
+            padding: 20px 30px;
+            border-bottom: none;
+            position: relative;
+        }
+        
+        .modal-creative .modal-header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--success-green));
+            border-radius: 2px;
+        }
+        
+        .modal-creative .modal-title {
+            font-weight: 700;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+        
+        .modal-creative .btn-close {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            padding: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-creative .btn-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+        
+        .modal-creative .modal-body {
+            padding: 30px;
+            background: linear-gradient(to bottom, #ffffff, #f8fafc);
+        }
+        
+        .modal-creative .modal-footer {
+            background: var(--background-light);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        /* Grid de informações no modal */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .info-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--accent-blue);
+            transition: transform 0.3s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .info-card.primary {
+            border-left-color: var(--primary-dark);
+        }
+        
+        .info-card.success {
+            border-left-color: var(--success-green);
+        }
+        
+        .info-card.warning {
+            border-left-color: var(--warning-yellow);
+        }
+        
+        .info-card.danger {
+            border-left-color: var(--danger-red);
+        }
+        
+        .info-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            word-break: break-word;
+        }
+        
+        .info-value.highlight {
+            font-size: 18px;
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+        
+        .objeto-container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--success-green);
+        }
+        
+        .objeto-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+        
+        .objeto-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #495057;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-blue);
+        }
+        
+        .modal-status-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        /* ==================== DATA ATUALIZAÇÃO CENTRALIZADA ==================== */
+        .data-atualizacao-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+        }
+        
+        .data-atualizacao-box {
+            background: white;
+            border-radius: 8px;
+            padding: 8px 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .data-atualizacao-box i {
+            font-size: 14px;
+            color: var(--accent-blue);
+        }
+        
+        /* ==================== BOTÃO DE LEGISLAÇÃO ==================== */
+        .btn-legislacao {
+            background: white;
+            border: 2px solid var(--primary-dark);
+            color: var(--primary-dark);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            flex-grow: 1;
+        }
+        
+        .btn-legislacao:hover {
+            background: var(--primary-dark);
+            color: white;
+            transform: translateY(-1px);
+            text-decoration: none;
+        }
+        
+        /* ==================== ESTILOS PARA DOWNLOADS (DASHBOARD 3) ==================== */
+        .downloads-filter-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent-blue);
+        }
+        
+        .downloads-filter-container .row {
+            align-items: center;
+        }
+        
+        .downloads-filter-container .form-select {
+            width: 150px; /* Diminuído o tamanho do filtro de ano */
+        }
+        
+        .downloads-buttons-container {
+            display: flex;
+            gap: 10px;
+            flex-grow: 1;
+        }
+        
+        .downloads-buttons-container .btn-primary-custom {
+            flex-grow: 1;
+        }
+        
+        .downloads-buttons-container .btn-legislacao {
+            flex-grow: 1;
+        }
+        
+        /* ==================== CORREÇÕES ESPECÍFICAS PARA SCROLL ==================== */
+        
+        /* REMOVER scroll da tabela quando não é necessário */
+        .table-fixed-header-container:has(table tbody tr:only-child),
+        .table-fixed-header-container:has(table tbody tr:first-child:last-child) {
+            max-height: none !important;
+            overflow-y: visible !important;
+        }
+        
+        /* Container principal - garantir que expanda */
+        #dashboardTabsContent {
+            overflow: visible !important;
+            min-height: 0 !important;
+        }
+        
+        /* Cada dashboard individual */
+        .tab-pane {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: 0 !important;
+        }
+        
+        /* Remover scroll de todos os elementos internos */
+        .row, .col, .col-md-3, .col-md-4, .col-md-6, .col-6, .col-12 {
+            overflow: visible !important;
+        }
+        
+        /* REMOVER SCROLL DO BOOTSTRAP CONTAINER */
+        .container-fluid, .container {
+            overflow: visible !important;
+        }
+        
+        /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
-            .stat-value {
-                font-size: 1.8rem;
+            body, html {
+                overflow-y: visible !important;
             }
             
-            .nav-tabs .nav-link {
-                padding: 8px 12px !important;
+            .main-container, 
+            .container.dashboard-spacing,
+            .tab-content {
+                overflow: visible !important;
+            }
+            
+            .table-fixed-header-container {
+                max-height: 400px; /* Um pouco menor em mobile */
+            }
+            
+            .main-header {
+                padding: 15px 0;
+                margin-bottom: 20px;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .header-title {
+                font-size: 18px;
+            }
+            
+            .header-subtitle {
                 font-size: 12px;
             }
             
-            .page-title {
-                font-size: 1.5rem;
+            .header-info {
+                justify-content: center;
+            }
+            
+            .metric-value {
+                font-size: 20px;
+            }
+            
+            .actions-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .right-aligned-container {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .export-buttons {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .nav-tabs .nav-link {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            
+            .chart-wrapper {
+                height: 200px;
+            }
+            
+            .table-responsive {
+                font-size: 12px;
+            }
+            
+            .table thead th,
+            .table tbody td {
+                padding: 8px 6px;
+                font-size: 11px;
+            }
+            
+            .actions-column {
+                width: 80px;
+            }
+            
+            .btn-action {
+                padding: 3px 6px;
+                font-size: 10px;
+            }
+            
+            .pagination-container {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+            
+            .btn-primary-custom,
+            .btn-secondary-custom,
+            .btn-pesquisa {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+            
+            .search-box-container {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .modal-creative .modal-body {
+                padding: 20px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .data-atualizacao-container {
+                justify-content: center;
+            }
+            
+            .downloads-buttons-container {
+                flex-direction: column;
+            }
+            
+            .downloads-filter-container .form-select {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .table-fixed-header-container {
+                max-height: 350px;
+            }
+            
+            .filter-container .row > div {
+                margin-bottom: 10px;
+            }
+            
+            .chart-container {
+                min-height: 240px;
+            }
+            
+            .chart-wrapper {
+                height: 180px;
+            }
+            
+            .actions-column {
+                width: 70px;
+            }
+            
+            .btn-action {
+                padding: 2px 4px;
+                font-size: 9px;
+            }
+            
+            .btn-action span {
+                display: none;
+            }
+            
+            .modal-creative .modal-header {
+                padding: 15px 20px;
+            }
+            
+            .modal-creative .modal-title {
+                font-size: 1.1rem;
+            }
+            
+            .right-aligned-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .items-per-page-container {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container-fluid py-3 px-4">
-        <!-- Cabeçalho -->
-        <div class="row mb-4">
-            <div class="col-12">
+
+    <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
+    <div class="main-container">
+        <div class="container dashboard-spacing">
+            
+            <!-- ==================== HEADER PRINCIPAL ==================== -->
+            <div class="main-header">
                 <div class="logo-container">
+                    <div class="logo">MG</div>
                     <div>
-                        <h1 class="page-title">Estrutura Organizacional</h1>
-                        <p class="page-subtitle">Governo do Estado de Minas Gerais</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Abas de Navegação -->
-        <div class="row">
-            <div class="col-12">
-                <div class="nav-tabs-container">
-                    <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="visao-geral-tab" data-bs-toggle="tab" data-bs-target="#visao-geral" type="button" role="tab">
-                                <span class="material-icons">dashboard</span> Visão Geral
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="destino-tab" data-bs-toggle="tab" data-bs-target="#destino" type="button" role="tab">
-                                <span class="material-icons">apartment</span> Órgãos e Entidades
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="consulta-individual-tab" data-bs-toggle="tab" data-bs-target="#consulta-individual" type="button" role="tab">
-                                <span class="material-icons">search</span> Consulta Individual
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="downloads-tab" data-bs-toggle="tab" data-bs-target="#downloads" type="button" role="tab">
-                                <span class="material-icons">download</span> Downloads
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Conteúdo das Abas -->
-        <div class="tab-content" id="dashboardTabsContent">
-            <!-- Aba 1: Visão Geral -->
-            <div class="tab-pane fade show active" id="visao-geral" role="tabpanel">
-                <div class="row">
-                    <div class="col-12 mb-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="material-icons me-2">insights</span> Resumo da Estrutura Organizacional
-                            </div>
-                            <div class="card-body">
-                                <p class="mb-4">Esta página apresenta a estrutura organizacional do Governo do Estado de Minas Gerais, com informações detalhadas sobre órgãos, suas competências, responsáveis e formas de contato. Os dados são atualizados regularmente e disponibilizados de forma transparente para a sociedade.</p>
-                                
-                                <div class="row">
-                                    <div class="col-md-3 col-sm-6 mb-3">
-                                        <div class="stat-card">
-                                            <div class="stat-value" id="total-orgaos">24</div>
-                                            <div class="stat-label">Total de Órgãos</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 mb-3">
-                                        <div class="stat-card">
-                                            <div class="stat-value" id="orgaos-autonomos">8</div>
-                                            <div class="stat-label">Órgãos Autônomos</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 mb-3">
-                                        <div class="stat-card">
-                                            <div class="stat-value" id="secretarias">12</div>
-                                            <div class="stat-label">Secretarias</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 mb-3">
-                                        <div class="stat-card">
-                                            <div class="stat-value" id="vinculados">4</div>
-                                            <div class="stat-label">Vinculados</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="row mt-4">
-                                    <div class="col-12">
-                                        <h5 class="mb-3">Distribuição por Tipo</h5>
-                                        <div class="progress" style="height: 25px;">
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 33.3%" aria-valuenow="33.3" aria-valuemin="0" aria-valuemax="100">Autônomos</div>
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">Secretarias</div>
-                                            <div class="progress-bar bg-purple" role="progressbar" style="width: 16.7%" aria-valuenow="16.7" aria-valuemin="0" aria-valuemax="100">Vinculados</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 mb-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="material-icons me-2">star</span> Órgãos em Destaque
-                            </div>
-                            <div class="card-body">
-                                <div class="orgao-card p-3 mb-3">
-                                    <div class="d-flex justify-content-between align-items-start">
-                                        <div>
-                                            <h6 class="mb-1 fw-bold">Advocacia-Geral do Estado (AGE)</h6>
-                                            <span class="orgao-type-badge type-autonomo">Órgão Autônomo</span>
-                                            <p class="mb-1 mt-2 small">Responsável: Sérgio Pessoa de Paulo Castro</p>
-                                            <p class="mb-0 small text-muted">Avenida Afonso Pena, Nº 4000, Cruzeiro, Belo Horizonte</p>
-                                        </div>
-                                        <span class="material-icons text-primary">chevron_right</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="orgao-card p-3 mb-3">
-                                    <div class="d-flex justify-content-between align-items-start">
-                                        <div>
-                                            <h6 class="mb-1 fw-bold">Secretaria de Estado de Saúde (SES-MG)</h6>
-                                            <span class="orgao-type-badge type-secretaria">Secretaria</span>
-                                            <p class="mb-1 mt-2 small">Responsável: Fábio Baccheretti</p>
-                                            <p class="mb-0 small text-muted">Avenida João Pinheiro, 166, Centro, Belo Horizonte</p>
-                                        </div>
-                                        <span class="material-icons text-primary">chevron_right</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="orgao-card p-3">
-                                    <div class="d-flex justify-content-between align-items-start">
-                                        <div>
-                                            <h6 class="mb-1 fw-bold">Companhia de Gás de Minas Gerais (GASMIG)</h6>
-                                            <span class="orgao-type-badge type-vinculado">Vinculado</span>
-                                            <p class="mb-1 mt-2 small">Responsável: Luiz Fernando Gama Rocha</p>
-                                            <p class="mb-0 small text-muted">Rua Timbiras, 1200, Lourdes, Belo Horizonte</p>
-                                        </div>
-                                        <span class="material-icons text-primary">chevron_right</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 mb-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="material-icons me-2">update</span> Informações de Atualização
-                            </div>
-                            <div class="card-body">
-                                <div class="alert alert-info">
-                                    <div class="d-flex">
-                                        <span class="material-icons me-2">info</span>
-                                        <div>
-                                            <h6 class="alert-heading mb-1">Dados Atualizados</h6>
-                                            <p class="mb-0">Os dados desta página são atualizados automaticamente a partir do repositório oficial da Transparência MG.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-4">
-                                    <h6 class="mb-3">Última Atualização</h6>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <span class="material-icons me-2 text-success">check_circle</span>
-                                        <div>
-                                            <div class="fw-bold">18 de março de 2024</div>
-                                            <div class="text-muted small">Base de dados mais recente</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="d-flex align-items-center">
-                                        <span class="material-icons me-2 text-primary">link</span>
-                                        <div>
-                                            <div class="fw-bold">Fonte Oficial</div>
-                                            <a href="https://github.com/transparencia-mg/estrutura_organizacional" target="_blank" class="small">Transparência MG - Estrutura Organizacional</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-4 pt-3 border-top">
-                                    <h6 class="mb-3">Próximas Atualizações</h6>
-                                    <div class="d-flex align-items-center">
-                                        <span class="material-icons me-2 text-warning">schedule</span>
-                                        <div>
-                                            <div class="fw-bold">Abril 2024</div>
-                                            <div class="text-muted small">Atualização prevista da estrutura organizacional</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <h1 class="header-title">Estrutura Organizacional</h1>
+                        <p class="header-subtitle">Governo do Estado de Minas Gerais</p>
                     </div>
                 </div>
             </div>
             
-            <!-- Aba 2: Destino (Órgãos e Entidades) -->
-            <div class="tab-pane fade" id="destino" role="tabpanel">
-                <div class="row">
-                    <div class="col-12 mb-4">
-                        <div class="filter-container">
-                            <h5 class="mb-3">Filtros de Pesquisa</h5>
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="filtro-tipo" class="form-label small fw-bold">Tipo de Órgão</label>
-                                    <select class="form-select" id="filtro-tipo">
-                                        <option value="">Todos os tipos</option>
-                                        <option value="Órgão Autônomo">Órgão Autônomo</option>
-                                        <option value="Secretaria">Secretaria</option>
-                                        <option value="Vinculado">Vinculado</option>
-                                        <option value="Outros">Outros</option>
+            <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
+            <div class="nav-tabs-container">
+                <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="visao-geral-tab" data-bs-toggle="tab" data-bs-target="#visao-geral" type="button" role="tab">
+                            <i class="material-icons">bar_chart</i>Visão Geral
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="destino-tab" data-bs-toggle="tab" data-bs-target="#destino" type="button" role="tab">
+                            <i class="material-icons">apartment</i>Órgãos e Entidades
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="consulta-individual-tab" data-bs-toggle="tab" data-bs-target="#consulta-individual" type="button" role="tab">
+                            <i class="material-icons">search</i>Consulta Individual
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="downloads-tab" data-bs-toggle="tab" data-bs-target="#downloads" type="button" role="tab">
+                            <i class="material-icons">downloading</i>Downloads
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ==================== DATA DE ATUALIZAÇÃO CENTRALIZADA ==================== -->
+            <div class="data-atualizacao-container">
+                <div class="data-atualizacao-box">
+                    <i class="material-icons">update</i>
+                    Atualizado em: <span id="data-atualizacao-header">Carregando...</span>
+                </div>
+            </div>
+
+            <!-- ==================== CONTEÚDO DAS ABAS ==================== -->
+            <div class="tab-content" id="dashboardTabsContent">
+                
+                <!-- ==================== DASHBOARD 1: VISÃO GERAL ==================== -->
+                <div class="tab-pane fade show active" id="visao-geral" role="tabpanel">
+                    
+                    <!-- Cards de Estatísticas Dashboard 1 -->
+                    <div class="row mb-4" id="summaryCards">
+                        <!-- Cards serão carregados aqui -->
+                    </div>
+
+                    <!-- Gráficos Dashboard 1 -->
+                    <div class="row mb-4">
+                        <div class="col-md-6 col-12">
+                            <div class="chart-container">
+                                <div class="chart-header">
+                                    <h4 class="chart-title">Distribuição por Tipo</h4>
+                                </div>
+                                <div class="chart-wrapper">
+                                    <canvas id="chartTipo"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="chart-container">
+                                <div class="chart-header">
+                                    <h4 class="chart-title">Top 10 Órgãos com mais Vinculações</h4>
+                                </div>
+                                <div class="chart-wrapper">
+                                    <canvas id="chartOrgao"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ações Dashboard 1 -->
+                    <div class="actions-container mb-4">
+                        <div class="export-buttons">
+                            <button class="btn-export" id="exportCSVDashboard1">
+                                <i class="material-icons me-2">description</i>Exportar CSV
+                            </button>
+                            <button class="btn-export" id="printDashboard1">
+                                <i class="material-icons me-2">print</i>Imprimir
+                            </button>
+                            <button class="btn-export" id="compartilharLinkDashboard1">
+                                <i class="material-icons me-2">share</i>Compartilhar Link
+                            </button>
+                        </div>
+                        
+                        <div class="right-aligned-container">
+                            <div class="items-per-page-container">
+                                <div class="items-per-page">
+                                    <span>Itens por página:</span>
+                                    <select id="itemsPerPageDashboard1">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50" selected>50</option>
+                                        <option value="100">100</option>
                                     </select>
                                 </div>
-                                <div class="col-md-5 mb-3">
-                                    <label for="filtro-pesquisa" class="form-label small fw-bold">Pesquisar por nome ou sigla</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><span class="material-icons">search</span></span>
-                                        <input type="text" class="form-control" id="filtro-pesquisa" placeholder="Digite o nome ou sigla do órgão">
-                                    </div>
+                                <span class="table-badge" id="resumoCountDashboard1">0 órgãos</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabela Dashboard 1 - VISÃO GERAL -->
+                    <div class="table-container">
+                        <div class="table-fixed-header-container">
+                            <table class="table table-hover" id="visaoGeralTable">
+                                <thead>
+                                    <tr>
+                                        <th data-sort="orgao" data-order="asc" onclick="sortTable('visaoGeral', 'orgao')">
+                                            Órgão <span class="sort-icon">▼</span>
+                                        </th>
+                                        <th data-sort="sigla" data-order="asc" onclick="sortTable('visaoGeral', 'sigla')">
+                                            Sigla <span class="sort-icon">▼</span>
+                                        </th>
+                                        <th data-sort="tipo" data-order="asc" onclick="sortTable('visaoGeral', 'tipo')">
+                                            Tipo <span class="sort-icon">▼</span>
+                                        </th>
+                                        <th data-sort="vinculacao" data-order="asc" onclick="sortTable('visaoGeral', 'vinculacao')">
+                                            Vinculação <span class="sort-icon">▼</span>
+                                        </th>
+                                        <th data-sort="responsavel_legal" data-order="asc" onclick="sortTable('visaoGeral', 'responsavel_legal')">
+                                            Responsável Legal <span class="sort-icon">▼</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="resumoTableBody">
+                                    <!-- Dados serão carregados aqui -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Paginação Dashboard 1 -->
+                        <div class="pagination-container">
+                            <div class="pagination-info" id="paginationInfoDashboard1">
+                                Mostrando 0-0 de 0 registros
+                            </div>
+                            <nav aria-label="Paginação">
+                                <ul class="pagination mb-0" id="paginationDashboard1">
+                                    <!-- Paginação será gerada aqui -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                </div> <!-- Fim Dashboard 1 -->
+
+                <!-- ==================== DASHBOARD 2: ÓRGÃOS E ENTIDADES ==================== -->
+                <div class="tab-pane fade" id="destino" role="tabpanel">
+                    
+                    <!-- Filtros Dashboard 2 -->
+                    <div class="filter-container">
+                        <div class="row">
+                            <div class="col-md-3 col-6">
+                                <div class="mb-3">
+                                    <label for="tipoOrgao" class="form-label filter-label">Tipo de Órgão</label>
+                                    <select class="form-select" id="tipoOrgao">
+                                        <option value="all">Todos os Tipos</option>
+                                        <!-- Opções serão carregadas dinamicamente -->
+                                    </select>
                                 </div>
-                                <div class="col-md-3 mb-3 d-flex align-items-end">
-                                    <button class="btn btn-primary w-100" id="btn-aplicar-filtros">
-                                        <span class="material-icons align-middle me-1">filter_alt</span> Aplicar Filtros
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="mb-3">
+                                    <label for="vinculacaoOrgao" class="form-label filter-label">Vinculação</label>
+                                    <select class="form-select" id="vinculacaoOrgao">
+                                        <option value="all">Todas as Vinculações</option>
+                                        <!-- Opções serão carregadas dinamicamente -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="mb-3">
+                                    <label for="buscaOrgao" class="form-label filter-label">Buscar Órgão/Sigla</label>
+                                    <input type="text" class="form-control" id="buscaOrgao" placeholder="Digite o nome ou sigla do órgão...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex gap-3 flex-wrap">
+                                    <button class="btn-pesquisa" id="pesquisarOrgaos">
+                                        <i class="material-icons me-2">search</i>Pesquisar
+                                    </button>
+                                    <button class="btn-secondary-custom" id="limparFiltrosDashboard2">
+                                        <i class="material-icons me-2">clear</i>Limpar Filtros
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="col-12 mb-4">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="material-icons me-2">list</span> Lista de Órgãos e Entidades
+
+                    <!-- Campo de Busca de Registros Dashboard 2 -->
+                    <div class="actions-container mb-4">
+                        <div class="export-buttons">
+                            <button class="btn-export" id="exportCSVDashboard2">
+                                <i class="material-icons me-2">description</i>Exportar CSV
+                            </button>
+                            <button class="btn-export" id="printDashboard2">
+                                <i class="material-icons me-2">print</i>Imprimir
+                            </button>
+                            <button class="btn-export" id="compartilharLinkDashboard2">
+                                <i class="material-icons me-2">share</i>Compartilhar Link
+                            </button>
+                        </div>
+
+                        <div class="right-aligned-container">
+                            <div class="items-per-page-container">
+                                <div class="search-box-container">
+                                    <label for="searchOrgaos">Buscar registros:</label>
+                                    <input type="text" id="searchOrgaos" placeholder="Buscar por órgão, responsável ou endereço...">
                                 </div>
-                                <div class="small text-muted" id="total-resultados">Mostrando 24 de 24 resultados</div>
-                            </div>
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table data-table mb-0" id="tabela-orgaos">
-                                        <thead>
-                                            <tr>
-                                                <th width="25%">Órgão</th>
-                                                <th width="10%">Sigla</th>
-                                                <th width="15%">Tipo</th>
-                                                <th width="20%">Responsável Legal</th>
-                                                <th width="15%">Telefone</th>
-                                                <th width="15%">Ações</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tabela-orgaos-body">
-                                            <!-- Os dados serão carregados via JavaScript -->
-                                        </tbody>
-                                    </table>
+                                
+                                <div class="items-per-page">
+                                    <span>Itens por página:</span>
+                                    <select id="itemsPerPageDashboard2">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50" selected>50</option>
+                                        <option value="100">100</option>
+                                    </select>
                                 </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="pagination-container">
-                                    <nav>
-                                        <ul class="pagination pagination-sm mb-0" id="paginacao">
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
+                                
+                                <span class="table-badge" id="resumoCountDashboard2">0 órgãos</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Aba 3: Consulta Individual -->
-            <div class="tab-pane fade" id="consulta-individual" role="tabpanel">
-                <div class="row">
-                    <div class="col-12 mb-4">
-                        <div class="search-container">
-                            <h5 class="mb-3">Consulta Detalhada</h5>
-                            <p class="text-muted mb-4">Busque informações específicas sobre um órgão ou entidade do Governo de Minas Gerais.</p>
-                            
-                            <div class="row">
-                                <div class="col-md-8 mb-3">
-                                    <label for="consulta-orgao" class="form-label fw-bold">Selecione o Órgão</label>
-                                    <select class="form-select" id="consulta-orgao" size="1">
+
+                    <!-- Tabela de Órgãos Dashboard 2 -->
+                    <div class="table-container">
+                        <div class="table-fixed-header-container">
+                            <table class="table table-hover" id="orgaosTable">
+                                <thead>
+                                    <tr>
+                                        <th data-sort="orgao" data-order="asc" onclick="sortTable('orgaos', 'orgao')">Órgão <span class="sort-icon">▼</span></th>
+                                        <th data-sort="sigla" data-order="asc" onclick="sortTable('orgaos', 'sigla')">Sigla <span class="sort-icon">▼</span></th>
+                                        <th data-sort="tipo" data-order="asc" onclick="sortTable('orgaos', 'tipo')">Tipo <span class="sort-icon">▼</span></th>
+                                        <th data-sort="vinculacao" data-order="asc" onclick="sortTable('orgaos', 'vinculacao')">Vinculação <span class="sort-icon">▼</span></th>
+                                        <th data-sort="responsavel_legal" data-order="asc" onclick="sortTable('orgaos', 'responsavel_legal')">Responsável Legal <span class="sort-icon">▼</span></th>
+                                        <th data-sort="telefone" data-order="asc" onclick="sortTable('orgaos', 'telefone')">Telefone <span class="sort-icon">▼</span></th>
+                                        <th class="actions-column">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orgaosTableBody">
+                                    <!-- Dados serão carregados aqui -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Paginação Dashboard 2 -->
+                        <div class="pagination-container">
+                            <div class="pagination-info" id="paginationInfoDashboard2">
+                                Mostrando 0-0 de 0 registros
+                            </div>
+                            <nav aria-label="Paginação">
+                                <ul class="pagination mb-0" id="paginationDashboard2">
+                                    <!-- Paginação será gerada aqui -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                </div> <!-- Fim Dashboard 2 -->
+
+                <!-- ==================== DASHBOARD 3: CONSULTA INDIVIDUAL ==================== -->
+                <div class="tab-pane fade" id="consulta-individual" role="tabpanel">
+                    
+                    <!-- Filtros Dashboard 3 -->
+                    <div class="filter-container">
+                        <div class="row">
+                            <div class="col-md-8 col-12">
+                                <div class="mb-3">
+                                    <label for="selectOrgaoConsulta" class="form-label filter-label">Selecione o Órgão</label>
+                                    <select class="form-select" id="selectOrgaoConsulta" size="1">
                                         <option value="">Selecione um órgão para consultar</option>
                                         <!-- Opções serão preenchidas via JavaScript -->
                                     </select>
                                 </div>
-                                <div class="col-md-4 d-flex align-items-end mb-3">
-                                    <button class="btn btn-primary w-100" id="btn-consultar">
-                                        <span class="material-icons align-middle me-1">search</span> Consultar
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="mb-3 d-flex align-items-end h-100">
+                                    <button class="btn-pesquisa w-100" id="consultarOrgao">
+                                        <i class="material-icons me-2">search</i> Consultar
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
+                    <!-- Resultado da Consulta -->
                     <div class="col-12" id="resultado-consulta">
                         <div class="card">
                             <div class="card-header">
-                                <span class="material-icons me-2">info</span> Informações do Órgão
+                                <i class="material-icons me-2">info</i> Informações do Órgão
                                 <div class="float-end">
                                     <span class="badge bg-info" id="orgao-status">Selecione um órgão para visualizar</span>
                                 </div>
                             </div>
                             <div class="card-body" id="detalhes-orgao">
                                 <div class="text-center py-5 text-muted">
-                                    <span class="material-icons display-6 mb-3">search</span>
+                                    <i class="material-icons display-6 mb-3">search</i>
                                     <h5>Nenhum órgão selecionado</h5>
                                     <p>Selecione um órgão na lista acima para visualizar suas informações detalhadas.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Aba 4: Downloads -->
-            <div class="tab-pane fade" id="downloads" role="tabpanel">
-                <div class="row">
-                    <div class="col-12 mb-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="material-icons me-2">cloud_download</span> Download de Dados
+                    
+                </div> <!-- Fim Dashboard 3 -->
+
+                <!-- ==================== DASHBOARD 4: DOWNLOADS ==================== -->
+                <div class="tab-pane fade" id="downloads" role="tabpanel">
+                    
+                    <!-- Filtro de Download -->
+                    <div class="downloads-filter-container">
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="formatoDownload" class="form-label filter-label">Formato de Download</label>
+                                    <select class="form-select" id="formatoDownload">
+                                        <option value="csv">CSV (Valores separados por vírgula)</option>
+                                        <option value="json">JSON (JavaScript Object Notation)</option>
+                                        <option value="excel">Excel (XLSX)</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <p class="mb-4">Faça o download dos dados completos da estrutura organizacional do Governo de Minas Gerais em diferentes formatos. Os dados são disponibilizados de forma aberta e seguem os princípios de transparência pública.</p>
-                                
-                                <div class="row">
-                                    <div class="col-md-6 mb-4">
-                                        <div class="card border">
-                                            <div class="card-body">
-                                                <h5 class="card-title mb-3">Dados Completos</h5>
-                                                <p class="card-text small mb-4">Base completa da estrutura organizacional contendo todos os campos disponíveis.</p>
-                                                
-                                                <div class="download-buttons">
-                                                    <a href="https://github.com/transparencia-mg/estrutura_organizacional/raw/main/dataset/data/estrutura_governamental.csv" class="btn btn-outline-primary">
-                                                        <span class="material-icons align-middle me-1">table_chart</span> CSV
-                                                    </a>
-                                                    <button class="btn btn-outline-success" id="btn-download-json">
-                                                        <span class="material-icons align-middle me-1">data_object</span> JSON
-                                                    </button>
-                                                    <button class="btn btn-outline-info" id="btn-download-excel">
-                                                        <span class="material-icons align-middle me-1">table_view</span> Excel
-                                                    </button>
-                                                </div>
-                                                
-                                                <div class="mt-3 small text-muted">
-                                                    <span class="material-icons align-text-bottom me-1" style="font-size: 14px;">info</span>
-                                                    Última atualização: 18/03/2024
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-6 mb-4">
-                                        <div class="card border">
-                                            <div class="card-body">
-                                                <h5 class="card-title mb-3">Documentação</h5>
-                                                <p class="card-text small mb-4">Documentação técnica e descritiva dos dados disponibilizados.</p>
-                                                
-                                                <div class="download-buttons">
-                                                    <a href="https://github.com/transparencia-mg/estrutura_organizacional/blob/main/README.md" target="_blank" class="btn btn-outline-secondary">
-                                                        <span class="material-icons align-middle me-1">description</span> README
-                                                    </a>
-                                                    <button class="btn btn-outline-secondary" id="btn-documentacao">
-                                                        <span class="material-icons align-middle me-1">feed</span> Metadados
-                                                    </button>
-                                                    <a href="https://github.com/transparencia-mg/estrutura_organizacional" target="_blank" class="btn btn-outline-dark">
-                                                        <span class="material-icons align-middle me-1">code</span> Repositório
-                                                    </a>
-                                                </div>
-                                                
-                                                <div class="mt-3 small text-muted">
-                                                    <span class="material-icons align-text-bottom me-1" style="font-size: 14px;">info</span>
-                                                    Repositório oficial no GitHub
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="row mt-2">
-                                    <div class="col-12">
-                                        <div class="card border">
-                                            <div class="card-body">
-                                                <h5 class="card-title mb-3">Exportar Dados Filtrados</h5>
-                                                <p class="card-text small mb-3">Exporte apenas os dados que correspondem aos filtros aplicados na aba "Órgãos e Entidades".</p>
-                                                
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="formato-exportacao" class="form-label small fw-bold">Formato de Exportação</label>
-                                                        <select class="form-select" id="formato-exportacao">
-                                                            <option value="csv">CSV (Valores separados por vírgula)</option>
-                                                            <option value="json">JSON (JavaScript Object Notation)</option>
-                                                            <option value="excel">Excel (XLSX)</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6 d-flex align-items-end mb-3">
-                                                        <button class="btn btn-primary w-100" id="btn-exportar-filtrados">
-                                                            <span class="material-icons align-middle me-1">file_download</span> Exportar Dados Filtrados
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-4 pt-3 border-top">
-                                    <h6 class="mb-3">Informações Técnicas</h6>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <ul class="list-unstyled small">
-                                                <li class="mb-2"><span class="material-icons align-text-bottom me-1" style="font-size: 16px;">check_circle</span> Dados em formato aberto</li>
-                                                <li class="mb-2"><span class="material-icons align-text-bottom me-1" style="font-size: 16px;">check_circle</span> Codificação UTF-8</li>
-                                                <li class="mb-2"><span class="material-icons align-text-bottom me-1" style="font-size: 16px;">check_circle</span> Licença aberta</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <ul class="list-unstyled small">
-                                                <li class="mb-2"><span class="material-icons align-text-bottom me-1" style="font-size: 16px;">check_circle</span> Atualização periódica</li>
-                                                <li class="mb-2"><span class="material-icons align-text-bottom me-1" style="font-size: 16px;">check_circle</span> Versionamento no GitHub</li>
-                                                <li class="mb-2"><span class="material-icons align-text-bottom me-1" style="font-size: 16px;">check_circle</span> Documentação disponível</li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                            <div class="col-md-8 col-lg-7">
+                                <div class="d-flex gap-3 flex-wrap">
+                                    <button class="btn-primary-custom flex-grow-1" id="downloadCompleto">
+                                        <i class="material-icons me-2">download</i>Baixar Dados Completos
+                                    </button>
+                                    <button class="btn-legislacao flex-grow-1" id="btn-legislacao-estrutura">
+                                        <i class="material-icons me-2">gavel</i>Legislação
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+
+                    <!-- Informações sobre os dados -->
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3 class="table-title">Informações sobre os Dados</h3>
+                        </div>
+                        <div class="p-4">
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="card-stats">
+                                        <i class="material-icons fa-3x mb-3" style="color: var(--primary-dark);">storage</i>
+                                        <h4>Fonte dos Dados</h4>
+                                        <p class="text-muted" style="font-size: 13px;">Dados atualizados automaticamente do GitHub Oficial</p>
+                                        <div class="mt-3">
+                                            <a href="https://github.com/transparencia-mg/estrutura_organizacional" 
+                                               target="_blank" 
+                                               class="btn-export w-100 d-block text-decoration-none">
+                                                <i class="material-icons me-2">code</i>Acessar Repositório
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="card-stats">
+                                        <i class="material-icons fa-3x mb-3" style="color: var(--primary-dark);">public</i>
+                                        <h4>Portal de Dados Abertos</h4>
+                                        <p class="text-muted" style="font-size: 13px;">Acesse o portal oficial de dados abertos de Minas Gerais</p>
+                                        <div class="mt-3">
+                                            <a href="https://dados.mg.gov.br/" 
+                                               target="_blank" 
+                                               class="btn-export w-100 d-block text-decoration-none">
+                                                <i class="material-icons me-2">open_in_new</i>Acessar Portal
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <h5 class="mb-3">Metadados - Estrutura dos Dados</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Campo</th>
+                                                <th>Descrição</th>
+                                                <th>Tipo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>orgao</td>
+                                                <td>Nome completo do órgão</td>
+                                                <td>Texto</td>
+                                            </tr>
+                                            <tr>
+                                                <td>sigla</td>
+                                                <td>Sigla do órgão</td>
+                                                <td>Texto</td>
+                                            </tr>
+                                            <tr>
+                                                <td>tipo</td>
+                                                <td>Tipo de órgão (Órgão Autônomo, Secretaria, Vinculado, etc.)</td>
+                                                <td>Texto</td>
+                                            </tr>
+                                            <tr>
+                                                <td>vinculacao</td>
+                                                <td>Órgão ao qual está vinculado</td>
+                                                <td>Texto</td>
+                                            </tr>
+                                            <tr>
+                                                <td>responsavel_legal</td>
+                                                <td>Nome do responsável legal</td>
+                                                <td>Texto</td>
+                                            </tr>
+                                            <tr>
+                                                <td>endereco</td>
+                                                <td>Endereço completo do órgão</td>
+                                                <td>Texto</td>
+                                            </tr>
+                                            <tr>
+                                                <td>telefone</td>
+                                                <td>Número de telefone para contato</td>
+                                                <td>Texto</td>
+                                            </tr>
+                                            <tr>
+                                                <td>competencias</td>
+                                                <td>Link para as competências legais</td>
+                                                <td>URL</td>
+                                            </tr>
+                                            <tr>
+                                                <td>site_orgao</td>
+                                                <td>Site oficial do órgão</td>
+                                                <td>URL</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="alert alert-info mt-3">
+                                    <i class="material-icons me-2">info</i>
+                                    <strong>Fonte dos Dados:</strong> Os dados são carregados automaticamente do repositório GitHub 
+                                    <a href="https://github.com/transparencia-mg/estrutura_organizacional" target="_blank">transparencia-mg/estrutura_organizacional</a>
+                                </div>
+                                
+                                <div class="alert alert-success mt-2">
+                                    <i class="material-icons me-2">sync</i>
+                                    <strong>Atualização Automática:</strong> Os dados são atualizados automaticamente quando novos arquivos são adicionados ao repositório GitHub.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div> <!-- Fim Dashboard 4 -->
             </div>
         </div>
-        
-        <!-- Rodapé simplificado -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="text-center text-muted small py-3 border-top">
-                    <p class="mb-1">Dados da estrutura organizacional do Governo do Estado de Minas Gerais</p>
-                    <p class="mb-0">Fonte: <a href="https://github.com/transparencia-mg/estrutura_organizacional" target="_blank" class="text-decoration-none">Transparência MG - Estrutura Organizacional</a> | Última atualização: <span id="data-atualizacao">18/03/2024</span></p>
+    </div>
+
+    <!-- ==================== MODAL DE DETALHES CRIATIVO ==================== -->
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-creative">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailModalLabel">
+                        <i class="material-icons me-2">description</i>Detalhes do Órgão
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="employee-info" id="orgaoInfo">
+                        <!-- Informações do órgão serão carregadas aqui -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal">
+                        <i class="material-icons me-2">close</i>Fechar
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- ==================== LOADING OVERLAY ==================== -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+
+    <!-- PapaParse (TEM QUE VIR PRIMEIRO) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     
-    <!-- Bootstrap JS -->
+    <!-- jQuery e DataTables -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    
+    <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Variáveis globais
-        let dadosOrgaos = [];
-        let dadosFiltrados = [];
-        let dashboardAnterior = 'visao-geral';
+        // ============================================
+        // VARIÁVEIS GLOBAIS
+        // ============================================
+        let orgaosData = [];
+        let filteredData = [];
+        let currentPageDashboard1 = 1;
+        let currentPageDashboard2 = 1;
+        let itemsPerPageDashboard1 = 50;
+        let itemsPerPageDashboard2 = 50;
+        let charts = {};
+        let currentSortDashboard1 = { column: 'orgao', order: 'asc' };
+        let currentSortDashboard2 = { column: 'orgao', order: 'asc' };
+        let currentSearchTerm = '';
+        let dashboardAnterior = '';
         
+        const chartColors = {
+            primary: '#1A5276',
+            accent: '#3498DB',
+            bright: '#2980B9',
+            dark: '#0E2F44',
+            success: '#27AE60',
+            warning: '#F39C12',
+            info: '#17A589',
+            purple: '#8E44AD',
+            orange: '#E67E22',
+            teal: '#16A085',
+            danger: '#E74C3C'
+        };
+
+        // URL do CSV no GitHub - CORRIGIDA para estrutura organizacional
+        const GITHUB_CSV_URL = 'https://raw.githubusercontent.com/transparencia-mg/estrutura_organizacional/main/dataset/data/estrutura_governamental.csv';
+
+        // ==================== FUNÇÕES DE INICIALIZAÇÃO ====================
+
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
+            // Primeiro: garantir que não há scroll duplo
+            removeAllScrollIssues();
+            
+            // Depois inicializar o resto
             setupEventListeners();
             loadInitialData();
-            setupTooltips();
-            setupDescriptiveTooltips();
-            setupAtualizacaoData();
+            updateDataAtualizacao();
             console.log('Painel de Estrutura Organizacional carregado com sucesso!!!');
-            iframeUpdateHeight();
-        });
-
-        // Event listeners para mudança de aba
-        const tabs = document.querySelectorAll('[data-bs-toggle="tab"]');
-        tabs.forEach(tab => {
-            tab.addEventListener('click', function(e) {
-                const tabId = this.getAttribute('data-bs-target').replace('#', '');
-                
-                if (tabId === 'dashboard3') {
-                    // Se vem de outro dashboard, mostra botão voltar
-                    if (dashboardAnterior && dashboardAnterior !== 'dashboard3') {
-                        document.getElementById('botaoVoltarContainer').style.display = 'block';
-                    } else {
-                        document.getElementById('botaoVoltarContainer').style.display = 'none';
-                    }
-                } else {
-                    dashboardAnterior = tabId;
-                }
-                
-                iframeUpdateHeight();
+            
+            // Atualizar altura após carregamento completo
+            setTimeout(iframeUpdateHeight, 1000);
+            
+            // Atualizar altura quando trocar de aba
+            const tabs = document.querySelectorAll('[data-bs-toggle="tab"]');
+            tabs.forEach(tab => {
+                tab.addEventListener('shown.bs.tab', function() {
+                    setTimeout(iframeUpdateHeight, 300);
+                });
             });
         });
-        
-        // Atualiza a altura do iframe
-        function iframeUpdateHeight() { 
-            window.parent.postMessage({ iframeHeight: document.body.scrollHeight + 10 }, '*'); 
+
+        // Função CRÍTICA para remover todos os problemas de scroll
+        function removeAllScrollIssues() {
+            console.log('Removendo problemas de scroll duplo...');
+            
+            // Forçar remoção de overflow em TODOS os elementos
+            const elements = [
+                document.body,
+                document.documentElement,
+                document.querySelector('.main-container'),
+                document.querySelector('.container.dashboard-spacing'),
+                document.querySelector('.tab-content'),
+                ...document.querySelectorAll('.tab-pane'),
+                ...document.querySelectorAll('.table-container'),
+                ...document.querySelectorAll('.row'),
+                ...document.querySelectorAll('.col'),
+                ...document.querySelectorAll('.container'),
+                ...document.querySelectorAll('.container-fluid')
+            ];
+            
+            elements.forEach(el => {
+                if (el && el.style) {
+                    el.style.overflowY = 'visible !important';
+                    el.style.overflowX = 'visible !important';
+                    el.style.overflow = 'visible !important';
+                }
+            });
+            
+            // Remover classes Bootstrap que podem causar scroll
+            document.body.classList.remove('overflow-auto');
+            document.documentElement.classList.remove('overflow-auto');
+            
+            // Forçar o html e body a terem altura automática
+            document.documentElement.style.height = 'auto';
+            document.body.style.height = 'auto';
         }
-        
-        // Configurar event listeners
+
+        // Função OTIMIZADA para atualizar a altura do iframe
+        function iframeUpdateHeight() {
+            console.log('Atualizando altura do iframe...');
+            
+            // Forçar reflow para garantir medições precisas
+            document.body.style.display = 'none';
+            document.body.offsetHeight; // Trigger reflow
+            document.body.style.display = '';
+            
+            // Calcular a altura REAL do conteúdo
+            const html = document.documentElement;
+            const body = document.body;
+            
+            // Pegar a maior altura entre body e html
+            const scrollHeight = Math.max(
+                body.scrollHeight, 
+                html.scrollHeight,
+                body.offsetHeight, 
+                html.offsetHeight
+            );
+            
+            // Adicionar margem de segurança (apenas 10px)
+            const finalHeight = scrollHeight + 10;
+            
+            console.log('Altura calculada:', {
+                bodyScrollHeight: body.scrollHeight,
+                htmlScrollHeight: html.scrollHeight,
+                finalHeight: finalHeight
+            });
+            
+            // Enviar para o pai - formato SIMPLES que funciona
+            window.parent.postMessage({ 
+                iframeHeight: finalHeight 
+            }, '*');
+            
+            return finalHeight;
+        }
+
+        // ==================== FUNÇÕES DE UTILIDADE ====================
+
+        function showLoading(show) {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.style.display = show ? 'flex' : 'none';
+        }
+
+        function showError(message) {
+            const container = document.querySelector('.main-container');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'alert alert-danger alert-dismissible fade show';
+            errorDiv.innerHTML = `
+                <i class="material-icons me-2">warning</i>
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            container.prepend(errorDiv);
+        }
+
+        function updateDataAtualizacao() {
+            const now = new Date();
+            const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
+            const elementoData = document.getElementById('data-atualizacao-header');
+            if (elementoData) {
+                elementoData.textContent = dataFormatada;
+            }
+            console.log('Data de atualização definida:', dataFormatada);
+        }
+
+        // ==================== CONFIGURAR EVENT LISTENERS ====================
         function setupEventListeners() {
-            // Filtros na aba de Destino
-            document.getElementById('btn-aplicar-filtros').addEventListener('click', aplicarFiltros);
-            document.getElementById('filtro-pesquisa').addEventListener('keyup', function(e) {
-                if (e.key === 'Enter') aplicarFiltros();
+            // Filtros Dashboard 2
+            document.getElementById('pesquisarOrgaos').addEventListener('click', function() {
+                applyFilters('dashboard2');
+            });
+            document.getElementById('limparFiltrosDashboard2').addEventListener('click', function() {
+                clearDashboard2Filters();
             });
             
             // Consulta individual
-            document.getElementById('btn-consultar').addEventListener('click', consultarOrgao);
-            document.getElementById('consulta-orgao').addEventListener('change', function() {
+            document.getElementById('consultarOrgao').addEventListener('click', consultarOrgao);
+            document.getElementById('selectOrgaoConsulta').addEventListener('change', function() {
                 if (this.value) {
-                    document.getElementById('btn-consultar').click();
+                    document.getElementById('consultarOrgao').click();
                 }
             });
             
-            // Downloads
-            document.getElementById('btn-download-json').addEventListener('click', function() {
-                alert('Download do JSON iniciado. Em uma implementação real, isso baixaria o arquivo JSON.');
+            // Exportação
+            document.getElementById('exportCSVDashboard1').addEventListener('click', () => exportToCSV('dashboard1'));
+            document.getElementById('printDashboard1').addEventListener('click', () => printDashboard('dashboard1'));
+            document.getElementById('compartilharLinkDashboard1').addEventListener('click', () => compartilharLink('dashboard1'));
+           
+            document.getElementById('exportCSVDashboard2').addEventListener('click', () => exportToCSV('dashboard2'));
+            document.getElementById('printDashboard2').addEventListener('click', () => printDashboard('dashboard2'));
+            document.getElementById('compartilharLinkDashboard2').addEventListener('click', () => compartilharLink('dashboard2'));
+            
+            // Download
+            document.getElementById('downloadCompleto').addEventListener('click', downloadFullCSV);
+            document.getElementById('btn-legislacao-estrutura').addEventListener('click', function() {
+                window.open('https://www.almg.gov.br/legislacao-mineira/texto/DEC/47963/2020/?cons=1', '_blank');
             });
             
-            document.getElementById('btn-download-excel').addEventListener('click', function() {
-                alert('Download do Excel iniciado. Em uma implementação real, isso baixaria o arquivo Excel.');
+            // Campo de busca na Consulta
+            document.getElementById('searchOrgaos').addEventListener('input', function(e) {
+                currentSearchTerm = e.target.value.toLowerCase();
+                filterOrgaosTable(currentSearchTerm);
             });
             
-            document.getElementById('btn-documentacao').addEventListener('click', function() {
-                alert('Documentação técnica aberta. Em uma implementação real, isso abriria um modal ou nova página com a documentação.');
+            // Troca de abas
+            document.getElementById('visao-geral-tab').addEventListener('click', function() {
+                setTimeout(() => {
+                    updateDashboard1();
+                    iframeUpdateHeight();
+                }, 100);
+            });
+            document.getElementById('destino-tab').addEventListener('click', function() {
+                setTimeout(() => {
+                    updateDashboard2();
+                    iframeUpdateHeight();
+                }, 100);
+            });
+            document.getElementById('consulta-individual-tab').addEventListener('click', function() {
+                setTimeout(() => {
+                    updateSelectConsulta();
+                    iframeUpdateHeight();
+                }, 100);
+            });
+            document.getElementById('downloads-tab').addEventListener('click', function() {
+                setTimeout(iframeUpdateHeight, 100);
             });
             
-            document.getElementById('btn-exportar-filtrados').addEventListener('click', function() {
-                const formato = document.getElementById('formato-exportacao').value;
-                alert(`Exportando dados filtrados no formato ${formato.toUpperCase()}. Em uma implementação real, isso geraria o arquivo para download.`);
+            // Itens por página
+            document.getElementById('itemsPerPageDashboard1').addEventListener('change', function() {
+                itemsPerPageDashboard1 = parseInt(this.value);
+                currentPageDashboard1 = 1;
+                updateResumoTable();
+            });
+            
+            document.getElementById('itemsPerPageDashboard2').addEventListener('change', function() {
+                itemsPerPageDashboard2 = parseInt(this.value);
+                currentPageDashboard2 = 1;
+                updateOrgaosTable();
+            });
+            
+            // Busca por nome ou sigla
+            document.getElementById('buscaOrgao').addEventListener('input', function() {
+                // Aplicar filtro em tempo real
+                setTimeout(() => {
+                    applyFilters('dashboard2');
+                }, 500);
+            });
+        }
+
+        async function loadInitialData() {
+            showLoading(true);
+            try {
+                await loadData();
+                updateFilterOptions();
+                updateDashboard1();
+                initializeDashboard2();
+                updateSelectConsulta();
+                console.log('Dashboard inicializado com sucesso!');
+                console.log(`Dados carregados: ${orgaosData.length} órgãos`);
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                showError('Erro ao carregar dados do CSV. Verifique a conexão ou tente novamente.');
+            } finally {
+                showLoading(false);
+                // Atualizar altura após carregar dados
+                setTimeout(iframeUpdateHeight, 500);
+            }
+        }
+
+        // ==================== CARREGAR DADOS DO GITHUB ====================
+
+        function loadData() {
+            return new Promise((resolve, reject) => {
+                Papa.parse(GITHUB_CSV_URL, {
+                    download: true,
+                    header: true,
+                    delimiter: ",",
+                    encoding: "utf-8",
+                    skipEmptyLines: "greedy",
+                    
+                    transformHeader: function(header) {
+                        return header
+                            .replace(/^\uFEFF/, "")
+                            .trim()
+                            .toLowerCase()
+                            .normalize("NFD")
+                            .replace(/[\u0300-\u036f]/g, "");
+                    },
+                    
+                    complete: function(results) {
+                        console.log("Linhas brutas:", results.data.length);
+                        console.log("Colunas do CSV:", Object.keys(results.data[0]));
+                        
+                        const dadosValidos = results.data.filter(row =>
+                            Object.values(row).some(v => v && v.toString().trim() !== "")
+                        );
+                        
+                        // Mapear os dados conforme a estrutura do CSV
+                        orgaosData = dadosValidos.map((row, index) => ({
+                            __id: index + 1,
+                            orgao: row.orgao || row['orgão'] || '',
+                            sigla: row.sigla || '',
+                            tipo: row.tipo || '',
+                            vinculacao: row.vinculacao || row.vinculacao || '-',
+                            responsavel_legal: row.responsavel_legal || row['responsavel'] || '',
+                            endereco: row.endereco || row['endereço'] || '',
+                            telefone: row.telefone || '',
+                            competencias: row.competencias || row['competência'] || '',
+                            site_orgao: row.site_orgao || row['site'] || row['site_orgão'] || ''
+                        }));
+                        
+                        // Limpar e normalizar dados
+                        orgaosData.forEach(orgao => {
+                            // Normalizar tipos
+                            if (orgao.tipo) {
+                                orgao.tipo = orgao.tipo.trim();
+                                if (orgao.tipo.includes('Órgão Autônomo') || orgao.tipo.includes('Autônomo')) {
+                                    orgao.tipo = 'Órgão Autônomo';
+                                } else if (orgao.tipo.includes('Secretaria')) {
+                                    orgao.tipo = 'Secretaria';
+                                } else if (orgao.tipo.includes('Vinculado')) {
+                                    orgao.tipo = 'Vinculado';
+                                }
+                            }
+                            
+                            // Normalizar vinculação
+                            if (orgao.vinculacao === '-' || orgao.vinculacao === '') {
+                                orgao.vinculacao = 'Governadoria';
+                            }
+                        });
+                        
+                        filteredData = [...orgaosData];
+                        
+                        console.log("Dados normalizados:", orgaosData.length);
+                        console.log("Exemplo normalizado:", orgaosData[0]);
+                        
+                        resolve();
+                    },
+                    
+                    error: function(err) {
+                        console.error("Erro ao carregar CSV:", err);
+                        reject(err);
+                    }
+                });
             });
         }
         
-        // Carregar dados iniciais
-        function loadInitialData() {
-            // Em uma implementação real, buscaria os dados do arquivo CSV
-            // Por enquanto, usamos dados de exemplo baseados no arquivo fornecido
+        // ==================== FUNÇÕES DE FILTRO ====================
+        function updateFilterOptions() {
+            // Obter tipos únicos
+            const tiposUnicos = [...new Set(orgaosData.map(o => o.tipo))].filter(t => t).sort();
             
-            // Dados de exemplo baseados na estrutura fornecida
-            dadosOrgaos = [
-                {
-                    orgao: "Advocacia-Geral do Estado",
-                    sigla: "AGE",
-                    tipo: "Órgão Autônomo",
-                    vinculacao: "-",
-                    responsavel_legal: "Sérgio Pessoa de Paulo Castro",
-                    endereco: "Avenida Afonso Pena, Nº 4000, Cruzeiro, Belo Horizonte, 30130-009",
-                    telefone: "(31) 3218 - 0700",
-                    competencias: "https://www.almg.gov.br/legislacao-mineira/texto/DEC/47963/2020/?cons=1",
-                    site_orgao: "http://advocaciageral.mg.gov.br/"
-                },
-                {
-                    orgao: "Secretaria de Estado de Saúde",
-                    sigla: "SES-MG",
-                    tipo: "Secretaria",
-                    vinculacao: "Governadoria",
-                    responsavel_legal: "Fábio Baccheretti",
-                    endereco: "Avenida João Pinheiro, 166, Centro, Belo Horizonte, 30130-170",
-                    telefone: "(31) 3215-7000",
-                    competencias: "https://www.saude.mg.gov.br/sobre/institucional",
-                    site_orgao: "https://www.saude.mg.gov.br/"
-                },
-                {
-                    orgao: "Secretaria de Estado de Educação",
-                    sigla: "SEE",
-                    tipo: "Secretaria",
-                    vinculacao: "Governadoria",
-                    responsavel_legal: "Julia Figueiredo Sant'Anna",
-                    endereco: "Rodovia Prefeito Américo Gianetti, 4143, Belo Horizonte, 31630-901",
-                    telefone: "(31) 3915-3000",
-                    competencias: "https://educacao.mg.gov.br/",
-                    site_orgao: "https://educacao.mg.gov.br/"
-                },
-                {
-                    orgao: "Companhia de Gás de Minas Gerais",
-                    sigla: "GASMIG",
-                    tipo: "Vinculado",
-                    vinculacao: "Secretaria de Estado de Desenvolvimento Econômico",
-                    responsavel_legal: "Luiz Fernando Gama Rocha",
-                    endereco: "Rua Timbiras, 1200, Lourdes, Belo Horizonte, 30140-061",
-                    telefone: "(31) 3299-4000",
-                    competencias: "https://www.gasmig.com.br/institucional",
-                    site_orgao: "https://www.gasmig.com.br/"
-                },
-                {
-                    orgao: "Secretaria de Estado de Planejamento e Gestão",
-                    sigla: "SEPLAG",
-                    tipo: "Secretaria",
-                    vinculacao: "Governadoria",
-                    responsavel_legal: "Luiz Leonardo Vieira Marques",
-                    endereco: "Rua Rodrigues Caldas, 30, Santo Agostinho, Belo Horizonte, 30190-921",
-                    telefone: "(31) 3915-5000",
-                    competencias: "https://www.seplag.mg.gov.br/",
-                    site_orgao: "https://www.seplag.mg.gov.br/"
-                },
-                {
-                    orgao: "Controladoria-Geral do Estado",
-                    sigla: "CGE",
-                    tipo: "Órgão Autônomo",
-                    vinculacao: "Governadoria",
-                    responsavel_legal: "Rômulo de Albuquerque Ferraz",
-                    endereco: "Rua Rodrigues Caldas, 471, Santo Agostinho, Belo Horizonte, 30190-921",
-                    telefone: "(31) 3915-2000",
-                    competencias: "https://www.cge.mg.gov.br/",
-                    site_orgao: "https://www.cge.mg.gov.br/"
-                },
-                {
-                    orgao: "Procuradoria Geral do Estado",
-                    sigla: "PGE",
-                    tipo: "Órgão Autônomo",
-                    vinculacao: "Governadoria",
-                    responsavel_legal: "José Henrique de Lima",
-                    endereco: "Avenida do Contorno, 6470, Savassi, Belo Horizonte, 30110-039",
-                    telefone: "(31) 3250-4000",
-                    competencias: "https://www.pge.mg.gov.br/",
-                    site_orgao: "https://www.pge.mg.gov.br/"
-                }
-            ];
+            // Dashboard 2 - Tipo
+            const tipoSelect = document.getElementById('tipoOrgao');
+            if (tipoSelect) {
+                tipoSelect.innerHTML = '<option value="all">Todos os Tipos</option>';
+                tiposUnicos.forEach(tipo => {
+                    const option = document.createElement('option');
+                    option.value = tipo;
+                    option.textContent = tipo;
+                    tipoSelect.appendChild(option);
+                });
+            }
             
-            // Preencher os dados iniciais
-            preencherTabelaOrgaos(dadosOrgaos);
-            preencherSelectConsulta();
-            atualizarEstatisticas();
+            // Obter vinculações únicas
+            const vinculacoesUnicas = [...new Set(orgaosData.map(o => o.vinculacao))].filter(v => v && v !== '-').sort();
             
-            // Inicializar dados filtrados
-            dadosFiltrados = [...dadosOrgaos];
+            // Dashboard 2 - Vinculação
+            const vinculacaoSelect = document.getElementById('vinculacaoOrgao');
+            if (vinculacaoSelect) {
+                vinculacaoSelect.innerHTML = '<option value="all">Todas as Vinculações</option>';
+                vinculacoesUnicas.forEach(vinculacao => {
+                    const option = document.createElement('option');
+                    option.value = vinculacao;
+                    option.textContent = vinculacao;
+                    vinculacaoSelect.appendChild(option);
+                });
+            }
         }
-        
-        // Preencher a tabela de órgãos
-        function preencherTabelaOrgaos(dados) {
-            const tbody = document.getElementById('tabela-orgaos-body');
-            tbody.innerHTML = '';
+
+        function updateSelectConsulta() {
+            const select = document.getElementById('selectOrgaoConsulta');
+            if (!select) return;
             
-            dados.forEach((orgao, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>
-                        <div class="fw-bold">${orgao.orgao}</div>
-                        <div class="small text-muted">${orgao.endereco ? orgao.endereco.split(',')[0] + ', ' + orgao.endereco.split(',')[1] : 'Endereço não disponível'}</div>
-                    </td>
-                    <td>
-                        <span class="badge bg-light text-dark">${orgao.sigla}</span>
-                    </td>
-                    <td>
-                        <span class="orgao-type-badge ${getTipoClass(orgao.tipo)}">${orgao.tipo}</span>
-                    </td>
-                    <td>${orgao.responsavel_legal}</td>
-                    <td>${orgao.telefone}</td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary" onclick="verDetalhesOrgao('${orgao.sigla}')">
-                            <span class="material-icons align-middle" style="font-size: 16px;">visibility</span> Ver
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
+            select.innerHTML = '<option value="">Selecione um órgão para consultar</option>';
             
-            // Atualizar contador de resultados
-            document.getElementById('total-resultados').textContent = `Mostrando ${dados.length} de ${dadosOrgaos.length} resultados`;
-        }
-        
-        // Preencher o select de consulta individual
-        function preencherSelectConsulta() {
-            const select = document.getElementById('consulta-orgao');
-            
-            dadosOrgaos.forEach(orgao => {
+            orgaosData.sort((a, b) => a.orgao.localeCompare(b.orgao)).forEach(orgao => {
                 const option = document.createElement('option');
                 option.value = orgao.sigla;
                 option.textContent = `${orgao.sigla} - ${orgao.orgao}`;
                 select.appendChild(option);
             });
         }
-        
-        // Atualizar estatísticas na visão geral
-        function atualizarEstatisticas() {
-            const total = dadosOrgaos.length;
-            const autonomos = dadosOrgaos.filter(o => o.tipo === "Órgão Autônomo").length;
-            const secretarias = dadosOrgaos.filter(o => o.tipo === "Secretaria").length;
-            const vinculados = dadosOrgaos.filter(o => o.tipo === "Vinculado").length;
+
+        function applyFilters(dashboard) {
+            showLoading(true);
             
-            document.getElementById('total-orgaos').textContent = total;
-            document.getElementById('orgaos-autonomos').textContent = autonomos;
-            document.getElementById('secretarias').textContent = secretarias;
-            document.getElementById('vinculados').textContent = vinculados;
+            if (dashboard === 'dashboard2') {
+                const tipo = document.getElementById('tipoOrgao').value;
+                const vinculacao = document.getElementById('vinculacaoOrgao').value;
+                const busca = document.getElementById('buscaOrgao').value.toLowerCase();
+                
+                // Filtrar dados
+                filteredData = orgaosData.filter(orgao => {
+                    // Filtro por tipo
+                    if (tipo !== 'all' && orgao.tipo !== tipo) {
+                        return false;
+                    }
+                    
+                    // Filtro por vinculação
+                    if (vinculacao !== 'all' && orgao.vinculacao !== vinculacao) {
+                        return false;
+                    }
+                    
+                    // Filtro por busca (nome ou sigla)
+                    if (busca && !orgao.orgao.toLowerCase().includes(busca) && !orgao.sigla.toLowerCase().includes(busca)) {
+                        return false;
+                    }
+                    
+                    return true;
+                });
+                
+                updateDashboard2();
+            }
+            
+            showLoading(false);
+            // Atualizar altura após filtrar
+            setTimeout(iframeUpdateHeight, 300);
         }
-        
-        // Aplicar filtros na aba de Destino
-        function aplicarFiltros() {
-            const tipo = document.getElementById('filtro-tipo').value;
-            const pesquisa = document.getElementById('filtro-pesquisa').value.toLowerCase();
+
+        function filterOrgaosTable(searchTerm) {
+            if (!searchTerm.trim()) {
+                updateOrgaosTable();
+                return;
+            }
             
-            dadosFiltrados = dadosOrgaos.filter(orgao => {
-                // Filtro por tipo
-                if (tipo && orgao.tipo !== tipo) return false;
-                
-                // Filtro por pesquisa
-                if (pesquisa) {
-                    const textoPesquisa = pesquisa.toLowerCase();
-                    return orgao.orgao.toLowerCase().includes(textoPesquisa) || 
-                           orgao.sigla.toLowerCase().includes(textoPesquisa) ||
-                           orgao.responsavel_legal.toLowerCase().includes(textoPesquisa);
-                }
-                
-                return true;
+            // Filtrar dados localmente
+            const filtered = filteredData.filter(orgao => {
+                return (
+                    orgao.orgao.toLowerCase().includes(searchTerm) ||
+                    orgao.sigla.toLowerCase().includes(searchTerm) ||
+                    orgao.responsavel_legal.toLowerCase().includes(searchTerm) ||
+                    orgao.endereco.toLowerCase().includes(searchTerm) ||
+                    orgao.tipo.toLowerCase().includes(searchTerm) ||
+                    orgao.vinculacao.toLowerCase().includes(searchTerm)
+                );
             });
             
-            preencherTabelaOrgaos(dadosFiltrados);
-            iframeUpdateHeight();
+            // Temporariamente mostrar resultados filtrados
+            const tempFiltered = [...filteredData];
+            filteredData = filtered;
+            updateOrgaosTable();
+            filteredData = tempFiltered;
         }
-        
-        // Consultar órgão individual
-        function consultarOrgao() {
-            const sigla = document.getElementById('consulta-orgao').value;
-            if (!sigla) return;
+
+        function clearDashboard2Filters() {
+            document.getElementById('tipoOrgao').value = 'all';
+            document.getElementById('vinculacaoOrgao').value = 'all';
+            document.getElementById('buscaOrgao').value = '';
+            document.getElementById('searchOrgaos').value = '';
+            currentSearchTerm = '';
             
-            const orgao = dadosOrgaos.find(o => o.sigla === sigla);
-            if (!orgao) return;
+            filteredData = [...orgaosData];
             
-            exibirDetalhesOrgao(orgao);
+            updateDashboard2();
         }
-        
-        // Exibir detalhes do órgão (também chamado pelo botão "Ver" na tabela)
-        function verDetalhesOrgao(sigla) {
-            const orgao = dadosOrgaos.find(o => o.sigla === sigla);
+
+        // ==================== DASHBOARD 1: VISÃO GERAL ====================
+        function updateDashboard1() {
+            updateSummaryCards();
+            updateResumoTable();
+            updateCharts1();
+            // Atualizar altura
+            setTimeout(iframeUpdateHeight, 100);
+        }
+
+        function updateSummaryCards() {
+            const container = document.getElementById('summaryCards');
+            
+            if (orgaosData.length === 0) {
+                container.innerHTML = '<div class="col-12 text-center"><p class="text-muted">Nenhum órgão encontrado.</p></div>';
+                return;
+            }
+            
+            // Calcular métricas
+            const totalOrgaos = orgaosData.length;
+            
+            // Contar por tipo
+            const orgaosAutonomos = orgaosData.filter(o => 
+                o.tipo === 'Órgão Autônomo'
+            ).length;
+            
+            const secretarias = orgaosData.filter(o => 
+                o.tipo === 'Secretaria'
+            ).length;
+            
+            const vinculados = orgaosData.filter(o => 
+                o.tipo === 'Vinculado'
+            ).length;
+            
+            const semVinculacao = orgaosData.filter(o => 
+                o.vinculacao === '-' || o.vinculacao === ''
+            ).length;
+            
+            // Calcular percentuais
+            const percentAutonomos = totalOrgaos > 0 ? ((orgaosAutonomos / totalOrgaos) * 100).toFixed(1) : 0;
+            const percentSecretarias = totalOrgaos > 0 ? ((secretarias / totalOrgaos) * 100).toFixed(1) : 0;
+            
+            const cardsHTML = `
+                <div class="col-md-3 col-6">
+                    <div class="metric-card">
+                        <div class="metric-label">Total de Órgãos</div>
+                        <div class="metric-value">${totalOrgaos.toLocaleString('pt-BR')}</div>
+                        <div class="update-info">
+                            <i class="material-icons" style="font-size: 14px;">apartment</i> Órgãos registrados
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="metric-card success">
+                        <div class="metric-label">Órgãos Autônomos</div>
+                        <div class="metric-value">${orgaosAutonomos}</div>
+                        <div class="metric-change positive">
+                            ${percentAutonomos}% do total
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="metric-card info">
+                        <div class="metric-label">Secretarias</div>
+                        <div class="metric-value">${secretarias}</div>
+                        <div class="update-info">
+                            <i class="material-icons" style="font-size: 14px;">account_balance</i> Secretarias de Estado
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="metric-card purple">
+                        <div class="metric-label">Órgãos Vinculados</div>
+                        <div class="metric-value">${vinculados}</div>
+                        <div class="metric-change warning">
+                            <i class="material-icons" style="font-size: 14px;">link</i> ${semVinculacao} sem vinculação
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = cardsHTML;
+        }
+
+        function updateResumoTable() {
+            const tbody = document.getElementById('resumoTableBody');
+            const countElement = document.getElementById('resumoCountDashboard1');
+            const paginationInfo = document.getElementById('paginationInfoDashboard1');
+            
+            if (orgaosData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">Nenhum órgão encontrado.</td></tr>';
+                if (countElement) countElement.textContent = '0 registros';
+                if (paginationInfo) paginationInfo.textContent = 'Mostrando 0-0 de 0 registros';
+                updatePaginationDashboard1(1, 1);
+                return;
+            }
+            
+            // Ordenar de acordo com a coluna selecionada
+            let orgaosArray = [...orgaosData];
+            orgaosArray.sort((a, b) => {
+                const order = currentSortDashboard1.order === 'asc' ? 1 : -1;
+                
+                if (currentSortDashboard1.column === 'orgao') {
+                    return order * a.orgao.localeCompare(b.orgao);
+                } else if (currentSortDashboard1.column === 'sigla') {
+                    return order * a.sigla.localeCompare(b.sigla);
+                } else if (currentSortDashboard1.column === 'tipo') {
+                    return order * a.tipo.localeCompare(b.tipo);
+                } else if (currentSortDashboard1.column === 'vinculacao') {
+                    return order * a.vinculacao.localeCompare(b.vinculacao);
+                } else if (currentSortDashboard1.column === 'responsavel_legal') {
+                    return order * a.responsavel_legal.localeCompare(b.responsavel_legal);
+                }
+                return 0;
+            });
+            
+            // Calcular totais
+            const totalOrgaos = orgaosArray.length;
+            
+            // Paginação
+            const itemsPerPage = itemsPerPageDashboard1;
+            const totalPages = Math.ceil(orgaosArray.length / itemsPerPage);
+            const startIndex = (currentPageDashboard1 - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, orgaosArray.length);
+            const currentData = orgaosArray.slice(startIndex, endIndex);
+            
+            // Gerar HTML da tabela
+            const rowsHTML = currentData.map(orgao => {
+                return `
+                    <tr>
+                        <td style="text-align: left;">
+                            <a href="#" 
+                               onclick="verDetalhesOrgao('${orgao.sigla}')" 
+                               class="orgao-link"
+                               title="Clique para ver detalhes">
+                               ${orgao.orgao}
+                            </a>
+                        </td>
+                        <td><strong>${orgao.sigla}</strong></td>
+                        <td><span class="badge-situacao ${getBadgeClassPorTipo(orgao.tipo)}">${orgao.tipo}</span></td>
+                        <td>${orgao.vinculacao}</td>
+                        <td>${orgao.responsavel_legal}</td>
+                    </tr>
+                `;
+            }).join('');
+            
+            tbody.innerHTML = rowsHTML;
+            if (countElement) countElement.textContent = `${totalOrgaos.toLocaleString()} órgãos`;
+            if (paginationInfo) paginationInfo.textContent = `Mostrando ${startIndex + 1}-${endIndex} de ${orgaosArray.length.toLocaleString('pt-BR')} registros`;
+            
+            updatePaginationDashboard1(totalPages, currentPageDashboard1);
+            
+            // Atualizar ícones de ordenação
+            updateSortIconsDashboard1();
+        }
+
+        function getBadgeClassPorTipo(tipo) {
+            switch(tipo) {
+                case 'Órgão Autônomo': return 'badge-vigente';
+                case 'Secretaria': return 'badge-ativo';
+                case 'Vinculado': return 'badge-encerrado';
+                default: return 'badge-encerrado';
+            }
+        }
+
+        function updateSortIconsDashboard1() {
+            const headers = document.querySelectorAll('#visaoGeralTable thead th');
+            headers.forEach(header => {
+                const sortIcon = header.querySelector('.sort-icon');
+                const column = header.getAttribute('data-sort');
+                
+                if (column === currentSortDashboard1.column) {
+                    header.classList.add('sorted-' + currentSortDashboard1.order);
+                    if (sortIcon) {
+                        sortIcon.innerHTML = currentSortDashboard1.order === 'asc' ? '↑' : '↓';
+                    }
+                } else {
+                    header.classList.remove('sorted-asc', 'sorted-desc');
+                    if (sortIcon) {
+                        sortIcon.innerHTML = '▼';
+                    }
+                }
+            });
+        }
+
+        function updatePaginationDashboard1(totalPages, currentPage = 1) {
+            const pagination = document.getElementById('paginationDashboard1');
+            if (!pagination) return;
+            
+            let paginationHTML = '';
+            
+            // Botão anterior
+            paginationHTML += `
+                <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePageDashboard1(${currentPage - 1})" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            `;
+            
+            // Páginas
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            // Ajustar se estiver no final
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                paginationHTML += `
+                    <li class="page-item ${i === currentPage ? 'active' : ''}">
+                        <a class="page-link" href="#" onclick="changePageDashboard1(${i})">${i}</a>
+                    </li>
+                `;
+            }
+            
+            // Botão próximo
+            paginationHTML += `
+                <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePageDashboard1(${currentPage + 1})" aria-label="Próximo">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            `;
+            
+            pagination.innerHTML = paginationHTML;
+        }
+
+        window.changePageDashboard1 = function(page) {
+            const totalPages = Math.ceil(orgaosData.length / itemsPerPageDashboard1);
+            
+            if (page < 1 || page > totalPages) return;
+            
+            currentPageDashboard1 = page;
+            updateResumoTable();
+            
+            const tableContainer = document.querySelector('#visao-geral .table-container');
+            if (tableContainer) {
+                tableContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        function updateCharts1() {
+            if (orgaosData.length === 0) return;
+            
+            updateTipoChart();
+            updateOrgaoChart();
+        }
+
+        function updateTipoChart() {
+            const ctx = document.getElementById('chartTipo')?.getContext('2d');
+            if (!ctx) return;
+            
+            // Contar por tipo
+            const tiposCount = {};
+            orgaosData.forEach(o => {
+                tiposCount[o.tipo] = (tiposCount[o.tipo] || 0) + 1;
+            });
+            
+            const tipos = Object.keys(tiposCount);
+            const counts = tipos.map(tipo => tiposCount[tipo]);
+            
+            // Cores para o gráfico
+            const pieColors = tipos.map(tipo => {
+                switch(tipo) {
+                    case 'Órgão Autônomo': return chartColors.success;
+                    case 'Secretaria': return chartColors.accent;
+                    case 'Vinculado': return chartColors.purple;
+                    default: return '#95A5A6';
+                }
+            });
+            
+            if (charts.tipo) {
+                charts.tipo.destroy();
+            }
+            
+            charts.tipo = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: tipos,
+                    datasets: [{
+                        data: counts,
+                        backgroundColor: pieColors,
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                usePointStyle: true,
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${label}: ${value} órgãos (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateOrgaoChart() {
+            const ctx = document.getElementById('chartOrgao')?.getContext('2d');
+            if (!ctx) return;
+            
+            // Agrupar por vinculação e pegar top 10
+            const vinculacoesCount = {};
+            orgaosData.forEach(o => {
+                if (o.vinculacao && o.vinculacao !== '-') {
+                    vinculacoesCount[o.vinculacao] = (vinculacoesCount[o.vinculacao] || 0) + 1;
+                }
+            });
+            
+            const vinculacoesArray = Object.entries(vinculacoesCount)
+                .map(([vinculacao, count]) => ({ vinculacao, count }))
+                .sort((a, b) => b.count - a.count)
+                .slice(0, 10);
+            
+            if (charts.orgao) {
+                charts.orgao.destroy();
+            }
+            
+            charts.orgao = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: vinculacoesArray.map(item => {
+                        return item.vinculacao.length > 20 ? item.vinculacao.substring(0, 20) + '...' : item.vinculacao;
+                    }),
+                    datasets: [{
+                        label: 'Número de Órgãos',
+                        data: vinculacoesArray.map(item => item.count),
+                        backgroundColor: chartColors.accent,
+                        borderColor: chartColors.primary,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // ==================== DASHBOARD 2: ÓRGÃOS E ENTIDADES ====================
+        function initializeDashboard2() {
+            updateDashboard2();
+        }
+
+        function updateDashboard2() {
+            updateOrgaosTable();
+        }
+
+        function updateOrgaosTable() {
+            const tbody = document.getElementById('orgaosTableBody');
+            const countElement = document.getElementById('resumoCountDashboard2');
+            const paginationInfo = document.getElementById('paginationInfoDashboard2');
+            
+            if (!tbody) return;
+            
+            if (filteredData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">Nenhum órgão encontrado para os filtros aplicados.</td></tr>';
+                if (countElement) countElement.textContent = '0 órgãos';
+                if (paginationInfo) paginationInfo.textContent = 'Mostrando 0-0 de 0 registros';
+                updatePaginationDashboard2(1, 1);
+                return;
+            }
+            
+            // Ordenar de acordo com a coluna selecionada
+            let orgaosArray = [...filteredData];
+            orgaosArray.sort((a, b) => {
+                const order = currentSortDashboard2.order === 'asc' ? 1 : -1;
+                
+                if (currentSortDashboard2.column === 'orgao') {
+                    return order * a.orgao.localeCompare(b.orgao);
+                } else if (currentSortDashboard2.column === 'sigla') {
+                    return order * a.sigla.localeCompare(b.sigla);
+                } else if (currentSortDashboard2.column === 'tipo') {
+                    return order * a.tipo.localeCompare(b.tipo);
+                } else if (currentSortDashboard2.column === 'vinculacao') {
+                    return order * a.vinculacao.localeCompare(b.vinculacao);
+                } else if (currentSortDashboard2.column === 'responsavel_legal') {
+                    return order * a.responsavel_legal.localeCompare(b.responsavel_legal);
+                } else if (currentSortDashboard2.column === 'telefone') {
+                    return order * a.telefone.localeCompare(b.telefone);
+                }
+                return 0;
+            });
+            
+            // Calcular totais
+            const totalOrgaos = orgaosArray.length;
+            
+            // Paginação
+            const itemsPerPage = itemsPerPageDashboard2;
+            const totalPages = Math.ceil(orgaosArray.length / itemsPerPage);
+            const startIndex = (currentPageDashboard2 - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, orgaosArray.length);
+            const currentData = orgaosArray.slice(startIndex, endIndex);
+            
+            // Gerar HTML da tabela
+            const rowsHTML = currentData.map(orgao => {
+                return `
+                <tr>
+                    <td>${orgao.orgao}</td>
+                    <td><strong>${orgao.sigla}</strong></td>
+                    <td><span class="badge-situacao ${getBadgeClassPorTipo(orgao.tipo)}">${orgao.tipo}</span></td>
+                    <td>${orgao.vinculacao}</td>
+                    <td>${orgao.responsavel_legal}</td>
+                    <td>${orgao.telefone}</td>
+                    <td class="actions-column">
+                        <div class="action-buttons">
+                            <button 
+                                class="btn-action btn-history"
+                                data-id="${orgao.sigla}"
+                                onclick="verDetalhesOrgao('${orgao.sigla}')"
+                                title="Ver Detalhes">
+                                <i class="material-icons" style="font-size: 14px;">visibility</i><span>Detalhes</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `}).join('');
+            
+            tbody.innerHTML = rowsHTML;
+            if (countElement) countElement.textContent = `${totalOrgaos.toLocaleString('pt-BR')} órgãos`;
+            if (paginationInfo) paginationInfo.textContent = `Mostrando ${startIndex + 1}-${endIndex} de ${orgaosArray.length.toLocaleString('pt-BR')} registros`;
+            
+            updatePaginationDashboard2(totalPages, currentPageDashboard2);
+            
+            // Atualizar ícones de ordenação
+            updateSortIconsDashboard2();
+        }
+
+        function updateSortIconsDashboard2() {
+            const headers = document.querySelectorAll('#orgaosTable thead th');
+            headers.forEach(header => {
+                const sortIcon = header.querySelector('.sort-icon');
+                const column = header.getAttribute('data-sort');
+                
+                if (column === currentSortDashboard2.column) {
+                    header.classList.add('sorted-' + currentSortDashboard2.order);
+                    if (sortIcon) {
+                        sortIcon.innerHTML = currentSortDashboard2.order === 'asc' ? '↑' : '↓';
+                    }
+                } else {
+                    header.classList.remove('sorted-asc', 'sorted-desc');
+                    if (sortIcon) {
+                        sortIcon.innerHTML = '▼';
+                    }
+                }
+            });
+        }
+
+        function updatePaginationDashboard2(totalPages, currentPage = 1) {
+            const pagination = document.getElementById('paginationDashboard2');
+            if (!pagination) return;
+            
+            let paginationHTML = '';
+            
+            // Botão anterior
+            paginationHTML += `
+                <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePageDashboard2(${currentPage - 1})" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            `;
+            
+            // Páginas
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                paginationHTML += `
+                    <li class="page-item ${i === currentPage ? 'active' : ''}">
+                        <a class="page-link" href="#" onclick="changePageDashboard2(${i})">${i}</a>
+                    </li>
+                `;
+            }
+            
+            // Botão próximo
+            paginationHTML += `
+                <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePageDashboard2(${currentPage + 1})" aria-label="Próximo">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            `;
+            
+            pagination.innerHTML = paginationHTML;
+        }
+
+        window.changePageDashboard2 = function(page) {
+            const totalPages = Math.ceil(filteredData.length / itemsPerPageDashboard2);
+            
+            if (page < 1 || page > totalPages) return;
+            
+            currentPageDashboard2 = page;
+            updateOrgaosTable();
+            
+            const tableContainer = document.querySelector('#destino .table-container');
+            if (tableContainer) {
+                tableContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        // ==================== DASHBOARD 3: CONSULTA INDIVIDUAL ====================
+        window.verDetalhesOrgao = function(sigla) {
+            const orgao = orgaosData.find(o => o.sigla === sigla);
             if (!orgao) return;
             
             // Mudar para a aba de consulta individual
@@ -1049,13 +3021,22 @@
             tabInstance.show();
             
             // Selecionar o órgão no select
-            document.getElementById('consulta-orgao').value = sigla;
+            document.getElementById('selectOrgaoConsulta').value = sigla;
             
             // Exibir detalhes
             exibirDetalhesOrgao(orgao);
+        };
+
+        function consultarOrgao() {
+            const sigla = document.getElementById('selectOrgaoConsulta').value;
+            if (!sigla) return;
+            
+            const orgao = orgaosData.find(o => o.sigla === sigla);
+            if (!orgao) return;
+            
+            exibirDetalhesOrgao(orgao);
         }
-        
-        // Exibir detalhes do órgão na aba de consulta
+
         function exibirDetalhesOrgao(orgao) {
             const detalhesDiv = document.getElementById('detalhes-orgao');
             const statusBadge = document.getElementById('orgao-status');
@@ -1064,68 +3045,56 @@
             statusBadge.className = 'badge ' + getTipoBadgeClass(orgao.tipo);
             
             detalhesDiv.innerHTML = `
-                <div class="row">
-                    <div class="col-md-8">
-                        <h4 class="mb-1">${orgao.orgao}</h4>
-                        <div class="d-flex align-items-center mb-3">
-                            <span class="badge ${getTipoBadgeClass(orgao.tipo)} me-2">${orgao.tipo}</span>
-                            <span class="badge bg-secondary">${orgao.sigla}</span>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <h6 class="mb-2">Responsável Legal</h6>
-                            <div class="d-flex align-items-center">
-                                <span class="material-icons me-2">person</span>
-                                <span class="fs-5">${orgao.responsavel_legal}</span>
-                            </div>
-                        </div>
-                        
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <h6 class="mb-2">Vinculação</h6>
-                                <p class="mb-0">${orgao.vinculacao || 'Não informada'}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <h6 class="mb-2">Competências</h6>
-                                <a href="${orgao.competencias}" target="_blank" class="small">Ver competências legais</a>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <h6 class="mb-2">Endereço</h6>
-                            <div class="contact-info">
-                                <span class="material-icons">location_on</span>
-                                <span>${orgao.endereco}</span>
+                <div class="info-grid">
+                    <div class="info-card primary">
+                        <div class="info-label">Órgão</div>
+                        <div class="info-value highlight">${orgao.orgao}</div>
+                        <div class="info-label mt-2">Sigla</div>
+                        <div class="info-value">${orgao.sigla}</div>
+                    </div>
+
+                    <div class="info-card success">
+                        <div class="info-label">Tipo</div>
+                        <div class="info-value"><span class="${getBadgeClassPorTipo(orgao.tipo)}">${orgao.tipo}</span></div>
+                        <div class="info-label mt-2">Vinculação</div>
+                        <div class="info-value">${orgao.vinculacao}</div>
+                    </div>
+
+                    <div class="info-card warning">
+                        <div class="info-label">Responsável Legal</div>
+                        <div class="info-value">${orgao.responsavel_legal}</div>
+                        <div class="info-label mt-2">Telefone</div>
+                        <div class="info-value">${orgao.telefone}</div>
+                    </div>
+
+                    <div class="info-card info">
+                        <div class="info-label">Endereço</div>
+                        <div class="info-value">${orgao.endereco}</div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="info-card">
+                            <div class="info-label">Competências</div>
+                            <div class="info-value">
+                                ${orgao.competencias ? 
+                                    `<a href="${orgao.competencias}" target="_blank" class="documento-link">
+                                        <i class="material-icons">link</i> Ver competências legais
+                                    </a>` : 
+                                    'Não informado'}
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="col-md-4">
-                        <div class="card border">
-                            <div class="card-body">
-                                <h6 class="card-title mb-3">Contato e Informações</h6>
-                                
-                                <div class="contact-info">
-                                    <span class="material-icons">phone</span>
-                                    <span>${orgao.telefone}</span>
-                                </div>
-                                
-                                <div class="contact-info">
-                                    <span class="material-icons">language</span>
-                                    <a href="${orgao.site_orgao}" target="_blank">Site do órgão</a>
-                                </div>
-                                
-                                <div class="mt-4 pt-3 border-top">
-                                    <h6 class="mb-2">Ações</h6>
-                                    <div class="d-grid gap-2">
-                                        <a href="${orgao.site_orgao}" target="_blank" class="btn btn-outline-primary btn-sm">
-                                            <span class="material-icons align-middle me-1">open_in_new</span> Visitar Site
-                                        </a>
-                                        <button class="btn btn-outline-secondary btn-sm" onclick="copiarInformacoes('${orgao.sigla}')">
-                                            <span class="material-icons align-middle me-1">content_copy</span> Copiar Informações
-                                        </button>
-                                    </div>
-                                </div>
+                    <div class="col-md-6">
+                        <div class="info-card">
+                            <div class="info-label">Site do Órgão</div>
+                            <div class="info-value">
+                                ${orgao.site_orgao ? 
+                                    `<a href="${orgao.site_orgao}" target="_blank" class="documento-link">
+                                        <i class="material-icons">language</i> Acessar site
+                                    </a>` : 
+                                    'Não informado'}
                             </div>
                         </div>
                     </div>
@@ -1134,18 +3103,7 @@
             
             iframeUpdateHeight();
         }
-        
-        // Função auxiliar para obter classe CSS baseada no tipo
-        function getTipoClass(tipo) {
-            switch(tipo) {
-                case 'Órgão Autônomo': return 'type-autonomo';
-                case 'Secretaria': return 'type-secretaria';
-                case 'Vinculado': return 'type-vinculado';
-                default: return 'type-autonomo';
-            }
-        }
-        
-        // Função auxiliar para obter classe de badge baseada no tipo
+
         function getTipoBadgeClass(tipo) {
             switch(tipo) {
                 case 'Órgão Autônomo': return 'bg-primary';
@@ -1154,54 +3112,204 @@
                 default: return 'bg-secondary';
             }
         }
-        
-        // Configurar tooltips (simplificado para este exemplo)
-        function setupTooltips() {
-            // Em uma implementação real, inicializaria tooltips do Bootstrap
-        }
-        
-        // Configurar tooltips descritivos
-        function setupDescriptiveTooltips() {
-            // Em uma implementação real, adicionaria tooltips em elementos específicos
-        }
-        
-        // Configurar data de atualização
-        function setupAtualizacaoData() {
-            const hoje = new Date();
-            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-            const dataFormatada = hoje.toLocaleDateString('pt-BR', options);
+
+        // ==================== DASHBOARD 4: DOWNLOADS ====================
+        async function downloadFullCSV() {
+            const formato = document.getElementById('formatoDownload').value;
             
-            document.getElementById('data-atualizacao').textContent = dataFormatada;
-        }
-        
-        // Função para copiar informações do órgão
-        function copiarInformacoes(sigla) {
-            const orgao = dadosOrgaos.find(o => o.sigla === sigla);
-            if (!orgao) return;
+            showLoading(true);
             
-            const texto = `
-            ${orgao.orgao} (${orgao.sigla})
-            Tipo: ${orgao.tipo}
-            Responsável: ${orgao.responsavel_legal}
-            Endereço: ${orgao.endereco}
-            Telefone: ${orgao.telefone}
-            Site: ${orgao.site_orgao}
-            `;
-            
-            // Em uma implementação real, usaria a API de Clipboard
-            alert(`Informações copiadas para a área de transferência:\n\n${texto}`);
+            try {
+                if (!orgaosData || orgaosData.length === 0) {
+                    alert(`Nenhum dado disponível para download.`);
+                    showLoading(false);
+                    return;
+                }
+                
+                // Preparar dados para download
+                const headers = ['orgao', 'sigla', 'tipo', 'vinculacao', 'responsavel_legal', 
+                               'endereco', 'telefone', 'competencias', 'site_orgao'];
+                
+                if (formato === 'csv') {
+                    const csvContent = [
+                        headers.join(';'),
+                        ...orgaosData.map(orgao => [
+                            orgao.orgao,
+                            orgao.sigla,
+                            orgao.tipo,
+                            orgao.vinculacao,
+                            orgao.responsavel_legal,
+                            `"${(orgao.endereco || '').replace(/"/g, '""')}"`,
+                            orgao.telefone,
+                            orgao.competencias,
+                            orgao.site_orgao
+                        ].join(';'))
+                    ].join('\n');
+                    
+                    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                    const link = document.createElement('a');
+                    const url = URL.createObjectURL(blob);
+                    
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', 'estrutura_organizacional_governo_mg.csv');
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                } else if (formato === 'json') {
+                    const jsonContent = JSON.stringify(orgaosData, null, 2);
+                    const blob = new Blob([jsonContent], { type: 'application/json;charset=utf-8;' });
+                    const link = document.createElement('a');
+                    const url = URL.createObjectURL(blob);
+                    
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', 'estrutura_organizacional_governo_mg.json');
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                } else if (formato === 'excel') {
+                    // Para Excel, seria necessário uma biblioteca adicional
+                    // Por enquanto, oferecemos CSV como alternativa
+                    alert('Funcionalidade Excel requer biblioteca adicional. Faça o download no formato CSV.');
+                }
+                
+                console.log(`Download realizado: ${orgaosData.length} registros`);
+                
+            } catch (error) {
+                console.error(`Erro ao baixar dados:`, error);
+                alert(`Erro ao baixar dados. Por favor, tente novamente.`);
+            } finally {
+                showLoading(false);
+            }
         }
-        
-        // Estilizar a barra de progresso
-        document.addEventListener('DOMContentLoaded', function() {
-            // Adicionar estilo para a barra de progresso "bg-purple"
-            const style = document.createElement('style');
-            style.textContent = `
-                .bg-purple { background-color: #8e44ad !important; }
-                .bg-purple:hover { background-color: #7d3c98 !important; }
-            `;
-            document.head.appendChild(style);
-        });
+
+        // ==================== FUNÇÕES GLOBAIS E UTILITÁRIOS ====================
+
+        // ==================== FUNÇÕES DE ORDENAÇÃO ====================
+        window.sortTable = function(tableType, column) {
+            if (tableType === 'visaoGeral') {
+                // Verificar se está ordenando a mesma coluna
+                if (currentSortDashboard1.column === column) {
+                    // Inverter a ordem
+                    currentSortDashboard1.order = currentSortDashboard1.order === 'asc' ? 'desc' : 'asc';
+                } else {
+                    // Nova coluna, ordem padrão asc
+                    currentSortDashboard1.column = column;
+                    currentSortDashboard1.order = 'asc';
+                }
+                currentPageDashboard1 = 1;
+                updateResumoTable();
+            } else if (tableType === 'orgaos') {
+                // Verificar se está ordenando a mesma coluna
+                if (currentSortDashboard2.column === column) {
+                    // Inverter a ordem
+                    currentSortDashboard2.order = currentSortDashboard2.order === 'asc' ? 'desc' : 'asc';
+                } else {
+                    // Nova coluna, ordem padrão asc
+                    currentSortDashboard2.column = column;
+                    currentSortDashboard2.order = 'asc';
+                }
+                currentPageDashboard2 = 1;
+                updateOrgaosTable();
+            }
+        };
+
+        // ==================== FUNÇÕES DE EXPORTAÇÃO ====================
+        function exportToCSV(source) {
+            if (source === 'dashboard1') {
+                exportVisaoGeralCSV();
+            } else if (source === 'dashboard2') {
+                exportOrgaosCSV();
+            }
+        }
+
+        function printDashboard(source) {
+            window.print();
+        }
+
+        function compartilharLink(source) {
+            const currentUrl = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Estrutura Organizacional - Governo de Minas Gerais',
+                    text: 'Confira a estrutura organizacional do Governo de Minas Gerais',
+                    url: currentUrl
+                });
+            } else {
+                // Fallback para copiar para a área de transferência
+                navigator.clipboard.writeText(currentUrl).then(() => {
+                    alert('Link copiado para a área de transferência!');
+                });
+            }
+        }
+
+        function exportVisaoGeralCSV() {
+            if (orgaosData.length === 0) return;
+            
+            const headers = ['Órgão', 'Sigla', 'Tipo', 'Vinculação', 'Responsável Legal'];
+            const data = orgaosData.map(orgao => [
+                orgao.orgao,
+                orgao.sigla,
+                orgao.tipo,
+                orgao.vinculacao,
+                orgao.responsavel_legal
+            ]);
+            
+            const csvContent = [
+                headers.join(';'),
+                ...data.map(row => row.map(cell => `"${cell}"`).join(';'))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'visao_geral_estrutura_organizacional.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function exportOrgaosCSV() {
+            if (filteredData.length === 0) return;
+            
+            const headers = ['orgao', 'sigla', 'tipo', 'vinculacao', 'responsavel_legal', 
+                           'endereco', 'telefone', 'competencias', 'site_orgao'];
+            const data = filteredData.map(orgao => [
+                orgao.orgao,
+                orgao.sigla,
+                orgao.tipo,
+                orgao.vinculacao,
+                orgao.responsavel_legal,
+                orgao.endereco,
+                orgao.telefone,
+                orgao.competencias,
+                orgao.site_orgao
+            ]);
+            
+            const csvContent = [
+                headers.join(';'),
+                ...data.map(row => row.join(';'))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            const filename = 'orgaos_estrutura_organizacional_filtrado.csv';
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     </script>
 </body>
 </html>
