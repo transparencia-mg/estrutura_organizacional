@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrutura Organizacional - Governo de Minas Gerais</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-dark: #1a5276;
+            --accent-blue: #3498db;
+            --light-bg: #f8f9fa;
+            --text-dark: #333;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--text-dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 0;
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* Container principal - CORRIGIDO */
+        .nav-tabs-container {
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-top: 10px;
+            overflow-x: auto; /* Adicionado para controlar overflow */
+            -webkit-overflow-scrolling: touch; /* Melhor rolagem no iOS */
+        }
+
+        /* Nav tabs - CORRIGIDO */
+        .nav-tabs {
+            border: none !important; /* !important para sobrescrever Bootstrap */
+            gap: 4px;
+            flex-wrap: nowrap; /* Mantém em uma linha */
+            min-width: max-content; /* Garante largura mínima baseada no conteúdo */
+            padding-bottom: 5px; /* Espaço para scrollbar */
+            margin-bottom: 0 !important;
+        }
+
+        /* Itens dos tabs - NOVO, necessário */
+        .nav-tabs .nav-item {
+            flex-shrink: 0; /* Não permite que os tabs encolham */
+        }
+
+        /* Links dos tabs - CORRIGIDO */
+        .nav-tabs .nav-link {
+            border: none !important;
+            border-radius: 6px !important;
+            padding: 10px 15px !important;
+            font-weight: 600;
+            color: #1a5276 !important; /* Fallback para var(--primary-dark) */
+            transition: all 0.3s ease;
+            font-size: 13px;
+            white-space: nowrap;
+            display: inline-flex !important; /* Mudado de flex para inline-flex */
+            align-items: center;
+            background: none !important;
+        }
+
+        .nav-tabs .nav-link:hover {
+            background-color: rgba(26, 82, 118, 0.05) !important;
+            color: #3498db !important; /* Fallback para var(--accent-blue) */
+        }
+
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, #1a5276 0%, #154360 100%) !important;
+            color: white !important;
+            border: none !important;
+        }
+
+        /* Ícones - CORRIGIDO */
+        .nav-tabs .nav-link .material-icons {
+            font-size: 16px !important;
+            margin-right: 8px !important;
+            vertical-align: middle;
+            line-height: 1;
+        }
+
+        .nav-tabs .nav-link.active .material-icons {
+            color: white !important;
+        }
+
+        /* Estilizar a scrollbar para ficar discreta */
+        .nav-tabs-container::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .nav-tabs-container::-webkit-scrollbar-track {
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .nav-tabs-container::-webkit-scrollbar-thumb {
+            background: #dee2e6;
+            border-radius: 4px;
+        }
+
+        .nav-tabs-container::-webkit-scrollbar-thumb:hover {
+            background: #adb5bd;
+        }
+
+        /* Para Firefox */
+        .nav-tabs-container {
+            scrollbar-width: thin;
+            scrollbar-color: #dee2e6 #f8f9fa;
+        }
+
+        /* Remover a borda inferior padrão do Bootstrap */
+        .nav-tabs {
+            border-bottom: none !important;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-weight: 600;
+            color: var(--primary-dark);
+            border-radius: 10px 10px 0 0 !important;
+            padding: 15px 20px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #154360 100%);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-dark) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .search-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .orgao-card {
+            border-left: 4px solid var(--primary-dark);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .orgao-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--primary-dark);
+            padding: 12px 15px;
+            border-bottom: 2px solid #e9ecef;
+            text-align: left;
+        }
+        
+        .data-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        .data-table tr:hover {
+            background-color: rgba(26, 82, 118, 0.03);
+        }
+        
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .download-buttons .btn {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .orgao-type-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .type-autonomo {
+            background-color: rgba(52, 152, 219, 0.15);
+            color: var(--accent-blue);
+        }
+        
+        .type-secretaria {
+            background-color: rgba(46, 204, 113, 0.15);
+            color: #27ae60;
+        }
+        
+        .type-vinculado {
+            background-color: rgba(155, 89, 182, 0.15);
+            color: #8e44ad;
+        }
+        
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .contact-info .material-icons {
+            color: var(--primary-dark);
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .page-title {
+            color: var(--primary-dark);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .page-subtitle {
+            color: #6c757d;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo-img {
+            height: 40px;
+            margin-right: 15px;
+        }
+        
+        .filter-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .table-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .stat-value {
+                font-size: 1.8rem;
+            }
+            
+            .nav-tabs .nav-link {
+                padding: 8px 12px !important;
+                font-size: 12px;
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid py-3 px-4">
+        <!-- Cabeçalho -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="logo-container">
+                    <div>
+                        <h1 class="page-title">Estrutura Organizacional</h1>
+                        <p class="page-subtitle">Governo do Estado de Minas Gerais</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Abas de Navegação -->
+        <div class="row">
+            <div class="col-12">
+                <div class="nav-tabs-container">
+                    <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="visao-geral-tab" data-bs-toggle="tab" data-bs-target="#visao-geral" type="button" role="tab">
+                                <span class="material-icons">dashboard</span> Visão Geral
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="destino-tab" data-bs-toggle="tab" data-bs-target="#destino" type="button" role="tab">
+                                <span class="material-icons">apartment</span> Órgãos e Entidades
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="consulta-individual-tab" data-bs-toggle="tab" data-bs-target="#consulta-individual" type="button" role="tab">
+                                <span class="material-icons">search</span> Consulta Individual
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="downloads-tab" data-bs-toggle="tab" data-bs-target="#downloads" type="button" role="tab">
+                                <span class="material-icons">download</span> Downloads
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Conteúdo das Abas -->
+        <div class="tab-content" id="dashboardTabsContent">
+            <!-- Aba 1: Visão Geral -->
+            <div class="tab-pane fade show active" id="visao-geral" role="tabpanel">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="material-icons me-2">insights</span> Resumo da Estrutura Organizacional
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-4">Esta página apresenta a estrutura organizacional do Governo do Estado de Minas Gerais, com informações detalhadas sobre órgãos, suas competências, responsáveis e formas de contato. Os dados são atualizados regularmente e disponibilizados de forma transparente para a sociedade.</p>
+                                
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6 mb-3">
+                                        <div class="stat-card">
+                                            <div class="stat-value" id="total-orgaos">24</div>
+                                            <div class="stat-label">Total de Órgãos</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 mb-3">
+                                        <div class="stat-card">
+                                            <div class="stat-value" id="orgaos-autonomos">8</div>
+                                            <div class="stat-label">Órgãos Autônomos</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 mb-3">
+                                        <div class="stat-card">
+                                            <div class="stat-value" id="secretarias">12</div>
+                                            <div class="stat-label">Secretarias</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 mb-3">
+                                        <div class="stat-card">
+                                            <div class="stat-value" id="vinculados">4</div>
+                                            <div class="stat-label">Vinculados</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mt-4">
+                                    <div class="col-12">
+                                        <h5 class="mb-3">Distribuição por Tipo</h5>
+                                        <div class="progress" style="height: 25px;">
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 33.3%" aria-valuenow="33.3" aria-valuemin="0" aria-valuemax="100">Autônomos</div>
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">Secretarias</div>
+                                            <div class="progress-bar bg-purple" role="progressbar" style="width: 16.7%" aria-valuenow="16.7" aria-valuemin="0" aria-valuemax="100">Vinculados</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="material-icons me-2">star</span> Órgãos em Destaque
+                            </div>
+                            <div class="card-body">
+                                <div class="orgao-card p-3 mb-3">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h6 class="mb-1 fw-bold">Advocacia-Geral do Estado (AGE)</h6>
+                                            <span class="orgao-type-badge type-autonomo">Órgão Autônomo</span>
+                                            <p class="mb-1 mt-2 small">Responsável: Sérgio Pessoa de Paulo Castro</p>
+                                            <p class="mb-0 small text-muted">Avenida Afonso Pena, Nº 4000, Cruzeiro, Belo Horizonte</p>
+                                        </div>
+                                        <span class="material-icons text-primary">chevron_right</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="orgao-card p-3 mb-3">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h6 class="mb-1 fw-bold">Secretaria de Estado de Saúde (SES-MG)</h6>
+                                            <span class="orgao-type-badge type-secretaria">Secretaria</span>
+                                            <p class="mb-1 mt-2 small">Responsável: Fábio Baccheretti</p>
+                                            <p class="mb-0 small text-muted">Avenida João Pinheiro, 166, Centro, Belo Horizonte</p>
+                                        </div>
+                                        <span class="material-icons text-primary">chevron_right</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="orgao-card p-3">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h6 class="mb-1 fw-bold">Companhia de Gás de Minas Gerais (GASMIG)</h6>
+                                            <span class="orgao-type-badge type-vinculado">Vinculado</span>
+                                            <p class="mb-1 mt-2 small">Responsável: Luiz Fernando Gama Rocha</p>
+                                            <p class="mb-0 small text-muted">Rua Timbiras, 1200, Lourdes, Belo Horizonte</p>
+                                        </div>
+                                        <span class="material-icons text-primary">chevron_right</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="material-icons me-2">update</span> Informações de Atualização
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-info">
+                                    <div class="d-flex">
+                                        <span class="material-icons me-2">info</span>
+                                        <div>
+                                            <h6 class="alert-heading mb-1">Dados Atualizados</h6>
+                                            <p class="mb-0">Os dados desta página são atualizados automaticamente a partir do repositório oficial da Transparência MG.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <h6 class="mb-3">Última Atualização</h6>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="material-icons me-2 text-success">check_circle</span>
+                                        <div>
+                                            <div class="fw-bold">18 de março de 2024</div>
+                                            <div class="text-muted small">Base de dados mais recente</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex align-items-center">
+                                        <span class="material-icons me-2 text-primary">link</span>
+                                        <div>
+                                            <div class="fw-bold">Fonte Oficial</div>
+                                            <a href="https://github.com/transparencia-mg/estrutura_organizacional" target="_blank" class="small">Transparência MG - Estrutura Organizacional</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 pt-3 border-top">
+                                    <h6 class="mb-3">Próximas Atualizações</h6>
+                                    <div class="d-flex align-items-center">
+                                        <span class="material-icons me-2 text-warning">schedule</span>
+                                        <div>
+                                            <div class="fw-bold">Abril 2024</div>
+                                            <div class="text-muted small">Atualização prevista da estrutura organizacional</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aba 2: Destino (Órgãos e Entidades) -->
+            <div class="tab-pane fade" id="destino" role="tabpanel">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="filter-container">
+                            <h5 class="mb-3">Filtros de Pesquisa</h5>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="filtro-tipo" class="form-label small fw-bold">Tipo de Órgão</label>
+                                    <select class="form-select" id="filtro-tipo">
+                                        <option value="">Todos os tipos</option>
+                                        <option value="Órgão Autônomo">Órgão Autônomo</option>
+                                        <option value="Secretaria">Secretaria</option>
+                                        <option value="Vinculado">Vinculado</option>
+                                        <option value="Outros">Outros</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-5 mb-3">
+                                    <label for="filtro-pesquisa" class="form-label small fw-bold">Pesquisar por nome ou sigla</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><span class="material-icons">search</span></span>
+                                        <input type="text" class="form-control" id="filtro-pesquisa" placeholder="Digite o nome ou sigla do órgão">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3 d-flex align-items-end">
+                                    <button class="btn btn-primary w-100" id="btn-aplicar-filtros">
+                                        <span class="material-icons align-middle me-1">filter_alt</span> Aplicar Filtros
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="material-icons me-2">list</span> Lista de Órgãos e Entidades
+                                </div>
+                                <div class="small text-muted" id="total-resultados">Mostrando 24 de 24 resultados</div>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table data-table mb-0" id="tabela-orgaos">
+                                        <thead>
+                                            <tr>
+                                                <th width="25%">Órgão</th>
+                                                <th width="10%">Sigla</th>
+                                                <th width="15%">Tipo</th>
+                                                <th width="20%">Responsável Legal</th>
+                                                <th width="15%">Telefone</th>
+                                                <th width="15%">Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabela-orgaos-body">
+                                            <!-- Os dados serão carregados via JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="pagination-container">
+                                    <nav>
+                                        <ul class="pagination pagination-sm mb-0" id="paginacao">
+                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aba 3: Consulta Individual -->
+            <div class="tab-pane fade" id="consulta-individual" role="tabpanel">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="search-container">
+                            <h5 class="mb-3">Consulta Detalhada</h5>
+                            <p class="text-muted mb-4">Busque informações específicas sobre um órgão ou entidade do Governo de Minas Gerais.</p>
+                            
+                            <div class="row">
+                                <div class="col-md-8 mb-3">
+                                    <label for="consulta-orgao" class="form-label fw-bold">Selecione o Órgão</label>
+                                    <select class="form-select" id="consulta-orgao" size="1">
+                                        <option value="">Selecione um órgão para consultar</option>
+                                        <!-- Opções serão preenchidas via JavaScript -->
+                                    </select>
+                                </div>
+                                <div class="col-md-4 d-flex align-items-end mb-3">
+                                    <button class="btn btn-primary w-100" id="btn-consultar">
+                                        <span class="material-icons align-middle me-1">search</span> Consultar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12" id="resultado-consulta">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="material-icons me-2">info</span> Informações do Órgão
+                                <div class="float-end">
+                                    <span class="badge bg-info" id="orgao-status">Selecione um órgão para visualizar</span>
+                                </div>
+                            </div>
+                            <div class="card-body" id="detalhes-orgao">
+                                <div class="text-center py-5 text-muted">
+                                    <span class="material-icons display-6 mb-3">search</span>
+                                    <h5>Nenhum órgão selecionado</h5>
+                                    <p>Selecione um órgão na lista acima para visualizar suas informações detalhadas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aba 4: Downloads -->
+            <div class="tab-pane fade" id="downloads" role="tabpanel">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="material-icons me-2">cloud_download</span> Download de Dados
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-4">Faça o download dos dados completos da estrutura organizacional do Governo de Minas Gerais em diferentes formatos. Os dados são disponibilizados de forma aberta e seguem os princípios de transparência pública.</p>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card border">
+                                            <div class="card-body">
+                                                <h5 class="card-title mb-3">Dados Completos</h5>
+                                                <p class="card-text small mb-4">Base completa da estrutura organizacional contendo todos os campos disponíveis.</p>
+                                                
+                                                <div class="download-buttons">
+                                                    <a href="https://github.com/transparencia-mg/estrutura_organizacional/raw/main/dataset/data/estrutura_governamental.csv" class="btn btn-outline-primary">
+                                                        <span class="material-icons align-middle me-1">table_chart</span> CSV
+                                                    </a>
+                                                    <button class="btn btn-outline-success" id="btn-download-json">
+                                                        <span class="material-icons align-middle me-1">data_object</span> JSON
+                                                    </button>
+                                                    <button class="btn btn-outline-info" id="btn-download-excel">
+                                                        <span class="material-icons align-middle me-1">table_view</span> Excel
+                                                    </button>
+                                                </div>
+                                                
+                                                <div class="mt-3 small text-muted">
+                                                    <span class="material-icons align-text-bottom me-1" style="font-size: 14px;">info</span>
+                                                    Última atualização: 18/03/2024
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card border">
+                                            <div class="card-body">
+                                                <h5 class="card-title mb-3">Documentação</h5>
+                                                <p class="card-text small mb-4">Documentação técnica e descritiva dos dados disponibilizados.</p>
+                                                
+                                                <div class="download-buttons">
+                                                    <a href="https://github.com/transparencia-mg/estrutura_organizacional/blob/main/README.md" target="_blank" class="btn btn-outline-secondary">
+                                                        <span class="material-icons align-middle me-1">description</span> README
+                                                    </a>
+                                                    <button class="btn btn-outline-secondary" id="btn-documentacao">
+                                                        <span class="material-icons align-middle me-1">feed</span> Metadados
+                                                    </button>
+                                                    <a href="https://github.com/transparencia-mg/estrutura_organizacional" target="_blank" class="btn btn-outline-dark">
+                                                        <span class="material-icons align-middle me-1">code</span> Repositório
+                                                    </a>
+                                                </div>
+                                                
+                                                <div class="mt-3 small text-muted">
+                                                    <span class="material-icons align-text-bottom me-1" style="font-size: 14px;">info</span>
+                                                    Repositório oficial no GitHub
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <div class="card border">
+                                            <div class="card-body">
+                                                <h5 class="card-title mb-3">Exportar Dados Filtrados</h5>
+                                                <p class="card-text small mb-3">Exporte apenas os dados que correspondem aos filtros aplicados na aba "Órgãos e Entidades".</p>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="formato-exportacao" class="form-label small fw-bold">Formato de Exportação</label>
+                                                        <select class="form-select" id="formato-exportacao">
+                                                            <option value="csv">CSV (Valores separados por vírgula)</option>
+                                                            <option value="json">JSON (JavaScript Object Notation)</option>
+                                                            <option value="excel">Excel (XLSX)</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6 d-flex align-items-end mb-3">
+                                                        <button class="btn btn-primary w-100" id="btn-exportar-filtrados">
+                                                            <span class="material-icons align-middle me-1">file_download</span> Exportar Dados Filtrados
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 pt-3 border-top">
+                                    <h6 class="mb-3">Informações Técnicas</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <ul class="list-unstyled small">
+                                                <li class="mb-2"><span class="material-icons align-text-bottom me-1" style="font-size: 16px;">check_circle</span> Dados em formato aberto</li>
+                                                <li class="mb-2"><span class="material-icons align-text-bottom me-1" style="font-size: 16px;">check_circle</span> Codificação UTF-8</li>
+                                                <li class="mb-2"><span class="material-icons align-text-bottom me-1" style="font-size: 16px;">check_circle</span> Licença aberta</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <ul class="list-unstyled small">
+                                                <li class="mb-2"><span class="material-icons align-text-bottom me-1" style="font-size: 16px;">check_circle</span> Atualização periódica</li>
+                                                <li class="mb-2"><span class="material-icons align-text-bottom me-1" style="font-size: 16px;">check_circle</span> Versionamento no GitHub</li>
+                                                <li class="mb-2"><span class="material-icons align-text-bottom me-1" style="font-size: 16px;">check_circle</span> Documentação disponível</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Rodapé simplificado -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="text-center text-muted small py-3 border-top">
+                    <p class="mb-1">Dados da estrutura organizacional do Governo do Estado de Minas Gerais</p>
+                    <p class="mb-0">Fonte: <a href="https://github.com/transparencia-mg/estrutura_organizacional" target="_blank" class="text-decoration-none">Transparência MG - Estrutura Organizacional</a> | Última atualização: <span id="data-atualizacao">18/03/2024</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Variáveis globais
+        let dadosOrgaos = [];
+        let dadosFiltrados = [];
+        let dashboardAnterior = 'visao-geral';
+        
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            loadInitialData();
+            setupTooltips();
+            setupDescriptiveTooltips();
+            setupAtualizacaoData();
+            console.log('Painel de Estrutura Organizacional carregado com sucesso!!!');
+            iframeUpdateHeight();
+        });
+
+        // Event listeners para mudança de aba
+        const tabs = document.querySelectorAll('[data-bs-toggle="tab"]');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                const tabId = this.getAttribute('data-bs-target').replace('#', '');
+                
+                if (tabId === 'dashboard3') {
+                    // Se vem de outro dashboard, mostra botão voltar
+                    if (dashboardAnterior && dashboardAnterior !== 'dashboard3') {
+                        document.getElementById('botaoVoltarContainer').style.display = 'block';
+                    } else {
+                        document.getElementById('botaoVoltarContainer').style.display = 'none';
+                    }
+                } else {
+                    dashboardAnterior = tabId;
+                }
+                
+                iframeUpdateHeight();
+            });
+        });
+        
+        // Atualiza a altura do iframe
+        function iframeUpdateHeight() { 
+            window.parent.postMessage({ iframeHeight: document.body.scrollHeight + 10 }, '*'); 
+        }
+        
+        // Configurar event listeners
+        function setupEventListeners() {
+            // Filtros na aba de Destino
+            document.getElementById('btn-aplicar-filtros').addEventListener('click', aplicarFiltros);
+            document.getElementById('filtro-pesquisa').addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') aplicarFiltros();
+            });
+            
+            // Consulta individual
+            document.getElementById('btn-consultar').addEventListener('click', consultarOrgao);
+            document.getElementById('consulta-orgao').addEventListener('change', function() {
+                if (this.value) {
+                    document.getElementById('btn-consultar').click();
+                }
+            });
+            
+            // Downloads
+            document.getElementById('btn-download-json').addEventListener('click', function() {
+                alert('Download do JSON iniciado. Em uma implementação real, isso baixaria o arquivo JSON.');
+            });
+            
+            document.getElementById('btn-download-excel').addEventListener('click', function() {
+                alert('Download do Excel iniciado. Em uma implementação real, isso baixaria o arquivo Excel.');
+            });
+            
+            document.getElementById('btn-documentacao').addEventListener('click', function() {
+                alert('Documentação técnica aberta. Em uma implementação real, isso abriria um modal ou nova página com a documentação.');
+            });
+            
+            document.getElementById('btn-exportar-filtrados').addEventListener('click', function() {
+                const formato = document.getElementById('formato-exportacao').value;
+                alert(`Exportando dados filtrados no formato ${formato.toUpperCase()}. Em uma implementação real, isso geraria o arquivo para download.`);
+            });
+        }
+        
+        // Carregar dados iniciais
+        function loadInitialData() {
+            // Em uma implementação real, buscaria os dados do arquivo CSV
+            // Por enquanto, usamos dados de exemplo baseados no arquivo fornecido
+            
+            // Dados de exemplo baseados na estrutura fornecida
+            dadosOrgaos = [
+                {
+                    orgao: "Advocacia-Geral do Estado",
+                    sigla: "AGE",
+                    tipo: "Órgão Autônomo",
+                    vinculacao: "-",
+                    responsavel_legal: "Sérgio Pessoa de Paulo Castro",
+                    endereco: "Avenida Afonso Pena, Nº 4000, Cruzeiro, Belo Horizonte, 30130-009",
+                    telefone: "(31) 3218 - 0700",
+                    competencias: "https://www.almg.gov.br/legislacao-mineira/texto/DEC/47963/2020/?cons=1",
+                    site_orgao: "http://advocaciageral.mg.gov.br/"
+                },
+                {
+                    orgao: "Secretaria de Estado de Saúde",
+                    sigla: "SES-MG",
+                    tipo: "Secretaria",
+                    vinculacao: "Governadoria",
+                    responsavel_legal: "Fábio Baccheretti",
+                    endereco: "Avenida João Pinheiro, 166, Centro, Belo Horizonte, 30130-170",
+                    telefone: "(31) 3215-7000",
+                    competencias: "https://www.saude.mg.gov.br/sobre/institucional",
+                    site_orgao: "https://www.saude.mg.gov.br/"
+                },
+                {
+                    orgao: "Secretaria de Estado de Educação",
+                    sigla: "SEE",
+                    tipo: "Secretaria",
+                    vinculacao: "Governadoria",
+                    responsavel_legal: "Julia Figueiredo Sant'Anna",
+                    endereco: "Rodovia Prefeito Américo Gianetti, 4143, Belo Horizonte, 31630-901",
+                    telefone: "(31) 3915-3000",
+                    competencias: "https://educacao.mg.gov.br/",
+                    site_orgao: "https://educacao.mg.gov.br/"
+                },
+                {
+                    orgao: "Companhia de Gás de Minas Gerais",
+                    sigla: "GASMIG",
+                    tipo: "Vinculado",
+                    vinculacao: "Secretaria de Estado de Desenvolvimento Econômico",
+                    responsavel_legal: "Luiz Fernando Gama Rocha",
+                    endereco: "Rua Timbiras, 1200, Lourdes, Belo Horizonte, 30140-061",
+                    telefone: "(31) 3299-4000",
+                    competencias: "https://www.gasmig.com.br/institucional",
+                    site_orgao: "https://www.gasmig.com.br/"
+                },
+                {
+                    orgao: "Secretaria de Estado de Planejamento e Gestão",
+                    sigla: "SEPLAG",
+                    tipo: "Secretaria",
+                    vinculacao: "Governadoria",
+                    responsavel_legal: "Luiz Leonardo Vieira Marques",
+                    endereco: "Rua Rodrigues Caldas, 30, Santo Agostinho, Belo Horizonte, 30190-921",
+                    telefone: "(31) 3915-5000",
+                    competencias: "https://www.seplag.mg.gov.br/",
+                    site_orgao: "https://www.seplag.mg.gov.br/"
+                },
+                {
+                    orgao: "Controladoria-Geral do Estado",
+                    sigla: "CGE",
+                    tipo: "Órgão Autônomo",
+                    vinculacao: "Governadoria",
+                    responsavel_legal: "Rômulo de Albuquerque Ferraz",
+                    endereco: "Rua Rodrigues Caldas, 471, Santo Agostinho, Belo Horizonte, 30190-921",
+                    telefone: "(31) 3915-2000",
+                    competencias: "https://www.cge.mg.gov.br/",
+                    site_orgao: "https://www.cge.mg.gov.br/"
+                },
+                {
+                    orgao: "Procuradoria Geral do Estado",
+                    sigla: "PGE",
+                    tipo: "Órgão Autônomo",
+                    vinculacao: "Governadoria",
+                    responsavel_legal: "José Henrique de Lima",
+                    endereco: "Avenida do Contorno, 6470, Savassi, Belo Horizonte, 30110-039",
+                    telefone: "(31) 3250-4000",
+                    competencias: "https://www.pge.mg.gov.br/",
+                    site_orgao: "https://www.pge.mg.gov.br/"
+                }
+            ];
+            
+            // Preencher os dados iniciais
+            preencherTabelaOrgaos(dadosOrgaos);
+            preencherSelectConsulta();
+            atualizarEstatisticas();
+            
+            // Inicializar dados filtrados
+            dadosFiltrados = [...dadosOrgaos];
+        }
+        
+        // Preencher a tabela de órgãos
+        function preencherTabelaOrgaos(dados) {
+            const tbody = document.getElementById('tabela-orgaos-body');
+            tbody.innerHTML = '';
+            
+            dados.forEach((orgao, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <div class="fw-bold">${orgao.orgao}</div>
+                        <div class="small text-muted">${orgao.endereco ? orgao.endereco.split(',')[0] + ', ' + orgao.endereco.split(',')[1] : 'Endereço não disponível'}</div>
+                    </td>
+                    <td>
+                        <span class="badge bg-light text-dark">${orgao.sigla}</span>
+                    </td>
+                    <td>
+                        <span class="orgao-type-badge ${getTipoClass(orgao.tipo)}">${orgao.tipo}</span>
+                    </td>
+                    <td>${orgao.responsavel_legal}</td>
+                    <td>${orgao.telefone}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick="verDetalhesOrgao('${orgao.sigla}')">
+                            <span class="material-icons align-middle" style="font-size: 16px;">visibility</span> Ver
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            
+            // Atualizar contador de resultados
+            document.getElementById('total-resultados').textContent = `Mostrando ${dados.length} de ${dadosOrgaos.length} resultados`;
+        }
+        
+        // Preencher o select de consulta individual
+        function preencherSelectConsulta() {
+            const select = document.getElementById('consulta-orgao');
+            
+            dadosOrgaos.forEach(orgao => {
+                const option = document.createElement('option');
+                option.value = orgao.sigla;
+                option.textContent = `${orgao.sigla} - ${orgao.orgao}`;
+                select.appendChild(option);
+            });
+        }
+        
+        // Atualizar estatísticas na visão geral
+        function atualizarEstatisticas() {
+            const total = dadosOrgaos.length;
+            const autonomos = dadosOrgaos.filter(o => o.tipo === "Órgão Autônomo").length;
+            const secretarias = dadosOrgaos.filter(o => o.tipo === "Secretaria").length;
+            const vinculados = dadosOrgaos.filter(o => o.tipo === "Vinculado").length;
+            
+            document.getElementById('total-orgaos').textContent = total;
+            document.getElementById('orgaos-autonomos').textContent = autonomos;
+            document.getElementById('secretarias').textContent = secretarias;
+            document.getElementById('vinculados').textContent = vinculados;
+        }
+        
+        // Aplicar filtros na aba de Destino
+        function aplicarFiltros() {
+            const tipo = document.getElementById('filtro-tipo').value;
+            const pesquisa = document.getElementById('filtro-pesquisa').value.toLowerCase();
+            
+            dadosFiltrados = dadosOrgaos.filter(orgao => {
+                // Filtro por tipo
+                if (tipo && orgao.tipo !== tipo) return false;
+                
+                // Filtro por pesquisa
+                if (pesquisa) {
+                    const textoPesquisa = pesquisa.toLowerCase();
+                    return orgao.orgao.toLowerCase().includes(textoPesquisa) || 
+                           orgao.sigla.toLowerCase().includes(textoPesquisa) ||
+                           orgao.responsavel_legal.toLowerCase().includes(textoPesquisa);
+                }
+                
+                return true;
+            });
+            
+            preencherTabelaOrgaos(dadosFiltrados);
+            iframeUpdateHeight();
+        }
+        
+        // Consultar órgão individual
+        function consultarOrgao() {
+            const sigla = document.getElementById('consulta-orgao').value;
+            if (!sigla) return;
+            
+            const orgao = dadosOrgaos.find(o => o.sigla === sigla);
+            if (!orgao) return;
+            
+            exibirDetalhesOrgao(orgao);
+        }
+        
+        // Exibir detalhes do órgão (também chamado pelo botão "Ver" na tabela)
+        function verDetalhesOrgao(sigla) {
+            const orgao = dadosOrgaos.find(o => o.sigla === sigla);
+            if (!orgao) return;
+            
+            // Mudar para a aba de consulta individual
+            const consultaTab = document.getElementById('consulta-individual-tab');
+            const tabInstance = new bootstrap.Tab(consultaTab);
+            tabInstance.show();
+            
+            // Selecionar o órgão no select
+            document.getElementById('consulta-orgao').value = sigla;
+            
+            // Exibir detalhes
+            exibirDetalhesOrgao(orgao);
+        }
+        
+        // Exibir detalhes do órgão na aba de consulta
+        function exibirDetalhesOrgao(orgao) {
+            const detalhesDiv = document.getElementById('detalhes-orgao');
+            const statusBadge = document.getElementById('orgao-status');
+            
+            statusBadge.textContent = orgao.tipo;
+            statusBadge.className = 'badge ' + getTipoBadgeClass(orgao.tipo);
+            
+            detalhesDiv.innerHTML = `
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4 class="mb-1">${orgao.orgao}</h4>
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="badge ${getTipoBadgeClass(orgao.tipo)} me-2">${orgao.tipo}</span>
+                            <span class="badge bg-secondary">${orgao.sigla}</span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h6 class="mb-2">Responsável Legal</h6>
+                            <div class="d-flex align-items-center">
+                                <span class="material-icons me-2">person</span>
+                                <span class="fs-5">${orgao.responsavel_legal}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h6 class="mb-2">Vinculação</h6>
+                                <p class="mb-0">${orgao.vinculacao || 'Não informada'}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="mb-2">Competências</h6>
+                                <a href="${orgao.competencias}" target="_blank" class="small">Ver competências legais</a>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h6 class="mb-2">Endereço</h6>
+                            <div class="contact-info">
+                                <span class="material-icons">location_on</span>
+                                <span>${orgao.endereco}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card border">
+                            <div class="card-body">
+                                <h6 class="card-title mb-3">Contato e Informações</h6>
+                                
+                                <div class="contact-info">
+                                    <span class="material-icons">phone</span>
+                                    <span>${orgao.telefone}</span>
+                                </div>
+                                
+                                <div class="contact-info">
+                                    <span class="material-icons">language</span>
+                                    <a href="${orgao.site_orgao}" target="_blank">Site do órgão</a>
+                                </div>
+                                
+                                <div class="mt-4 pt-3 border-top">
+                                    <h6 class="mb-2">Ações</h6>
+                                    <div class="d-grid gap-2">
+                                        <a href="${orgao.site_orgao}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                            <span class="material-icons align-middle me-1">open_in_new</span> Visitar Site
+                                        </a>
+                                        <button class="btn btn-outline-secondary btn-sm" onclick="copiarInformacoes('${orgao.sigla}')">
+                                            <span class="material-icons align-middle me-1">content_copy</span> Copiar Informações
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            iframeUpdateHeight();
+        }
+        
+        // Função auxiliar para obter classe CSS baseada no tipo
+        function getTipoClass(tipo) {
+            switch(tipo) {
+                case 'Órgão Autônomo': return 'type-autonomo';
+                case 'Secretaria': return 'type-secretaria';
+                case 'Vinculado': return 'type-vinculado';
+                default: return 'type-autonomo';
+            }
+        }
+        
+        // Função auxiliar para obter classe de badge baseada no tipo
+        function getTipoBadgeClass(tipo) {
+            switch(tipo) {
+                case 'Órgão Autônomo': return 'bg-primary';
+                case 'Secretaria': return 'bg-success';
+                case 'Vinculado': return 'bg-purple';
+                default: return 'bg-secondary';
+            }
+        }
+        
+        // Configurar tooltips (simplificado para este exemplo)
+        function setupTooltips() {
+            // Em uma implementação real, inicializaria tooltips do Bootstrap
+        }
+        
+        // Configurar tooltips descritivos
+        function setupDescriptiveTooltips() {
+            // Em uma implementação real, adicionaria tooltips em elementos específicos
+        }
+        
+        // Configurar data de atualização
+        function setupAtualizacaoData() {
+            const hoje = new Date();
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            const dataFormatada = hoje.toLocaleDateString('pt-BR', options);
+            
+            document.getElementById('data-atualizacao').textContent = dataFormatada;
+        }
+        
+        // Função para copiar informações do órgão
+        function copiarInformacoes(sigla) {
+            const orgao = dadosOrgaos.find(o => o.sigla === sigla);
+            if (!orgao) return;
+            
+            const texto = `
+            ${orgao.orgao} (${orgao.sigla})
+            Tipo: ${orgao.tipo}
+            Responsável: ${orgao.responsavel_legal}
+            Endereço: ${orgao.endereco}
+            Telefone: ${orgao.telefone}
+            Site: ${orgao.site_orgao}
+            `;
+            
+            // Em uma implementação real, usaria a API de Clipboard
+            alert(`Informações copiadas para a área de transferência:\n\n${texto}`);
+        }
+        
+        // Estilizar a barra de progresso
+        document.addEventListener('DOMContentLoaded', function() {
+            // Adicionar estilo para a barra de progresso "bg-purple"
+            const style = document.createElement('style');
+            style.textContent = `
+                .bg-purple { background-color: #8e44ad !important; }
+                .bg-purple:hover { background-color: #7d3c98 !important; }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
