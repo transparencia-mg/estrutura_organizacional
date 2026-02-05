@@ -1,10 +1,10 @@
 {
   "name": "estrutura_organizacional",
-  "owner_org": "",
+  "owner_org": "secretaria-geral",
   "profile": "data-package",
   "resources": [
     {
-      "description": "Insira a descrição/explicação detalhada deste recurso.",
+      "description": "Conjuntos referentes a estrutura governamental do Estado de Minas Gerais.",
       "dialect": {
         "delimiter": ";"
       },
@@ -55,8 +55,8 @@
         ]
       },
       "scheme": "file",
-      "title": "Insira um título humanamente legível para este recurso."
+      "title": "estrutura_organizacional"
     }
   ],
-  "title": "Estrutura_organizacional"
+  "title": "Estrutura Organizacional"
 }
