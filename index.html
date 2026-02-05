@@ -34,6 +34,13 @@
             --secondary-orange: #E67E22;
             --secondary-teal: #16A085;
             --danger-red: #E74C3C;
+            
+            /* Cores padronizadas para tipos de órgão */
+            --color-autonomo: #2ECC71;
+            --color-secretaria: #3498DB;
+            --color-vinculado: #9B59B6;
+            --color-outros: #95A5A6;
+            --color-especial: #E74C3C;
         }
         
         /* ==================== ESTILOS GERAIS ==================== */
@@ -41,7 +48,7 @@
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
             padding-bottom: 15px;
-            overflow-y: visible !important;  /* IMPEDIR SCROLL NO BODY */
+            overflow-y: visible !important;
             overflow-x: hidden !important;
             min-height: auto !important;
             height: auto !important;
@@ -49,11 +56,10 @@
         }
 
         html {
-            overflow-y: visible !important; /* IMPEDIR SCROLL NO HTML */
+            overflow-y: visible !important;
             height: auto !important;
         }
 
-        /* Garantir que o container principal não imponha restrições */
         .main-container {
             height: auto !important;
             min-height: auto !important;
@@ -61,7 +67,6 @@
             position: relative;
         }
 
-        /* Container principal do conteúdo */
         .container.dashboard-spacing {
             overflow: visible !important;
             height: auto !important;
@@ -69,7 +74,6 @@
             position: relative;
         }
 
-        /* Remover qualquer restrição de altura dos elementos pais */
         .tab-content {
             overflow: visible !important;
             height: auto !important;
@@ -77,7 +81,6 @@
             position: relative;
         }
 
-        /* Garantir que as tabelas possam expandir */
         .table-container {
             height: auto !important;
             min-height: auto !important;
@@ -85,10 +88,9 @@
             position: relative;
         }
 
-        /* Corrigir o container das tabelas com cabeçalho fixo */
         .table-fixed-header-container {
-            max-height: 500px; /* Mantém o limite apenas para a tabela, não para a página */
-            overflow-y: auto; /* Scroll apenas na tabela, não na página toda */
+            max-height: 500px;
+            overflow-y: auto;
             position: relative;
         }
         
@@ -100,7 +102,7 @@
             margin-bottom: 25px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             border-bottom: 4px solid var(--accent-blue);
-            flex-shrink: 0; /* EVITA QUE O HEADER ENCOLHA */
+            flex-shrink: 0;
             position: relative;
             z-index: 1;
         }
@@ -287,19 +289,19 @@
         .chart-container {
             background: white;
             border-radius: 10px;
-            padding: 15px;
+            padding: 20px;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
             margin-bottom: 20px;
             height: 100%;
-            min-height: 280px;
+            min-height: 320px;
         }
         
         .chart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
             border-bottom: 2px solid var(--background-light);
         }
         
@@ -312,7 +314,7 @@
         
         .chart-wrapper {
             position: relative;
-            height: 220px;
+            height: 240px;
             width: 100%;
         }
         
@@ -352,15 +354,13 @@
             font-weight: 600;
         }
         
-        /* Container para tabela com cabeçalho fixo */
         .table-fixed-header-container {
             position: relative;
             max-height: 500px;
-            overflow-y: auto;
+            overflow: auto;
             padding: 0;
         }
         
-        /* Cabeçalho fixo para todas as tabelas */
         .table-fixed-header-container table thead {
             position: sticky;
             top: 0;
@@ -379,7 +379,6 @@
         .table-responsive {
             padding: 0;
             overflow-x: auto;
-            overflow-y: visible !important; /* IMPORTANTE: sem scroll vertical aqui */
         }
         
         .table {
@@ -391,7 +390,6 @@
             border: 1px solid #dee2e6;
         }
         
-        /* Adicionar bordas verticais ao cabeçalho da tabela */
         .table thead th {
             background-color: var(--primary-dark) !important;
             color: white !important;
@@ -449,7 +447,6 @@
             content: "↓";
         }
         
-        /* Aplicar bordas verticais a TODAS as tabelas */
         .table-container table th, 
         .table-container table td {
             border-left: 1px solid #dee2e6;
@@ -467,7 +464,6 @@
             border-right: none;
         }
         
-        /* Borda inferior para linhas */
         .table-container table tbody tr {
             border-bottom: 1px solid #f1f1f1;
         }
@@ -490,9 +486,15 @@
             font-size: 13px;
         }
         
-        /* Coluna de quantidade centralizada - DASHBOARD 1 */
+        /* Alinhamento específico para responsável legal */
+        .table tbody td.responsavel-legal {
+            text-align: right !important;
+            font-style: italic;
+        }
+        
+        /* Centralizar colunas de quantidade */
         .table tbody td.quantidade {
-            text-align: center !important;
+            text-align: center;
             font-weight: 600;
         }
         
@@ -504,21 +506,51 @@
         #visaoGeralTable tbody td:first-child {
             text-align: left;
         }
-
-        /* Adicione isso ao seu CSS, se já não existir */
-        #visaoGeralTable .quantidade,
-        #acordosTable .quantidade {
-            text-align: center !important;
-            font-weight: 600;
-        }
-
-        /* E também para as células do rodapé */
-        .table-total-row td.quantidade {
-            text-align: center !important;
-            font-weight: 600;
+        
+        /* ==================== TAGS PADRONIZADAS PARA TIPOS DE ÓRGÃO ==================== */
+        .badge-tipo {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            display: inline-block;
+            min-width: 100px;
+            text-align: center;
+            border: 1px solid transparent;
         }
         
-        /* Coluna de ações na tabela */
+        .badge-autonomo {
+            background-color: rgba(46, 204, 113, 0.15);
+            color: var(--color-autonomo);
+            border-color: rgba(46, 204, 113, 0.3);
+        }
+        
+        .badge-secretaria {
+            background-color: rgba(52, 152, 219, 0.15);
+            color: var(--color-secretaria);
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+        
+        .badge-vinculado {
+            background-color: rgba(155, 89, 182, 0.15);
+            color: var(--color-vinculado);
+            border-color: rgba(155, 89, 182, 0.3);
+        }
+        
+        .badge-outros {
+            background-color: rgba(149, 165, 166, 0.15);
+            color: var(--color-outros);
+            border-color: rgba(149, 165, 166, 0.3);
+        }
+        
+        .badge-especial {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: var(--color-especial);
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+        
         .actions-column {
             width: 100px;
             text-align: center;
@@ -539,7 +571,6 @@
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 3px;
         }
         
@@ -576,7 +607,7 @@
             color: white;
         }
         
-        /* Botão de pesquisa com cor vermelha - ALINHADO */
+        /* Botão de pesquisa com cor vermelha */
         .btn-pesquisa {
             background: linear-gradient(to right, var(--button-red), #C0392B);
             border: none;
@@ -590,6 +621,7 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
+            height: 42px;
         }
         
         .btn-pesquisa:hover {
@@ -599,7 +631,7 @@
             color: white;
         }
         
-        /* Botão secundário - ALINHADO */
+        /* Botão secundário */
         .btn-secondary-custom {
             background: white;
             border: 2px solid var(--primary-dark);
@@ -645,100 +677,92 @@
         }
         
         /* ==================== MENU DE NAVEGAÇÃO ==================== */
-        /* Container principal - CORRIGIDO */
-.nav-tabs-container {
-    background: white;
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-    margin-top: 10px;
-    overflow-x: auto; /* Adicionado para controlar overflow */
-    -webkit-overflow-scrolling: touch; /* Melhor rolagem no iOS */
-}
+        .nav-tabs-container {
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-top: 10px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
 
-/* Nav tabs - CORRIGIDO */
-.nav-tabs {
-    border: none !important; /* !important para sobrescrever Bootstrap */
-    gap: 4px;
-    flex-wrap: nowrap; /* Mantém em uma linha */
-    min-width: max-content; /* Garante largura mínima baseada no conteúdo */
-    padding-bottom: 5px; /* Espaço para scrollbar */
-    margin-bottom: 0 !important;
-}
+        .nav-tabs {
+            border: none !important;
+            gap: 4px;
+            flex-wrap: nowrap;
+            min-width: max-content;
+            padding-bottom: 5px;
+            margin-bottom: 0 !important;
+        }
 
-/* Itens dos tabs - NOVO, necessário */
-.nav-tabs .nav-item {
-    flex-shrink: 0; /* Não permite que os tabs encolham */
-}
+        .nav-tabs .nav-item {
+            flex-shrink: 0;
+        }
 
-/* Links dos tabs - CORRIGIDO */
-.nav-tabs .nav-link {
-    border: none !important;
-    border-radius: 6px !important;
-    padding: 10px 15px !important;
-    font-weight: 600;
-    color: #1a5276 !important; /* Fallback para var(--primary-dark) */
-    transition: all 0.3s ease;
-    font-size: 13px;
-    white-space: nowrap;
-    display: inline-flex !important; /* Mudado de flex para inline-flex */
-    align-items: center;
-    background: none !important;
-}
+        .nav-tabs .nav-link {
+            border: none !important;
+            border-radius: 6px !important;
+            padding: 10px 15px !important;
+            font-weight: 600;
+            color: var(--primary-dark) !important;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            white-space: nowrap;
+            display: inline-flex !important;
+            align-items: center;
+            background: none !important;
+        }
 
-.nav-tabs .nav-link:hover {
-    background-color: rgba(26, 82, 118, 0.05) !important;
-    color: #3498db !important; /* Fallback para var(--accent-blue) */
-}
+        .nav-tabs .nav-link:hover {
+            background-color: rgba(26, 82, 118, 0.05) !important;
+            color: var(--accent-blue) !important;
+        }
 
-.nav-tabs .nav-link.active {
-    background: linear-gradient(135deg, #1a5276 0%, #154360 100%) !important;
-    color: white !important;
-    border: none !important;
-}
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%) !important;
+            color: white !important;
+            border: none !important;
+        }
 
-/* Ícones - CORRIGIDO */
-.nav-tabs .nav-link .material-icons {
-    font-size: 16px !important;
-    margin-right: 8px !important;
-    vertical-align: middle;
-    line-height: 1;
-}
+        .nav-tabs .nav-link .material-icons {
+            font-size: 16px !important;
+            margin-right: 8px !important;
+            vertical-align: middle;
+            line-height: 1;
+        }
 
-.nav-tabs .nav-link.active .material-icons {
-    color: white !important;
-}
+        .nav-tabs .nav-link.active .material-icons {
+            color: white !important;
+        }
 
-/* Estilizar a scrollbar para ficar discreta */
-.nav-tabs-container::-webkit-scrollbar {
-    height: 4px;
-}
+        .nav-tabs-container::-webkit-scrollbar {
+            height: 4px;
+        }
 
-.nav-tabs-container::-webkit-scrollbar-track {
-    background: #f8f9fa;
-    border-radius: 4px;
-}
+        .nav-tabs-container::-webkit-scrollbar-track {
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
 
-.nav-tabs-container::-webkit-scrollbar-thumb {
-    background: #dee2e6;
-    border-radius: 4px;
-}
+        .nav-tabs-container::-webkit-scrollbar-thumb {
+            background: #dee2e6;
+            border-radius: 4px;
+        }
 
-.nav-tabs-container::-webkit-scrollbar-thumb:hover {
-    background: #adb5bd;
-}
+        .nav-tabs-container::-webkit-scrollbar-thumb:hover {
+            background: #adb5bd;
+        }
 
-/* Para Firefox */
-.nav-tabs-container {
-    scrollbar-width: thin;
-    scrollbar-color: #dee2e6 #f8f9fa;
-}
+        .nav-tabs-container {
+            scrollbar-width: thin;
+            scrollbar-color: #dee2e6 #f8f9fa;
+        }
 
-/* Remover a borda inferior padrão do Bootstrap */
-.nav-tabs {
-    border-bottom: none !important;
-}
+        .nav-tabs {
+            border-bottom: none !important;
+        }
         
         /* ==================== AÇÕES ==================== */
         .actions-container {
@@ -758,7 +782,6 @@
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            align-items: center;
         }
         
         .right-aligned-container {
@@ -852,7 +875,6 @@
             padding: 2px 4px;
             border-radius: 4px;
             font-size: 13px;
-            border-bottom: 1px solid transparent;
         }
 
         .orgao-link:hover {
@@ -968,64 +990,6 @@
             border-color: var(--accent-blue) !important;
             box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.15) !important;
             outline: none !important;
-        }
-        
-        /* ==================== BADGES DE SITUAÇÃO ==================== */
-        .badge-situacao {
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            display: inline-block;
-            min-width: 80px;
-            text-align: center;
-        }
-        
-        .badge-ativo {
-            background-color: rgba(39, 174, 96, 0.15);
-            color: var(--success-green);
-            border: 1px solid rgba(39, 174, 96, 0.3);
-        }
-        
-        .badge-vigente {
-            background-color: rgba(39, 174, 96, 0.15);
-            color: var(--success-green);
-            border: 1px solid rgba(39, 174, 96, 0.3);
-        }
-        
-        .badge-encerrado {
-            background-color: rgba(52, 152, 219, 0.15);
-            color: var(--accent-blue);
-            border: 1px solid rgba(52, 152, 219, 0.3);
-        }
-        
-        .badge-rescindido {
-            background-color: rgba(231, 76, 60, 0.15);
-            color: var(--danger-red);
-            border: 1px solid rgba(231, 76, 60, 0.3);
-        }
-        
-        /* ==================== DOCUMENTO LINK ==================== */
-        .documento-link {
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            font-size: 12px;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        
-        .documento-link:hover {
-            color: var(--primary-dark);
-            background-color: rgba(52, 152, 219, 0.08);
-            text-decoration: underline;
         }
         
         /* ==================== NOVO MODAL CRIATIVO ==================== */
@@ -1220,33 +1184,7 @@
             color: var(--accent-blue);
         }
         
-        /* ==================== BOTÃO DE LEGISLAÇÃO ==================== */
-        .btn-legislacao {
-            background: white;
-            border: 2px solid var(--primary-dark);
-            color: var(--primary-dark);
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 12px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            cursor: pointer;
-            text-decoration: none;
-            flex-grow: 1;
-        }
-        
-        .btn-legislacao:hover {
-            background: var(--primary-dark);
-            color: white;
-            transform: translateY(-1px);
-            text-decoration: none;
-        }
-        
-        /* ==================== ESTILOS PARA DOWNLOADS (DASHBOARD 3) ==================== */
+        /* ==================== ESTILOS PARA DOWNLOADS (DASHBOARD 4) ==================== */
         .downloads-filter-container {
             background: white;
             border-radius: 10px;
@@ -1261,53 +1199,26 @@
         }
         
         .downloads-filter-container .form-select {
-            width: 150px; /* Diminuído o tamanho do filtro de ano */
+            width: 100%;
         }
         
         .downloads-buttons-container {
             display: flex;
             gap: 10px;
-            flex-grow: 1;
         }
         
         .downloads-buttons-container .btn-primary-custom {
             flex-grow: 1;
         }
         
-        .downloads-buttons-container .btn-legislacao {
-            flex-grow: 1;
+        /* ==================== CORREÇÕES ESPECÍFICAS PARA CONSULTA INDIVIDUAL ==================== */
+        #consulta-individual .filter-container .row {
+            align-items: flex-end;
         }
         
-        /* ==================== CORREÇÕES ESPECÍFICAS PARA SCROLL ==================== */
-        
-        /* REMOVER scroll da tabela quando não é necessário */
-        .table-fixed-header-container:has(table tbody tr:only-child),
-        .table-fixed-header-container:has(table tbody tr:first-child:last-child) {
-            max-height: none !important;
-            overflow-y: visible !important;
-        }
-        
-        /* Container principal - garantir que expanda */
-        #dashboardTabsContent {
-            overflow: visible !important;
-            min-height: 0 !important;
-        }
-        
-        /* Cada dashboard individual */
-        .tab-pane {
-            overflow: visible !important;
-            height: auto !important;
-            min-height: 0 !important;
-        }
-        
-        /* Remover scroll de todos os elementos internos */
-        .row, .col, .col-md-3, .col-md-4, .col-md-6, .col-6, .col-12 {
-            overflow: visible !important;
-        }
-        
-        /* REMOVER SCROLL DO BOOTSTRAP CONTAINER */
-        .container-fluid, .container {
-            overflow: visible !important;
+        #consulta-individual .btn-pesquisa {
+            width: 100%;
+            justify-content: center;
         }
         
         /* ==================== RESPONSIVIDADE ==================== */
@@ -1323,7 +1234,7 @@
             }
             
             .table-fixed-header-container {
-                max-height: 400px; /* Um pouco menor em mobile */
+                max-height: 400px;
             }
             
             .main-header {
@@ -1430,10 +1341,6 @@
             .downloads-buttons-container {
                 flex-direction: column;
             }
-            
-            .downloads-filter-container .form-select {
-                width: 100%;
-            }
         }
         
         @media (max-width: 576px) {
@@ -1446,7 +1353,7 @@
             }
             
             .chart-container {
-                min-height: 240px;
+                min-height: 280px;
             }
             
             .chart-wrapper {
@@ -1484,6 +1391,10 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+            
+            #consulta-individual .col-md-4 {
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
@@ -1493,7 +1404,37 @@
     <div class="main-container">
         <div class="container dashboard-spacing">
             
-         
+            <!-- ==================== HEADER PRINCIPAL ==================== -->
+            <header class="main-header">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="logo-container">
+                                <div class="logo">
+                                    <i class="material-icons">apartment</i>
+                                </div>
+                                <div>
+                                    <h1 class="header-title">Estrutura Organizacional</h1>
+                                    <p class="header-subtitle">Governo de Minas Gerais</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="header-info justify-content-end">
+                                <a href="https://www.almg.gov.br/legislacao-mineira/texto/DEC/47963/2020/?cons=1" 
+                                   target="_blank" 
+                                   class="link-legislacao">
+                                    <i class="material-icons">gavel</i> Legislação
+                                </a>
+                                <span class="badge-atualizacao-header">
+                                    <i class="material-icons">update</i> Atualizado diariamente
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
             <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
             <div class="nav-tabs-container">
                 <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
@@ -1756,9 +1697,9 @@
                 <!-- ==================== DASHBOARD 3: CONSULTA INDIVIDUAL ==================== -->
                 <div class="tab-pane fade" id="consulta-individual" role="tabpanel">
                     
-                    <!-- Filtros Dashboard 3 -->
+                    <!-- Filtros Dashboard 3 - CORRIGIDO ALINHAMENTO -->
                     <div class="filter-container">
-                        <div class="row">
+                        <div class="row align-items-end">
                             <div class="col-md-8 col-12">
                                 <div class="mb-3">
                                     <label for="selectOrgaoConsulta" class="form-label filter-label">Selecione o Órgão</label>
@@ -1769,7 +1710,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
-                                <div class="mb-3 d-flex align-items-end h-100">
+                                <div class="mb-3">
                                     <button class="btn-pesquisa w-100" id="consultarOrgao">
                                         <i class="material-icons me-2">search</i> Consultar
                                     </button>
@@ -1802,27 +1743,20 @@
                 <!-- ==================== DASHBOARD 4: DOWNLOADS ==================== -->
                 <div class="tab-pane fade" id="downloads" role="tabpanel">
                     
-                    <!-- Filtro de Download -->
+                    <!-- Filtro de Download - APENAS BOTÃO DE DOWNLOAD -->
                     <div class="downloads-filter-container">
                         <div class="row align-items-center">
-                            <div class="col-md-4">
+                            <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label for="formatoDownload" class="form-label filter-label">Formato de Download</label>
-                                    <select class="form-select" id="formatoDownload">
-                                        <option value="csv">CSV (Valores separados por vírgula)</option>
-                                        <option value="json">JSON (JavaScript Object Notation)</option>
-                                        <option value="excel">Excel (XLSX)</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-8 col-lg-7">
-                                <div class="d-flex gap-3 flex-wrap">
-                                    <button class="btn-primary-custom flex-grow-1" id="downloadCompleto">
-                                        <i class="material-icons me-2">download</i>Baixar Dados Completos
-                                    </button>
-                                    <button class="btn-legislacao flex-grow-1" id="btn-legislacao-estrutura">
-                                        <i class="material-icons me-2">gavel</i>Legislação
-                                    </button>
+                                    <label class="form-label filter-label">Download dos Dados Completos</label>
+                                    <p class="text-muted mb-3" style="font-size: 13px;">
+                                        Baixe o arquivo CSV completo com todos os dados da estrutura organizacional.
+                                    </p>
+                                    <div class="d-grid">
+                                        <button class="btn-primary-custom" id="downloadCompleto">
+                                            <i class="material-icons me-2">download</i>Baixar Dados Completos (CSV)
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2001,42 +1935,55 @@
         let currentSortDashboard1 = { column: 'orgao', order: 'asc' };
         let currentSortDashboard2 = { column: 'orgao', order: 'asc' };
         let currentSearchTerm = '';
-        let dashboardAnterior = '';
         
+        // Cores harmonizadas para gráficos
         const chartColors = {
+            autonomo: '#2ECC71',
+            secretaria: '#3498DB',
+            vinculado: '#9B59B6',
+            outros: '#95A5A6',
+            especial: '#E74C3C',
             primary: '#1A5276',
             accent: '#3498DB',
             bright: '#2980B9',
-            dark: '#0E2F44',
             success: '#27AE60',
             warning: '#F39C12',
-            info: '#17A589',
-            purple: '#8E44AD',
-            orange: '#E67E22',
-            teal: '#16A085',
-            danger: '#E74C3C'
+            info: '#17A589'
         };
 
-        // URL do CSV no GitHub - CORRIGIDA para estrutura organizacional
+        // Mapeamento de tipos de órgão para cores
+        const tipoColors = {
+            'Órgão Autônomo': chartColors.autonomo,
+            'Secretaria': chartColors.secretaria,
+            'Vinculado': chartColors.vinculado,
+            'Outros': chartColors.outros,
+            'Especial': chartColors.especial
+        };
+
+        // Mapeamento de tipos de órgão para classes CSS
+        const tipoClasses = {
+            'Órgão Autônomo': 'badge-autonomo',
+            'Secretaria': 'badge-secretaria',
+            'Vinculado': 'badge-vinculado',
+            'Outros': 'badge-outros',
+            'Especial': 'badge-especial'
+        };
+
+        // URL do CSV no GitHub
         const GITHUB_CSV_URL = 'https://raw.githubusercontent.com/transparencia-mg/estrutura_organizacional/main/dataset/data/estrutura_governamental.csv';
 
         // ==================== FUNÇÕES DE INICIALIZAÇÃO ====================
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
-            // Primeiro: garantir que não há scroll duplo
             removeAllScrollIssues();
-            
-            // Depois inicializar o resto
             setupEventListeners();
             loadInitialData();
             updateDataAtualizacao();
             console.log('Painel de Estrutura Organizacional carregado com sucesso!!!');
             
-            // Atualizar altura após carregamento completo
             setTimeout(iframeUpdateHeight, 1000);
             
-            // Atualizar altura quando trocar de aba
             const tabs = document.querySelectorAll('[data-bs-toggle="tab"]');
             tabs.forEach(tab => {
                 tab.addEventListener('shown.bs.tab', function() {
@@ -2045,11 +1992,10 @@
             });
         });
 
-        // Função CRÍTICA para remover todos os problemas de scroll
+        // Função para remover problemas de scroll
         function removeAllScrollIssues() {
             console.log('Removendo problemas de scroll duplo...');
             
-            // Forçar remoção de overflow em TODOS os elementos
             const elements = [
                 document.body,
                 document.documentElement,
@@ -2072,29 +2018,24 @@
                 }
             });
             
-            // Remover classes Bootstrap que podem causar scroll
             document.body.classList.remove('overflow-auto');
             document.documentElement.classList.remove('overflow-auto');
             
-            // Forçar o html e body a terem altura automática
             document.documentElement.style.height = 'auto';
             document.body.style.height = 'auto';
         }
 
-        // Função OTIMIZADA para atualizar a altura do iframe
+        // Função para atualizar a altura do iframe
         function iframeUpdateHeight() {
             console.log('Atualizando altura do iframe...');
             
-            // Forçar reflow para garantir medições precisas
             document.body.style.display = 'none';
-            document.body.offsetHeight; // Trigger reflow
+            document.body.offsetHeight;
             document.body.style.display = '';
             
-            // Calcular a altura REAL do conteúdo
             const html = document.documentElement;
             const body = document.body;
             
-            // Pegar a maior altura entre body e html
             const scrollHeight = Math.max(
                 body.scrollHeight, 
                 html.scrollHeight,
@@ -2102,7 +2043,6 @@
                 html.offsetHeight
             );
             
-            // Adicionar margem de segurança (apenas 10px)
             const finalHeight = scrollHeight + 10;
             
             console.log('Altura calculada:', {
@@ -2111,7 +2051,6 @@
                 finalHeight: finalHeight
             });
             
-            // Enviar para o pai - formato SIMPLES que funciona
             window.parent.postMessage({ 
                 iframeHeight: finalHeight 
             }, '*');
@@ -2148,6 +2087,16 @@
             console.log('Data de atualização definida:', dataFormatada);
         }
 
+        // Função para obter a classe CSS para um tipo de órgão
+        function getTipoClass(tipo) {
+            return tipoClasses[tipo] || 'badge-outros';
+        }
+
+        // Função para obter a cor para um tipo de órgão
+        function getTipoColor(tipo) {
+            return tipoColors[tipo] || chartColors.outros;
+        }
+
         // ==================== CONFIGURAR EVENT LISTENERS ====================
         function setupEventListeners() {
             // Filtros Dashboard 2
@@ -2177,9 +2126,6 @@
             
             // Download
             document.getElementById('downloadCompleto').addEventListener('click', downloadFullCSV);
-            document.getElementById('btn-legislacao-estrutura').addEventListener('click', function() {
-                window.open('https://www.almg.gov.br/legislacao-mineira/texto/DEC/47963/2020/?cons=1', '_blank');
-            });
             
             // Campo de busca na Consulta
             document.getElementById('searchOrgaos').addEventListener('input', function(e) {
@@ -2225,7 +2171,6 @@
             
             // Busca por nome ou sigla
             document.getElementById('buscaOrgao').addEventListener('input', function() {
-                // Aplicar filtro em tempo real
                 setTimeout(() => {
                     applyFilters('dashboard2');
                 }, 500);
@@ -2247,7 +2192,6 @@
                 showError('Erro ao carregar dados do CSV. Verifique a conexão ou tente novamente.');
             } finally {
                 showLoading(false);
-                // Atualizar altura após carregar dados
                 setTimeout(iframeUpdateHeight, 500);
             }
         }
@@ -2258,7 +2202,6 @@
             return new Promise((resolve, reject) => {
                 console.log('Iniciando carregamento do CSV...');
                 
-                // Primeiro, vamos tentar uma abordagem alternativa para o parsing
                 fetch(GITHUB_CSV_URL)
                     .then(response => {
                         if (!response.ok) {
@@ -2269,11 +2212,6 @@
                     .then(csvText => {
                         console.log('CSV baixado com sucesso, tamanho:', csvText.length);
                         
-                        // Verificar o conteúdo do CSV
-                        console.log('Primeiras 500 caracteres do CSV:', csvText.substring(0, 500));
-                        
-                        // O CSV parece usar ponto e vírgula como separador
-                        // Vamos processar manualmente para garantir
                         const lines = csvText.split('\n').filter(line => line.trim() !== '');
                         
                         if (lines.length === 0) {
@@ -2283,21 +2221,18 @@
                         
                         console.log('Número de linhas no CSV:', lines.length);
                         
-                        // Extrair cabeçalhos - assumindo que a primeira linha é o cabeçalho
                         const headers = lines[0].split(';').map(header => 
                             header.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                         );
                         
                         console.log('Cabeçalhos encontrados:', headers);
                         
-                        // Processar dados
                         orgaosData = [];
                         
                         for (let i = 1; i < lines.length; i++) {
                             const line = lines[i];
                             const values = line.split(';').map(v => v.trim());
                             
-                            // Verificar se temos valores suficientes
                             if (values.length >= headers.length) {
                                 const orgao = {
                                     __id: i,
@@ -2355,13 +2290,12 @@
                     .catch(error => {
                         console.error('Erro ao baixar ou processar CSV:', error);
                         
-                        // Tentar com PapaParse como fallback
                         console.log('Tentando com PapaParse como fallback...');
                         
                         Papa.parse(GITHUB_CSV_URL, {
                             download: true,
                             header: true,
-                            delimiter: ";", // Especificar ponto e vírgula como delimitador
+                            delimiter: ";",
                             encoding: "utf-8",
                             skipEmptyLines: true,
                             
@@ -2376,7 +2310,6 @@
                             
                             complete: function(results) {
                                 console.log("PapaParse completou:", results.data.length, "linhas");
-                                console.log("Colunas do CSV via PapaParse:", Object.keys(results.data[0]));
                                 
                                 const dadosValidos = results.data.filter(row =>
                                     Object.values(row).some(v => v && v.toString().trim() !== "")
@@ -2456,8 +2389,10 @@
                 });
             }
             
-            // Obter vinculações únicas
-            const vinculacoesUnicas = [...new Set(orgaosData.map(o => o.vinculacao))].filter(v => v && v !== '-').sort();
+            // Obter vinculações únicas (excluindo "Sem Vinculação")
+            const vinculacoesUnicas = [...new Set(orgaosData.map(o => o.vinculacao))]
+                .filter(v => v && v !== '-' && v !== 'Sem Vinculação' && v !== 'Sem vinculação')
+                .sort();
             
             // Dashboard 2 - Vinculação
             const vinculacaoSelect = document.getElementById('vinculacaoOrgao');
@@ -2523,7 +2458,6 @@
             }
             
             showLoading(false);
-            // Atualizar altura após filtrar
             setTimeout(iframeUpdateHeight, 300);
         }
 
@@ -2569,7 +2503,6 @@
             updateSummaryCards();
             updateResumoTable();
             updateCharts1();
-            // Atualizar altura
             setTimeout(iframeUpdateHeight, 100);
         }
 
@@ -2703,9 +2636,9 @@
                             </a>
                         </td>
                         <td><strong>${siglaText}</strong></td>
-                        <td><span class="badge-situacao ${getBadgeClassPorTipo(orgao.tipo)}">${orgao.tipo}</span></td>
+                        <td><span class="badge-tipo ${getTipoClass(orgao.tipo)}">${orgao.tipo}</span></td>
                         <td>${orgao.vinculacao}</td>
-                        <td>${orgao.responsavel_legal || 'Não informado'}</td>
+                        <td class="responsavel-legal">${orgao.responsavel_legal || 'Não informado'}</td>
                     </tr>
                 `;
             }).join('');
@@ -2718,15 +2651,6 @@
             
             // Atualizar ícones de ordenação
             updateSortIconsDashboard1();
-        }
-
-        function getBadgeClassPorTipo(tipo) {
-            switch(tipo) {
-                case 'Órgão Autônomo': return 'badge-vigente';
-                case 'Secretaria': return 'badge-ativo';
-                case 'Vinculado': return 'badge-encerrado';
-                default: return 'badge-rescindido';
-            }
         }
 
         function updateSortIconsDashboard1() {
@@ -2829,15 +2753,8 @@
             const tipos = Object.keys(tiposCount);
             const counts = tipos.map(tipo => tiposCount[tipo]);
             
-            // Cores para o gráfico
-            const pieColors = tipos.map(tipo => {
-                switch(tipo) {
-                    case 'Órgão Autônomo': return chartColors.success;
-                    case 'Secretaria': return chartColors.accent;
-                    case 'Vinculado': return chartColors.purple;
-                    default: return '#95A5A6';
-                }
-            });
+            // Cores harmonizadas para o gráfico
+            const pieColors = tipos.map(tipo => getTipoColor(tipo));
             
             if (charts.tipo) {
                 charts.tipo.destroy();
@@ -2889,9 +2806,14 @@
             if (!ctx) return;
             
             // Agrupar por vinculação e pegar top 10
+            // EXCLUIR "Sem Vinculação" da métrica
             const vinculacoesCount = {};
             orgaosData.forEach(o => {
                 const vinculacao = o.vinculacao || 'Sem vinculação';
+                // Ignorar órgãos sem vinculação
+                if (vinculacao === 'Sem Vinculação' || vinculacao === 'Sem vinculação' || vinculacao === '-') {
+                    return;
+                }
                 vinculacoesCount[vinculacao] = (vinculacoesCount[vinculacao] || 0) + 1;
             });
             
@@ -2904,6 +2826,20 @@
                 charts.orgao.destroy();
             }
             
+            // Cores harmonizadas para o gráfico de barras
+            const barColors = [
+                chartColors.primary,
+                chartColors.accent,
+                chartColors.success,
+                chartColors.warning,
+                chartColors.info,
+                chartColors.autonomo,
+                chartColors.secretaria,
+                chartColors.vinculado,
+                chartColors.outros,
+                chartColors.especial
+            ];
+            
             charts.orgao = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -2914,7 +2850,7 @@
                     datasets: [{
                         label: 'Número de Órgãos',
                         data: vinculacoesArray.map(item => item.count),
-                        backgroundColor: chartColors.accent,
+                        backgroundColor: barColors,
                         borderColor: chartColors.primary,
                         borderWidth: 1
                     }]
@@ -3016,9 +2952,9 @@
                 <tr>
                     <td>${orgaoText}</td>
                     <td><strong>${siglaText}</strong></td>
-                    <td><span class="badge-situacao ${getBadgeClassPorTipo(orgao.tipo)}">${tipoText}</span></td>
+                    <td><span class="badge-tipo ${getTipoClass(orgao.tipo)}">${tipoText}</span></td>
                     <td>${orgao.vinculacao}</td>
-                    <td>${responsavelText}</td>
+                    <td class="responsavel-legal">${responsavelText}</td>
                     <td>${telefoneText}</td>
                     <td class="actions-column">
                         <div class="action-buttons">
@@ -3163,7 +3099,7 @@
             const statusBadge = document.getElementById('orgao-status');
             
             statusBadge.textContent = orgao.tipo || 'Não informado';
-            statusBadge.className = 'badge ' + getTipoBadgeClass(orgao.tipo);
+            statusBadge.className = 'badge-tipo ' + getTipoClass(orgao.tipo);
             
             detalhesDiv.innerHTML = `
                 <div class="info-grid">
@@ -3176,7 +3112,7 @@
 
                     <div class="info-card success">
                         <div class="info-label">Tipo</div>
-                        <div class="info-value"><span class="${getBadgeClassPorTipo(orgao.tipo)}">${orgao.tipo || 'Não informado'}</span></div>
+                        <div class="info-value"><span class="badge-tipo ${getTipoClass(orgao.tipo)}">${orgao.tipo || 'Não informado'}</span></div>
                         <div class="info-label mt-2">Vinculação</div>
                         <div class="info-value">${orgao.vinculacao || 'Não informado'}</div>
                     </div>
@@ -3225,19 +3161,8 @@
             iframeUpdateHeight();
         }
 
-        function getTipoBadgeClass(tipo) {
-            switch(tipo) {
-                case 'Órgão Autônomo': return 'bg-primary';
-                case 'Secretaria': return 'bg-success';
-                case 'Vinculado': return 'bg-purple';
-                default: return 'bg-secondary';
-            }
-        }
-
         // ==================== DASHBOARD 4: DOWNLOADS ====================
         async function downloadFullCSV() {
-            const formato = document.getElementById('formatoDownload').value;
-            
             showLoading(true);
             
             try {
@@ -3251,51 +3176,31 @@
                 const headers = ['orgao', 'sigla', 'tipo', 'vinculacao', 'responsavel_legal', 
                                'endereco', 'telefone', 'competencias', 'site_orgao'];
                 
-                if (formato === 'csv') {
-                    const csvContent = [
-                        headers.join(';'),
-                        ...orgaosData.map(orgao => [
-                            orgao.orgao || '',
-                            orgao.sigla || '',
-                            orgao.tipo || '',
-                            orgao.vinculacao || '',
-                            orgao.responsavel_legal || '',
-                            orgao.endereco || '',
-                            orgao.telefone || '',
-                            orgao.competencias || '',
-                            orgao.site_orgao || ''
-                        ].map(cell => `"${cell.replace(/"/g, '""')}"`).join(';'))
-                    ].join('\n');
-                    
-                    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                    const link = document.createElement('a');
-                    const url = URL.createObjectURL(blob);
-                    
-                    link.setAttribute('href', url);
-                    link.setAttribute('download', 'estrutura_organizacional_governo_mg.csv');
-                    link.style.visibility = 'hidden';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    
-                } else if (formato === 'json') {
-                    const jsonContent = JSON.stringify(orgaosData, null, 2);
-                    const blob = new Blob([jsonContent], { type: 'application/json;charset=utf-8;' });
-                    const link = document.createElement('a');
-                    const url = URL.createObjectURL(blob);
-                    
-                    link.setAttribute('href', url);
-                    link.setAttribute('download', 'estrutura_organizacional_governo_mg.json');
-                    link.style.visibility = 'hidden';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    
-                } else if (formato === 'excel') {
-                    // Para Excel, seria necessário uma biblioteca adicional
-                    // Por enquanto, oferecemos CSV como alternativa
-                    alert('Funcionalidade Excel requer biblioteca adicional. Faça o download no formato CSV.');
-                }
+                const csvContent = [
+                    headers.join(';'),
+                    ...orgaosData.map(orgao => [
+                        orgao.orgao || '',
+                        orgao.sigla || '',
+                        orgao.tipo || '',
+                        orgao.vinculacao || '',
+                        orgao.responsavel_legal || '',
+                        orgao.endereco || '',
+                        orgao.telefone || '',
+                        orgao.competencias || '',
+                        orgao.site_orgao || ''
+                    ].map(cell => `"${cell.replace(/"/g, '""')}"`).join(';'))
+                ].join('\n');
+                
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                
+                link.setAttribute('href', url);
+                link.setAttribute('download', 'estrutura_organizacional_governo_mg.csv');
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
                 
                 console.log(`Download realizado: ${orgaosData.length} registros`);
                 
