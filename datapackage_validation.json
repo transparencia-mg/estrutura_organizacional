@@ -5,7 +5,7 @@
   "tasks": [
     {
       "resource": {
-        "description": "Insira a descrição/explicação detalhada deste recurso.",
+        "description": "Conjuntos referentes a estrutura governamental do Estado de Minas Gerais.",
         "dialect": {
           "delimiter": ";"
         },
@@ -56,7 +56,7 @@
           ]
         },
         "scheme": "file",
-        "title": "Insira um título humanamente legível para este recurso.",
+        "title": "estrutura_organizacional",
         "stats": {
           "hash": "59cbabccb43baa4e9391f268bbdbfd56",
           "bytes": 17113,
@@ -64,7 +64,7 @@
           "rows": 62
         }
       },
-      "time": 0.016,
+      "time": 0.017,
       "scope": [
         "hash-count-error",
         "byte-count-error",
