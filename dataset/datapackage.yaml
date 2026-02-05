@@ -1,8 +1,8 @@
 name: estrutura_organizacional
-owner_org: ''
+owner_org: 'secretaria-geral'
 profile: data-package
 resources:
-  - description: Insira a descrição/explicação detalhada deste recurso.
+  - description: Conjuntos referentes a estrutura governamental do Estado de Minas Gerais.
     dialect:
       delimiter: ;
     encoding: utf-8-sig
@@ -32,5 +32,5 @@ resources:
         - name: site_orgao
           type: string
     scheme: file
-    title: Insira um título humanamente legível para este recurso.
-title: Estrutura_organizacional
+    title: estrutura_organizacional
+title: Estrutura Organizacional
