@@ -52,15 +52,15 @@
             --chart-brown: #9C6B4A;
 
 :root {
-    /* Cores padronizadas para tipos de órgão */
-    --color-autonomo: #2F7A5C;     /* Verde */
-    --color-secretaria: #2F5D8A;   /* Azul */
-    --color-vinculado: #6B5B95;    /* Roxo */
-    --color-autarquia: #16A085;    /* Verde-azulado */
-    --color-empresa: #2980B9;      /* Azul médio */
-    --color-fundacao: #8E44AD;     /* Roxo-azulado */
+    /* Cores padronizadas para tipos de órgão - VERSÃO COM MAIOR CONTRASTE */
+    --color-autonomo: #1E7E34;     /* Verde escuro */
+    --color-secretaria: #2C3E50;   /* Azul petróleo escuro */
+    --color-vinculado: #8E44AD;    /* Roxo vibrante */
+    --color-autarquia: #0E6655;    /* Verde garrafa (mais escuro) */
+    --color-empresa: #2874A6;      /* Azul médio */
+    --color-fundacao: #B7950B;     /* Dourado / Mostarda */
     --color-outros: #E67E22;       /* Laranja */
-    --color-especial: #B93C42;     /* Vermelho */
+    --color-especial: #B03A2E;     /* Vermelho tijolo */
 }
         
         /* ==================== ESTILOS GERAIS ==================== */
@@ -728,21 +728,44 @@
             font-size: 1.4rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+    	    gap: 10px;
+    	    color: white;
         }
         
-        .modal-creative .btn-close {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            padding: 8px;
-            transition: all 0.3s ease;
-        }
-        
-        .modal-creative .btn-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(90deg);
-        }
-        
+/* CORREÇÃO: Botão X branco e visível */
+.modal-creative .btn-close {
+    background: transparent;
+    border-radius: 50%;
+    padding: 8px;
+    transition: all 0.3s ease;
+    opacity: 1;
+    filter: brightness(0) invert(1); /* Torna o ícone branco */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.modal-creative .btn-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Fallback para navegadores que não suportam filter */
+.modal-creative .btn-close::before {
+    color: white;
+}
+
+/* Para garantir visibilidade total */
+.modal-creative .btn-close {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3E%3Cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3E%3C/svg%3E");
+    background-size: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    opacity: 1;
+}        
         .modal-creative .modal-body {
             padding: 30px;
             background: linear-gradient(to bottom, #ffffff, #f8fafc);
@@ -860,6 +883,37 @@
                 grid-template-columns: 1fr;
             }
         }
+
+/* ==================== LINK CLICÁVEL ==================== */
+.orgao-link {
+    color: var(--primary-dark);  /* Azul escuro #29435A */
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-block;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.orgao-link:hover {
+    color: var(--accent-red) !important;  /* Vermelho #B93C42 */
+    background-color: rgba(185, 60, 66, 0.05);
+    transform: translateY(-1px);
+    text-decoration: none !important;  /* SEM sublinhado */
+}
+
+.orgao-link:active {
+    transform: translateY(0);
+}
+
+/* Para a tabela específica da visão geral */
+#visaoGeralTable .orgao-link {
+    padding: 4px 8px;
+    margin: -4px -8px;
+}
+
     </style>
 </head>
 <body>
@@ -1208,27 +1262,27 @@
         </div>
     </div>
 
-    <!-- ==================== MODAL DE DETALHES CRIATIVO ==================== -->
-    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content modal-creative">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="detailModalLabel">
-                        <i class="material-icons me-2">account_balance</i>Detalhes do Órgão
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="orgao-info" id="modalOrgaoInfo"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal">
-                        <i class="material-icons me-2">close</i>Fechar
-                    </button>
-                </div>
+<!-- ==================== MODAL DE DETALHES CRIATIVO ==================== -->
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content modal-creative">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailModalLabel">
+                    <i class="material-icons me-2">account_balance</i> Carregando...
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="orgao-info" id="modalOrgaoInfo"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal">
+                    <i class="material-icons me-2">close</i>Fechar
+                </button>
             </div>
         </div>
     </div>
+</div>
 
     <!-- ==================== LOADING OVERLAY ==================== -->
     <div class="loading-overlay" id="loadingOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); display: none; justify-content: center; align-items: center; z-index: 9999;">
@@ -1258,27 +1312,27 @@
         let currentSearchTerm = '';
         
 const chartPalette = [
-    '#2F7A5C', // autonomo
-    '#2F5D8A', // secretaria
-    '#6B5B95', // vinculado
-    '#16A085', // autarquia
-    '#2980B9', // empresa
-    '#8E44AD', // fundacao
-    '#E67E22', // outros
-    '#B93C42', // especial
-    '#D97A30',
-    '#C65A2C'
+    '#1E7E34', // Órgão Autônomo - Verde escuro
+    '#2C3E50', // Secretaria - Azul petróleo
+    '#8E44AD', // Vinculado - Roxo
+    '#0E6655', // Autarquia - Verde garrafa
+    '#2874A6', // Empresa Pública - Azul médio
+    '#B7950B', // Fundação - Dourado
+    '#E67E22', // Outros - Laranja
+    '#B03A2E', // Especial - Vermelho
+    '#D97A30', // Cor extra 1
+    '#C65A2C'  // Cor extra 2
 ];
 
 const tipoColors = {
-    'Órgão Autônomo': '#2F7A5C',  // Verde
-    'Secretaria': '#2F5D8A',      // Azul escuro
-    'Vinculado': '#6B5B95',       // Roxo
-    'Autarquia': '#16A085',       // Verde-azulado
-    'Empresa Pública': '#2980B9', // Azul médio
-    'Fundação': '#8E44AD',        // Roxo-azulado
-    'Outros': '#E67E22',          // Laranja
-    'Especial': '#B93C42'         // Vermelho
+    'Órgão Autônomo': '#1E7E34',     // Verde escuro
+    'Secretaria': '#2C3E50',         // Azul petróleo escuro
+    'Vinculado': '#8E44AD',          // Roxo vibrante
+    'Autarquia': '#0E6655',         // Verde garrafa (bem diferente)
+    'Empresa Pública': '#2874A6',   // Azul médio
+    'Fundação': '#B7950B',          // Dourado / Mostarda
+    'Outros': '#E67E22',            // Laranja
+    'Especial': '#B03A2E'           // Vermelho tijolo
 };
 
 const tipoClasses = {
@@ -1638,18 +1692,73 @@ const tipoClasses = {
 
         function updateCharts1() { if (orgaosData.length) { updateTipoChart(); updateOrgaoChart(); } }
 
-        function updateTipoChart() {
-            let ctx = document.getElementById('chartTipo')?.getContext('2d');
-            if (!ctx) return;
-            let grupos = {}; orgaosData.forEach(o => { let t = o.tipo || "Outros"; grupos[t] = (grupos[t]||0)+1; });
-            let items = Object.entries(grupos).map(([t,c])=>({tipo:t, count:c}));
-            destroyChart(charts.tipo);
-            charts.tipo = new Chart(ctx, {
-                type: 'doughnut',
-                data: { labels: items.map(i=>i.tipo), datasets: [{ data: items.map(i=>i.count), backgroundColor: items.map(i=>tipoColors[i.tipo]||chartPalette[3]), borderWidth: 1, borderColor: '#fff' }] },
-                options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, font: { size: 11 } } }, tooltip: { callbacks: { label: (ctx) => { let total = getTotal(ctx.dataset); let perc = Math.round((ctx.raw/total)*100); return `${ctx.label}: ${ctx.raw} órgãos (${perc}%)`; } } } } }
-            });
+function updateTipoChart() {
+    let ctx = document.getElementById('chartTipo')?.getContext('2d');
+    if (!ctx) return;
+    
+    // Agrupar por tipo
+    let grupos = {}; 
+    orgaosData.forEach(o => { 
+        let t = o.tipo || "Outros"; 
+        grupos[t] = (grupos[t]||0) + 1; 
+    });
+    
+    let items = Object.entries(grupos).map(([t,c])=>({tipo:t, count:c}));
+    
+    // CORREÇÃO: Mapear cores EXATAMENTE iguais às tags, com cores distintas
+    const coresDoGrafico = items.map(item => {
+        // Mapeamento direto das cores das tags
+        const cores = {
+            'Órgão Autônomo': '#1E7E34',     // Verde escuro
+            'Secretaria': '#2C3E50',         // Azul petróleo
+            'Vinculado': '#8E44AD',          // Roxo vibrante
+            'Autarquia': '#0E6655',          // Verde garrafa
+            'Empresa Pública': '#2874A6',    // Azul médio
+            'Fundação': '#B7950B',           // Dourado
+            'Outros': '#E67E22',             // Laranja
+            'Especial': '#B03A2E'            // Vermelho tijolo
+        };
+        return cores[item.tipo] || '#95A5A6'; // Cinza só se não encontrar
+    });
+    
+    destroyChart(charts.tipo);
+    
+    charts.tipo = new Chart(ctx, {
+        type: 'doughnut',
+        data: { 
+            labels: items.map(i=>i.tipo), 
+            datasets: [{ 
+                data: items.map(i=>i.count), 
+                backgroundColor: coresDoGrafico, // AGORA USA AS MESMAS CORES DAS TAGS
+                borderWidth: 1, 
+                borderColor: '#fff' 
+            }] 
+        },
+        options: { 
+            responsive: true, 
+            maintainAspectRatio: false, 
+            cutout: '70%', 
+            plugins: { 
+                legend: { 
+                    position: 'bottom', 
+                    labels: { 
+                        usePointStyle: true, 
+                        font: { size: 11 } 
+                    } 
+                }, 
+                tooltip: { 
+                    callbacks: { 
+                        label: (ctx) => { 
+                            let total = getTotal(ctx.dataset); 
+                            let perc = Math.round((ctx.raw/total)*100); 
+                            return `${ctx.label}: ${ctx.raw} órgãos (${perc}%)`; 
+                        } 
+                    } 
+                } 
+            } 
         }
+    });
+}
 
         function updateOrgaoChart() {
             let ctx = document.getElementById('chartOrgao')?.getContext('2d');
@@ -1718,27 +1827,75 @@ const tipoClasses = {
             updateOrgaosTable();
         };
 
-        // ==================== MODAL DETALHES ====================
-        window.abrirModalDetalhes = function(sigla) {
-            const orgao = orgaosData.find(o => o.sigla === sigla);
-            if (!orgao) { alert('Órgão não encontrado!'); return; }
-            const modalBody = document.getElementById('modalOrgaoInfo');
-            modalBody.innerHTML = `
-                <div class="info-grid">
-                    <div class="info-card primary"><div class="info-label">Órgão</div><div class="info-value highlight">${orgao.orgao || 'Não informado'}</div><div class="info-label mt-2">Sigla</div><div class="info-value">${orgao.sigla || 'Não informado'}</div></div>
-                    <div class="info-card"><div class="info-label">Tipo</div><div class="info-value"><span class="badge-tipo ${tipoClasses[orgao.tipo] || 'badge-outros'}">${orgao.tipo || 'Não informado'}</span></div><div class="info-label mt-2">Vinculação</div><div class="info-value">${orgao.vinculacao || 'Não informado'}</div></div>
-                    <div class="info-card"><div class="info-label">Responsável Legal</div><div class="info-value">${orgao.responsavel_legal || 'Não informado'}</div><div class="info-label mt-2">Telefone</div><div class="info-value">${orgao.telefone || 'Não informado'}</div></div>
-                    <div class="info-card"><div class="info-label">Endereço</div><div class="info-value">${orgao.endereco || 'Não informado'}</div></div>
+// ==================== MODAL DETALHES ====================
+window.abrirModalDetalhes = function(sigla) {
+    const orgao = orgaosData.find(o => o.sigla === sigla);
+    if (!orgao) { 
+        alert('Órgão não encontrado!'); 
+        return; 
+    }
+    
+    // ATUALIZAR O TÍTULO DO MODAL COM O NOME DO ÓRGÃO
+    const modalTitle = document.getElementById('detailModalLabel');
+    if (modalTitle) {
+        modalTitle.innerHTML = `<i class="material-icons me-2">account_balance</i> ${orgao.orgao || 'Detalhes do Órgão'}`;
+    }
+    
+    // Preencher o corpo do modal
+    const modalBody = document.getElementById('modalOrgaoInfo');
+    modalBody.innerHTML = `
+        <div class="info-grid">
+            <div class="info-card primary">
+                <div class="info-label">Sigla</div>
+                <div class="info-value highlight">${orgao.sigla || 'Não informado'}</div>
+                <div class="info-label mt-2">Tipo</div>
+                <div class="info-value"><span class="badge-tipo ${tipoClasses[orgao.tipo] || 'badge-outros'}">${orgao.tipo || 'Não informado'}</span></div>
+            </div>
+            <div class="info-card">
+                <div class="info-label">Vinculação</div>
+                <div class="info-value">${orgao.vinculacao || 'Não informado'}</div>
+                <div class="info-label mt-2">Responsável Legal</div>
+                <div class="info-value">${orgao.responsavel_legal || 'Não informado'}</div>
+            </div>
+            <div class="info-card">
+                <div class="info-label">Telefone</div>
+                <div class="info-value">${orgao.telefone || 'Não informado'}</div>
+                <div class="info-label mt-2">Endereço</div>
+                <div class="info-value">${orgao.endereco || 'Não informado'}</div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="info-card">
+                    <div class="info-label">Competências</div>
+                    <div class="info-value">
+                        ${orgao.competencias ? 
+                            `<a href="${orgao.competencias}" target="_blank" style="color: var(--accent-red); text-decoration: none;">
+                                <i class="material-icons" style="font-size: 16px; vertical-align: middle;">link</i> Ver competências legais
+                            </a>` : 
+                            'Não informado'}
+                    </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-6"><div class="info-card"><div class="info-label">Competências</div><div class="info-value">${orgao.competencias ? `<a href="${orgao.competencias}" target="_blank" style="color: var(--accent-red);"><i class="material-icons">link</i> Ver competências</a>` : 'Não informado'}</div></div></div>
-                    <div class="col-md-6"><div class="info-card"><div class="info-label">Site do Órgão</div><div class="info-value">${orgao.site_orgao ? `<a href="${orgao.site_orgao}" target="_blank" style="color: var(--accent-red);"><i class="material-icons">language</i> Acessar site</a>` : 'Não informado'}</div></div></div>
+            </div>
+            <div class="col-md-6">
+                <div class="info-card">
+                    <div class="info-label">Site do Órgão</div>
+                    <div class="info-value">
+                        ${orgao.site_orgao ? 
+                            `<a href="${orgao.site_orgao}" target="_blank" style="color: var(--accent-red); text-decoration: none;">
+                                <i class="material-icons" style="font-size: 16px; vertical-align: middle;">language</i> Acessar site oficial
+                            </a>` : 
+                            'Não informado'}
+                    </div>
                 </div>
-            `;
-            const modal = new bootstrap.Modal(document.getElementById('detailModal'));
-            modal.show();
-        };
-
+            </div>
+        </div>
+    `;
+    
+    // Abrir o modal
+    const modal = new bootstrap.Modal(document.getElementById('detailModal'));
+    modal.show();
+};
         // ==================== DOWNLOAD ====================
         async function downloadFullCSV() {
             showLoading(true);
