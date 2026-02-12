@@ -37,31 +37,16 @@
             --button-red: var(--accent-red);
             --button-red-hover: var(--primary-darker);
 
-            /* NOVAS PARA GRÁFICOS */
-            --chart-blue-1: #2F5D8A;
-            --chart-blue-2: #4A7DAA;
-            --chart-blue-3: #1F6F8B;
-            --chart-orange-1: #D97A30;
-            --chart-orange-2: #C65A2C;
-            --chart-red-2: #A8323A;
-            --chart-green-1: #2F7A5C;
-            --chart-green-2: #5A8F6E;
-            --chart-lime: #7FAF3F;
-            --chart-purple: #6B5B95;
-            --chart-gray: #6C7A89;
-            --chart-brown: #9C6B4A;
-
-:root {
-    /* Cores padronizadas para tipos de órgão - VERSÃO COM MAIOR CONTRASTE */
-    --color-autonomo: #1E7E34;     /* Verde escuro */
-    --color-secretaria: #2C3E50;   /* Azul petróleo escuro */
-    --color-vinculado: #8E44AD;    /* Roxo vibrante */
-    --color-autarquia: #0E6655;    /* Verde garrafa (mais escuro) */
-    --color-empresa: #2874A6;      /* Azul médio */
-    --color-fundacao: #B7950B;     /* Dourado / Mostarda */
-    --color-outros: #E67E22;       /* Laranja */
-    --color-especial: #B03A2E;     /* Vermelho tijolo */
-}
+            /* Cores padronizadas para tipos de órgão - CORRIGIDAS */
+            --color-autonomo: #E83F6F;     /* Rosa claro vibrante */
+            --color-secretaria: #2C3E50;    /* Azul petróleo escuro */
+            --color-vinculado: #8E44AD;     /* Roxo vibrante */
+            --color-autarquia: #0E6655;     /* Verde garrafa (escuro) */
+            --color-empresa: #2874A6;       /* Azul médio */
+            --color-fundacao: #B7950B;      /* Dourado / Mostarda */
+            --color-outros: #E67E22;        /* Laranja */
+            --color-especial: #B03A2E;      /* Vermelho tijolo */
+        }
         
         /* ==================== ESTILOS GERAIS ==================== */
         body {
@@ -450,50 +435,51 @@
         }
         
         .badge-autonomo {
-            background-color: rgba(47, 122, 92, 0.15);
+            background-color: rgba(232, 63, 111, 0.15);
             color: var(--color-autonomo);
-            border-color: rgba(47, 122, 92, 0.3);
+            border-color: rgba(232, 63, 111, 0.3);
         }
         
         .badge-secretaria {
-            background-color: rgba(47, 93, 138, 0.15);
+            background-color: rgba(44, 62, 80, 0.15);
             color: var(--color-secretaria);
-            border-color: rgba(47, 93, 138, 0.3);
+            border-color: rgba(44, 62, 80, 0.3);
         }
         
         .badge-vinculado {
-            background-color: rgba(107, 91, 149, 0.15);
+            background-color: rgba(142, 68, 173, 0.15);
             color: var(--color-vinculado);
-            border-color: rgba(107, 91, 149, 0.3);
+            border-color: rgba(142, 68, 173, 0.3);
         }
 
-.badge-autarquia {
-    background-color: rgba(22, 160, 133, 0.15);
-    color: var(--color-autarquia);
-    border-color: rgba(22, 160, 133, 0.3);
-}
+        .badge-autarquia {
+            background-color: rgba(14, 102, 85, 0.15);
+            color: var(--color-autarquia);
+            border-color: rgba(14, 102, 85, 0.3);
+        }
 
-.badge-empresa {
-    background-color: rgba(41, 128, 185, 0.15);
-    color: var(--color-empresa);
-    border-color: rgba(41, 128, 185, 0.3);
-}
+        .badge-empresa {
+            background-color: rgba(40, 116, 166, 0.15);
+            color: var(--color-empresa);
+            border-color: rgba(40, 116, 166, 0.3);
+        }
 
-.badge-fundacao {
-    background-color: rgba(142, 68, 173, 0.15);
-    color: var(--color-fundacao);
-    border-color: rgba(142, 68, 173, 0.3);
-}
+        .badge-fundacao {
+            background-color: rgba(183, 149, 11, 0.15);
+            color: var(--color-fundacao);
+            border-color: rgba(183, 149, 11, 0.3);
+        }
         
-.badge-outros {
-    background-color: rgba(230, 126, 34, 0.15);  /* Laranja com opacidade */
-    color: var(--color-outros);
-    border-color: rgba(230, 126, 34, 0.3);
-}
+        .badge-outros {
+            background-color: rgba(230, 126, 34, 0.15);
+            color: var(--color-outros);
+            border-color: rgba(230, 126, 34, 0.3);
+        }
+        
         .badge-especial {
-            background-color: rgba(185, 60, 66, 0.15);
+            background-color: rgba(176, 58, 46, 0.15);
             color: var(--color-especial);
-            border-color: rgba(185, 60, 66, 0.3);
+            border-color: rgba(176, 58, 46, 0.3);
         }
         
         /* ==================== BOTÕES ==================== */
@@ -586,6 +572,37 @@
             color: white;
             transform: translateY(-1px);
         }
+
+        /* ==================== BOTÃO COMPARTILHAR ==================== */
+        .btn-share {
+            background: white;
+            border: 2px solid var(--primary-darker);
+            color: var(--primary-darker);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        
+        .btn-share:hover {
+            background: var(--primary-darker);
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        .btn-share i {
+            color: var(--primary-darker);
+        }
+        
+        .btn-share:hover i {
+            color: white;
+        }
         
         /* ==================== DROPDOWN COMPARTILHAR ==================== */
         .share-dropdown {
@@ -602,7 +619,7 @@
             min-width: 220px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             border-radius: 8px;
-            padding: 12px;
+            padding: 8px;
             z-index: 1000;
             border: 1px solid #dee2e6;
             margin-top: 5px;
@@ -612,7 +629,7 @@
             display: block;
         }
         
-        .share-btn {
+        .link-share, .facebook-share, .twitter-share, .linkedin-share, .whatsapp-share {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -625,15 +642,33 @@
             color: var(--primary-dark);
             transition: background 0.2s;
             cursor: pointer;
+            text-decoration: none;
         }
-        
-        .share-btn:hover {
+
+       
+        .link-share:hover, .facebook-share:hover, .twitter-share:hover, .linkedin-share:hover, .whatsapp-share:hover {
             background-color: var(--background-light);
             color: var(--accent-red);
         }
         
-        .share-btn i {
+        .link-share i, .facebook-share i, .twitter-share i, .linkedin-share i, .whatsapp-share i {
             font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .facebook-share i { color: #1877f2; }
+        .twitter-share i { color: #1da1f2; }
+        .linkedin-share i { color: #0a66c2; }
+        .whatsapp-share i { color: #25d366; }
+        .link-share i { color: var(--primary-dark); }
+        
+        .facebook-share:hover i, 
+        .twitter-share:hover i, 
+        .linkedin-share:hover i, 
+        .whatsapp-share:hover i,
+        .link-share:hover i {
+            color: var(--accent-red);
         }
         
         /* ==================== MENU DE NAVEGAÇÃO ==================== */
@@ -732,40 +767,34 @@
     	    color: white;
         }
         
-/* CORREÇÃO: Botão X branco e visível */
-.modal-creative .btn-close {
-    background: transparent;
-    border-radius: 50%;
-    padding: 8px;
-    transition: all 0.3s ease;
-    opacity: 1;
-    filter: brightness(0) invert(1); /* Torna o ícone branco */
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
+        .modal-creative .btn-close {
+            background: transparent;
+            border-radius: 50%;
+            padding: 8px;
+            transition: all 0.3s ease;
+            opacity: 1;
+            filter: brightness(0) invert(1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
 
-.modal-creative .btn-close:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: rotate(90deg);
-    border-color: rgba(255, 255, 255, 0.8);
-}
+        .modal-creative .btn-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
 
-/* Fallback para navegadores que não suportam filter */
-.modal-creative .btn-close::before {
-    color: white;
-}
-
-/* Para garantir visibilidade total */
-.modal-creative .btn-close {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3E%3Cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3E%3C/svg%3E");
-    background-size: 12px;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 32px;
-    height: 32px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    opacity: 1;
-}        
+        .modal-creative .btn-close {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3E%3Cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3E%3C/svg%3E");
+            background-size: 12px;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            opacity: 1;
+        }        
+        
         .modal-creative .modal-body {
             padding: 30px;
             background: linear-gradient(to bottom, #ffffff, #f8fafc);
@@ -884,36 +913,34 @@
             }
         }
 
-/* ==================== LINK CLICÁVEL ==================== */
-.orgao-link {
-    color: var(--primary-dark);  /* Azul escuro #29435A */
-    text-decoration: none;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-block;
-    padding: 2px 4px;
-    border-radius: 4px;
-    font-size: 13px;
-}
+        /* ==================== LINK CLICÁVEL ==================== */
+        .orgao-link {
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-block;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
 
-.orgao-link:hover {
-    color: var(--accent-red) !important;  /* Vermelho #B93C42 */
-    background-color: rgba(185, 60, 66, 0.05);
-    transform: translateY(-1px);
-    text-decoration: none !important;  /* SEM sublinhado */
-}
+        .orgao-link:hover {
+            color: var(--accent-red) !important;
+            background-color: rgba(185, 60, 66, 0.05);
+            transform: translateY(-1px);
+            text-decoration: none !important;
+        }
 
-.orgao-link:active {
-    transform: translateY(0);
-}
+        .orgao-link:active {
+            transform: translateY(0);
+        }
 
-/* Para a tabela específica da visão geral */
-#visaoGeralTable .orgao-link {
-    padding: 4px 8px;
-    margin: -4px -8px;
-}
-
+        #visaoGeralTable .orgao-link {
+            padding: 4px 8px;
+            margin: -4px -8px;
+        }
     </style>
 </head>
 <body>
@@ -982,54 +1009,55 @@
                         </div>
                     </div>
 
-<!-- ==================== AÇÕES DASHBOARD 1 ==================== -->
-<div class="actions-container" style="background: white; border-radius: 10px; padding: 15px 20px; margin-bottom: 20px; box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-    <div class="export-buttons d-flex gap-2">
-        <button class="btn-export" id="exportCSVDashboard1">
-            <i class="material-icons me-2">description</i>Exportar CSV
-        </button>
-        <button class="btn-export" id="printDashboard1">
-            <i class="material-icons me-2">print</i>Imprimir
-        </button>
-        <div class="share-dropdown">
-            <button class="btn-export" id="shareButton1">
-                <i class="material-icons me-2">share</i>Compartilhar
-            </button>
-            <div class="share-options" id="shareOptions1" style="display: none; position: absolute; right: 0; top: 100%; background-color: white; min-width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); border-radius: 8px; padding: 12px; z-index: 1000; border: 1px solid #dee2e6; margin-top: 5px;">
-                <button onclick="copiarLink()" class="share-btn" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: none; border-radius: 6px; font-size: 13px; color: var(--primary-dark); transition: background 0.2s; cursor: pointer;">
-                    <i class="material-icons" style="font-size: 18px;">link</i> Copiar link
-                </button>
-                <button onclick="compartilharFacebook(event)" class="share-btn" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: none; border-radius: 6px; font-size: 13px; color: var(--primary-dark); transition: background 0.2s; cursor: pointer;">
-                    <i class="fab fa-facebook" style="font-size: 18px;"></i> Facebook
-                </button>
-                <button onclick="compartilharTwitter(event)" class="share-btn" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: none; border-radius: 6px; font-size: 13px; color: var(--primary-dark); transition: background 0.2s; cursor: pointer;">
-                    <i class="fab fa-twitter" style="font-size: 18px;"></i> Twitter
-                </button>
-                <button onclick="compartilharLinkedIn(event)" class="share-btn" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: none; border-radius: 6px; font-size: 13px; color: var(--primary-dark); transition: background 0.2s; cursor: pointer;">
-                    <i class="fab fa-linkedin" style="font-size: 18px;"></i> LinkedIn
-                </button>
-                <button onclick="compartilharWhatsApp(event)" class="share-btn" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: none; border-radius: 6px; font-size: 13px; color: var(--primary-dark); transition: background 0.2s; cursor: pointer;">
-                    <i class="fab fa-whatsapp" style="font-size: 18px;"></i> WhatsApp
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="right-aligned-container" style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: flex-end;">
-        <div class="items-per-page-container d-flex gap-3 align-items-center">
-            <div class="items-per-page d-flex align-items-center gap-2">
-                <span style="font-size: 12px; color: var(--primary-dark); font-weight: 600;">Itens por página:</span>
-                <select id="itemsPerPageDashboard1" class="form-select form-select-sm" style="border: 2px solid var(--primary-dark); border-radius: 6px; padding: 5px 10px; font-size: 12px; width: 70px; background-color: white; color: var(--primary-dark);">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50" selected>50</option>
-                    <option value="100">100</option>
-                </select>
-            </div>
-            <span class="table-badge" id="resumoCountDashboard1" style="background: var(--accent-red); color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px; font-weight: 600;">0 órgãos</span>
-        </div>
-    </div>
-</div>
+                    <!-- ==================== AÇÕES DASHBOARD 1 ==================== -->
+                    <div class="actions-container" style="background: white; border-radius: 10px; padding: 15px 20px; margin-bottom: 20px; box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                        <div class="export-buttons d-flex gap-2">
+                            <button class="btn-export" id="exportCSVDashboard1">
+                                <i class="material-icons me-2">description</i>Exportar CSV
+                            </button>
+                            <button class="btn-export" id="printDashboard1">
+                                <i class="material-icons me-2">print</i>Imprimir
+                            </button>
+                            <!-- Botão de Compartilhar - CORRIGIDO -->
+                            <div class="share-dropdown">
+                                <button class="btn-share" id="shareButton1">
+                                    <i class="material-icons me-2">share</i> Compartilhar
+                                </button>
+                                <div class="share-options" id="shareOptions1">
+                                    <a href="#" class="link-share" onclick="copiarLink(event)">
+                                        <i class="fas fa-link"></i> Copiar Link
+                                    </a>
+                                    <a href="#" class="facebook-share" onclick="compartilharFacebook(event)">
+                                        <i class="fab fa-facebook-f"></i> Facebook
+                                    </a>
+                                    <a href="#" class="twitter-share" onclick="compartilharTwitter(event)">
+                                        <i class="fab fa-twitter"></i> Twitter
+                                    </a>
+                                    <a href="#" class="linkedin-share" onclick="compartilharLinkedIn(event)">
+                                        <i class="fab fa-linkedin-in"></i> LinkedIn
+                                    </a>
+                                    <a href="#" class="whatsapp-share" onclick="compartilharWhatsApp(event)">
+                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="right-aligned-container" style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: flex-end;">
+                            <div class="items-per-page-container d-flex gap-3 align-items-center">
+                                <div class="items-per-page d-flex align-items-center gap-2">
+                                    <span style="font-size: 12px; color: var(--primary-dark); font-weight: 600;">Itens por página:</span>
+                                    <select id="itemsPerPageDashboard1" class="form-select form-select-sm" style="border: 2px solid var(--primary-dark); border-radius: 6px; padding: 5px 10px; font-size: 12px; width: 70px; background-color: white; color: var(--primary-dark);">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50" selected>50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+                                <span class="table-badge" id="resumoCountDashboard1" style="background: var(--accent-red); color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px; font-weight: 600;">0 órgãos</span>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="table-container">
                         <div class="table-fixed-header-container">
@@ -1110,63 +1138,64 @@
                         </div>
                     </div>
 
-<!-- ==================== AÇÕES DASHBOARD 2 ==================== -->
-<div class="actions-container mb-4" style="background: white; border-radius: 10px; padding: 15px 20px; margin-bottom: 20px; box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-    <div class="export-buttons d-flex gap-2">
-        <button class="btn-export" id="exportCSVDashboard2">
-            <i class="material-icons me-2">description</i>Exportar CSV
-        </button>
-        <button class="btn-export" id="printDashboard2">
-            <i class="material-icons me-2">print</i>Imprimir
-        </button>
-        <div class="share-dropdown" style="position: relative;">
-            <button class="btn-export" id="shareButton2">
-                <i class="material-icons me-2">share</i>Compartilhar
-            </button>
-            <div class="share-options" id="shareOptions2" style="display: none; position: absolute; right: 0; top: 100%; background-color: white; min-width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); border-radius: 8px; padding: 12px; z-index: 1000; border: 1px solid #dee2e6; margin-top: 5px;">
-                <button onclick="copiarLink()" class="share-btn" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: none; border-radius: 6px; font-size: 13px; color: var(--primary-dark); transition: background 0.2s; cursor: pointer;">
-                    <i class="material-icons" style="font-size: 18px;">link</i> Copiar link
-                </button>
-                <button onclick="compartilharFacebook(event)" class="share-btn" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: none; border-radius: 6px; font-size: 13px; color: var(--primary-dark); transition: background 0.2s; cursor: pointer;">
-                    <i class="fab fa-facebook" style="font-size: 18px;"></i> Facebook
-                </button>
-                <button onclick="compartilharTwitter(event)" class="share-btn" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: none; border-radius: 6px; font-size: 13px; color: var(--primary-dark); transition: background 0.2s; cursor: pointer;">
-                    <i class="fab fa-twitter" style="font-size: 18px;"></i> Twitter
-                </button>
-                <button onclick="compartilharLinkedIn(event)" class="share-btn" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: none; border-radius: 6px; font-size: 13px; color: var(--primary-dark); transition: background 0.2s; cursor: pointer;">
-                    <i class="fab fa-linkedin" style="font-size: 18px;"></i> LinkedIn
-                </button>
-                <button onclick="compartilharWhatsApp(event)" class="share-btn" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: none; border-radius: 6px; font-size: 13px; color: var(--primary-dark); transition: background 0.2s; cursor: pointer;">
-                    <i class="fab fa-whatsapp" style="font-size: 18px;"></i> WhatsApp
-                </button>
-            </div>
-        </div>
-    </div>
+                    <!-- ==================== AÇÕES DASHBOARD 2 ==================== -->
+                    <div class="actions-container mb-4" style="background: white; border-radius: 10px; padding: 15px 20px; margin-bottom: 20px; box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                        <div class="export-buttons d-flex gap-2">
+                            <button class="btn-export" id="exportCSVDashboard2">
+                                <i class="material-icons me-2">description</i>Exportar CSV
+                            </button>
+                            <button class="btn-export" id="printDashboard2">
+                                <i class="material-icons me-2">print</i>Imprimir
+                            </button>
+                            <!-- Botão de Compartilhar - Dashboard 2 -->
+                            <div class="share-dropdown" style="position: relative;">
+                                <button class="btn-share" id="shareButton2">
+                                    <i class="material-icons me-2">share</i> Compartilhar
+                                </button>
+                                <div class="share-options" id="shareOptions2" style="display: none; position: absolute; right: 0; top: 100%; background-color: white; min-width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); border-radius: 8px; padding: 12px; z-index: 1000; border: 1px solid #dee2e6; margin-top: 5px;">
+                                    <a href="#" class="link-share" onclick="copiarLink(event)">
+                                        <i class="fas fa-link"></i> Copiar Link
+                                    </a>
+                                    <a href="#" class="facebook-share" onclick="compartilharFacebook(event)">
+                                        <i class="fab fa-facebook-f"></i> Facebook
+                                    </a>
+                                    <a href="#" class="twitter-share" onclick="compartilharTwitter(event)">
+                                        <i class="fab fa-twitter"></i> Twitter
+                                    </a>
+                                    <a href="#" class="linkedin-share" onclick="compartilharLinkedIn(event)">
+                                        <i class="fab fa-linkedin-in"></i> LinkedIn
+                                    </a>
+                                    <a href="#" class="whatsapp-share" onclick="compartilharWhatsApp(event)">
+                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
 
-    <div class="right-aligned-container" style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: flex-end;">
-        <div class="items-per-page-container d-flex gap-3 align-items-center">
-            <div class="search-box-container d-flex align-items-center gap-2">
-                <label for="searchOrgaos" style="font-weight: 600; color: var(--primary-dark); font-size: 12px; white-space: nowrap;">Buscar registros:</label>
-                <input type="text" id="searchOrgaos" placeholder="Buscar por órgão, responsável ou endereço..." 
-                       style="border: 2px solid var(--primary-dark) !important; border-radius: 6px !important; padding: 8px 12px !important; font-size: 13px !important; width: 100% !important; max-width: 250px !important; background-color: white; color: var(--primary-dark);"
-                       class="form-control form-control-sm">
-            </div>
-            
-            <div class="items-per-page d-flex align-items-center gap-2">
-                <span style="font-size: 12px; color: var(--primary-dark); font-weight: 600;">Itens por página:</span>
-                <select id="itemsPerPageDashboard2" class="form-select form-select-sm" 
-                        style="border: 2px solid var(--primary-dark); border-radius: 6px; padding: 5px 10px; font-size: 12px; width: 70px; background-color: white; color: var(--primary-dark);">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50" selected>50</option>
-                    <option value="100">100</option>
-                </select>
-            </div>
-            
-            <span class="table-badge" id="resumoCountDashboard2" style="background: var(--accent-red); color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px; font-weight: 600;">0 órgãos</span>
-        </div>
-    </div>
-</div>
+                        <div class="right-aligned-container" style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: flex-end;">
+                            <div class="items-per-page-container d-flex gap-3 align-items-center">
+                                <div class="search-box-container d-flex align-items-center gap-2">
+                                    <label for="searchOrgaos" style="font-weight: 600; color: var(--primary-dark); font-size: 12px; white-space: nowrap;">Buscar registros:</label>
+                                    <input type="text" id="searchOrgaos" placeholder="Buscar por órgão, responsável ou endereço..." 
+                                           style="border: 2px solid var(--primary-dark) !important; border-radius: 6px !important; padding: 8px 12px !important; font-size: 13px !important; width: 100% !important; max-width: 250px !important; background-color: white; color: var(--primary-dark);"
+                                           class="form-control form-control-sm">
+                                </div>
+                                
+                                <div class="items-per-page d-flex align-items-center gap-2">
+                                    <span style="font-size: 12px; color: var(--primary-dark); font-weight: 600;">Itens por página:</span>
+                                    <select id="itemsPerPageDashboard2" class="form-select form-select-sm" 
+                                            style="border: 2px solid var(--primary-dark); border-radius: 6px; padding: 5px 10px; font-size: 12px; width: 70px; background-color: white; color: var(--primary-dark);">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50" selected>50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+                                
+                                <span class="table-badge" id="resumoCountDashboard2" style="background: var(--accent-red); color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px; font-weight: 600;">0 órgãos</span>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="table-container">
                         <div class="table-fixed-header-container">
@@ -1262,27 +1291,27 @@
         </div>
     </div>
 
-<!-- ==================== MODAL DE DETALHES CRIATIVO ==================== -->
-<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content modal-creative">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailModalLabel">
-                    <i class="material-icons me-2">account_balance</i> Carregando...
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="orgao-info" id="modalOrgaoInfo"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal">
-                    <i class="material-icons me-2">close</i>Fechar
-                </button>
+    <!-- ==================== MODAL DE DETALHES CRIATIVO ==================== -->
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-creative">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailModalLabel">
+                        <i class="material-icons me-2">account_balance</i> Carregando...
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="orgao-info" id="modalOrgaoInfo"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal">
+                        <i class="material-icons me-2">close</i>Fechar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- ==================== LOADING OVERLAY ==================== -->
     <div class="loading-overlay" id="loadingOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); display: none; justify-content: center; align-items: center; z-index: 9999;">
@@ -1311,40 +1340,41 @@
         let currentSortDashboard2 = { column: 'orgao', order: 'asc' };
         let currentSearchTerm = '';
         
-const chartPalette = [
-    '#1E7E34', // Órgão Autônomo - Verde escuro
-    '#2C3E50', // Secretaria - Azul petróleo
-    '#8E44AD', // Vinculado - Roxo
-    '#0E6655', // Autarquia - Verde garrafa
-    '#2874A6', // Empresa Pública - Azul médio
-    '#B7950B', // Fundação - Dourado
-    '#E67E22', // Outros - Laranja
-    '#B03A2E', // Especial - Vermelho
-    '#D97A30', // Cor extra 1
-    '#C65A2C'  // Cor extra 2
-];
+        // Paleta de cores atualizada - Órgão Autônomo rosa claro, Autarquia verde escuro
+        const chartPalette = [
+            '#E83F6F', // Órgão Autônomo - Rosa claro
+            '#2C3E50', // Secretaria - Azul petróleo
+            '#8E44AD', // Vinculado - Roxo
+            '#0E6655', // Autarquia - Verde garrafa
+            '#2874A6', // Empresa Pública - Azul médio
+            '#B7950B', // Fundação - Dourado
+            '#E67E22', // Outros - Laranja
+            '#B03A2E', // Especial - Vermelho
+            '#D97A30', // Cor extra 1
+            '#C65A2C'  // Cor extra 2
+        ];
 
-const tipoColors = {
-    'Órgão Autônomo': '#1E7E34',     // Verde escuro
-    'Secretaria': '#2C3E50',         // Azul petróleo escuro
-    'Vinculado': '#8E44AD',          // Roxo vibrante
-    'Autarquia': '#0E6655',         // Verde garrafa (bem diferente)
-    'Empresa Pública': '#2874A6',   // Azul médio
-    'Fundação': '#B7950B',          // Dourado / Mostarda
-    'Outros': '#E67E22',            // Laranja
-    'Especial': '#B03A2E'           // Vermelho tijolo
-};
+        const tipoColors = {
+            'Órgão Autônomo': '#E83F6F',  // Rosa claro
+            'Secretaria': '#2C3E50',      // Azul petróleo
+            'Vinculado': '#8E44AD',       // Roxo
+            'Autarquia': '#0E6655',       // Verde escuro
+            'Empresa Pública': '#2874A6', // Azul médio
+            'Fundação': '#B7950B',        // Dourado
+            'Outros': '#E67E22',          // Laranja
+            'Especial': '#B03A2E'         // Vermelho
+        };
 
-const tipoClasses = {
-    'Órgão Autônomo': 'badge-autonomo',
-    'Secretaria': 'badge-secretaria',
-    'Vinculado': 'badge-vinculado',
-    'Autarquia': 'badge-autarquia',
-    'Empresa Pública': 'badge-empresa',
-    'Fundação': 'badge-fundacao',
-    'Outros': 'badge-outros',
-    'Especial': 'badge-especial'
-};
+        const tipoClasses = {
+            'Órgão Autônomo': 'badge-autonomo',
+            'Secretaria': 'badge-secretaria',
+            'Vinculado': 'badge-vinculado',
+            'Autarquia': 'badge-autarquia',
+            'Empresa Pública': 'badge-empresa',
+            'Fundação': 'badge-fundacao',
+            'Outros': 'badge-outros',
+            'Especial': 'badge-especial'
+        };
 
         const GITHUB_CSV_URL = 'https://raw.githubusercontent.com/transparencia-mg/estrutura_organizacional/main/dataset/data/estrutura_governamental.csv';
 
@@ -1379,14 +1409,15 @@ const tipoClasses = {
             return finalHeight;
         }
 
-        // ==================== COMPARTILHAMENTO ====================
+        // ==================== COMPARTILHAMENTO - CORRIGIDO ====================
         function toggleShare(id) {
             const options = document.getElementById(`shareOptions${id}`);
             document.querySelectorAll('.share-options').forEach(opt => { if(opt !== options) opt.classList.remove('show'); });
             options.classList.toggle('show');
         }
 
-        function copiarLink() {
+        function copiarLink(e) {
+            if (e) e.preventDefault();
             const currentUrl = window.location.href;
             navigator.clipboard.writeText(currentUrl).then(() => {
                 alert('Link copiado para a área de transferência!');
@@ -1406,10 +1437,29 @@ const tipoClasses = {
             document.body.removeChild(textarea);
         }
 
-        function compartilharFacebook(e) { e.preventDefault(); window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank'); document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show')); }
-        function compartilharTwitter(e) { e.preventDefault(); window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent('Estrutura Organizacional - Governo de Minas Gerais')}`, '_blank'); document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show')); }
-        function compartilharLinkedIn(e) { e.preventDefault(); window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank'); document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show')); }
-        function compartilharWhatsApp(e) { e.preventDefault(); window.open(`https://wa.me/?text=${encodeURIComponent('Confira a estrutura organizacional do Governo de Minas Gerais')}%20${encodeURIComponent(window.location.href)}`, '_blank'); document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show')); }
+        function compartilharFacebook(e) { 
+            e.preventDefault(); 
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank'); 
+            document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show')); 
+        }
+        
+        function compartilharTwitter(e) { 
+            e.preventDefault(); 
+            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent('Estrutura Organizacional - Governo de Minas Gerais')}`, '_blank'); 
+            document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show')); 
+        }
+        
+        function compartilharLinkedIn(e) { 
+            e.preventDefault(); 
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank'); 
+            document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show')); 
+        }
+        
+        function compartilharWhatsApp(e) { 
+            e.preventDefault(); 
+            window.open(`https://wa.me/?text=${encodeURIComponent('Confira a estrutura organizacional do Governo de Minas Gerais')}%20${encodeURIComponent(window.location.href)}`, '_blank'); 
+            document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show')); 
+        }
 
         // ==================== DATA ATUALIZAÇÃO ====================
         function updateDataAtualizacao() {
@@ -1426,9 +1476,18 @@ const tipoClasses = {
             loadInitialData();
             updateDataAtualizacao();
             
-            // Dropdown compartilhamento
-            document.getElementById('shareButton1')?.addEventListener('click', (e) => { e.stopPropagation(); toggleShare(1); });
-            document.getElementById('shareButton2')?.addEventListener('click', (e) => { e.stopPropagation(); toggleShare(2); });
+            // Dropdown compartilhamento - CORRIGIDO
+            document.getElementById('shareButton1')?.addEventListener('click', (e) => { 
+                e.preventDefault();
+                e.stopPropagation(); 
+                toggleShare(1); 
+            });
+            
+            document.getElementById('shareButton2')?.addEventListener('click', (e) => { 
+                e.preventDefault();
+                e.stopPropagation(); 
+                toggleShare(2); 
+            });
             
             window.addEventListener('click', function(e) {
                 if (!e.target.closest('.share-dropdown')) {
@@ -1636,9 +1695,9 @@ const tipoClasses = {
             const outros = total - autonomos - secretarias - vinculados;
             container.innerHTML = `
                 <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Total de Órgãos</div><div class="metric-value">${total.toLocaleString('pt-BR')}</div><div><i class="material-icons" style="font-size:14px;">apartment</i> Órgãos registrados</div></div></div>
-                <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Órgãos Autônomos</div><div class="metric-value">${autonomos}</div><span class="badge" style="background: rgba(47,122,92,0.1); color: var(--color-autonomo);">${total>0?((autonomos/total*100).toFixed(1)):0}%</span></div></div>
-                <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Secretarias</div><div class="metric-value">${secretarias}</div><span class="badge" style="background: rgba(47,93,138,0.1); color: var(--color-secretaria);">${total>0?((secretarias/total*100).toFixed(1)):0}%</span></div></div>
-                <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Outros/Especiais</div><div class="metric-value">${outros}</div><span class="badge" style="background: rgba(108,122,137,0.1); color: var(--color-outros);">${vinculados} vinculados</span></div></div>
+                <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Órgãos Autônomos</div><div class="metric-value">${autonomos}</div><span class="badge" style="background: rgba(232,63,111,0.1); color: var(--color-autonomo);">${total>0?((autonomos/total*100).toFixed(1)):0}%</span></div></div>
+                <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Secretarias</div><div class="metric-value">${secretarias}</div><span class="badge" style="background: rgba(44,62,80,0.1); color: var(--color-secretaria);">${total>0?((secretarias/total*100).toFixed(1)):0}%</span></div></div>
+                <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Outros/Especiais</div><div class="metric-value">${outros}</div><span class="badge" style="background: rgba(230,126,34,0.1); color: var(--color-outros);">${vinculados} vinculados</span></div></div>
             `;
         }
 
@@ -1692,73 +1751,72 @@ const tipoClasses = {
 
         function updateCharts1() { if (orgaosData.length) { updateTipoChart(); updateOrgaoChart(); } }
 
-function updateTipoChart() {
-    let ctx = document.getElementById('chartTipo')?.getContext('2d');
-    if (!ctx) return;
-    
-    // Agrupar por tipo
-    let grupos = {}; 
-    orgaosData.forEach(o => { 
-        let t = o.tipo || "Outros"; 
-        grupos[t] = (grupos[t]||0) + 1; 
-    });
-    
-    let items = Object.entries(grupos).map(([t,c])=>({tipo:t, count:c}));
-    
-    // CORREÇÃO: Mapear cores EXATAMENTE iguais às tags, com cores distintas
-    const coresDoGrafico = items.map(item => {
-        // Mapeamento direto das cores das tags
-        const cores = {
-            'Órgão Autônomo': '#1E7E34',     // Verde escuro
-            'Secretaria': '#2C3E50',         // Azul petróleo
-            'Vinculado': '#8E44AD',          // Roxo vibrante
-            'Autarquia': '#0E6655',          // Verde garrafa
-            'Empresa Pública': '#2874A6',    // Azul médio
-            'Fundação': '#B7950B',           // Dourado
-            'Outros': '#E67E22',             // Laranja
-            'Especial': '#B03A2E'            // Vermelho tijolo
-        };
-        return cores[item.tipo] || '#95A5A6'; // Cinza só se não encontrar
-    });
-    
-    destroyChart(charts.tipo);
-    
-    charts.tipo = new Chart(ctx, {
-        type: 'doughnut',
-        data: { 
-            labels: items.map(i=>i.tipo), 
-            datasets: [{ 
-                data: items.map(i=>i.count), 
-                backgroundColor: coresDoGrafico, // AGORA USA AS MESMAS CORES DAS TAGS
-                borderWidth: 1, 
-                borderColor: '#fff' 
-            }] 
-        },
-        options: { 
-            responsive: true, 
-            maintainAspectRatio: false, 
-            cutout: '70%', 
-            plugins: { 
-                legend: { 
-                    position: 'bottom', 
-                    labels: { 
-                        usePointStyle: true, 
-                        font: { size: 11 } 
-                    } 
-                }, 
-                tooltip: { 
-                    callbacks: { 
-                        label: (ctx) => { 
-                            let total = getTotal(ctx.dataset); 
-                            let perc = Math.round((ctx.raw/total)*100); 
-                            return `${ctx.label}: ${ctx.raw} órgãos (${perc}%)`; 
+        function updateTipoChart() {
+            let ctx = document.getElementById('chartTipo')?.getContext('2d');
+            if (!ctx) return;
+            
+            // Agrupar por tipo
+            let grupos = {}; 
+            orgaosData.forEach(o => { 
+                let t = o.tipo || "Outros"; 
+                grupos[t] = (grupos[t]||0) + 1; 
+            });
+            
+            let items = Object.entries(grupos).map(([t,c])=>({tipo:t, count:c}));
+            
+            // CORREÇÃO: Mapeamento com as novas cores
+            const coresDoGrafico = items.map(item => {
+                const cores = {
+                    'Órgão Autônomo': '#E83F6F',  // Rosa claro
+                    'Secretaria': '#2C3E50',      // Azul petróleo
+                    'Vinculado': '#8E44AD',       // Roxo vibrante
+                    'Autarquia': '#0E6655',       // Verde garrafa
+                    'Empresa Pública': '#2874A6', // Azul médio
+                    'Fundação': '#B7950B',        // Dourado
+                    'Outros': '#E67E22',          // Laranja
+                    'Especial': '#B03A2E'         // Vermelho tijolo
+                };
+                return cores[item.tipo] || '#95A5A6';
+            });
+            
+            destroyChart(charts.tipo);
+            
+            charts.tipo = new Chart(ctx, {
+                type: 'doughnut',
+                data: { 
+                    labels: items.map(i=>i.tipo), 
+                    datasets: [{ 
+                        data: items.map(i=>i.count), 
+                        backgroundColor: coresDoGrafico,
+                        borderWidth: 1, 
+                        borderColor: '#fff' 
+                    }] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    cutout: '70%', 
+                    plugins: { 
+                        legend: { 
+                            position: 'bottom', 
+                            labels: { 
+                                usePointStyle: true, 
+                                font: { size: 11 } 
+                            } 
+                        }, 
+                        tooltip: { 
+                            callbacks: { 
+                                label: (ctx) => { 
+                                    let total = getTotal(ctx.dataset); 
+                                    let perc = Math.round((ctx.raw/total)*100); 
+                                    return `${ctx.label}: ${ctx.raw} órgãos (${perc}%)`; 
+                                } 
+                            } 
                         } 
                     } 
-                } 
-            } 
+                }
+            });
         }
-    });
-}
 
         function updateOrgaoChart() {
             let ctx = document.getElementById('chartOrgao')?.getContext('2d');
@@ -1827,75 +1885,76 @@ function updateTipoChart() {
             updateOrgaosTable();
         };
 
-// ==================== MODAL DETALHES ====================
-window.abrirModalDetalhes = function(sigla) {
-    const orgao = orgaosData.find(o => o.sigla === sigla);
-    if (!orgao) { 
-        alert('Órgão não encontrado!'); 
-        return; 
-    }
-    
-    // ATUALIZAR O TÍTULO DO MODAL COM O NOME DO ÓRGÃO
-    const modalTitle = document.getElementById('detailModalLabel');
-    if (modalTitle) {
-        modalTitle.innerHTML = `<i class="material-icons me-2">account_balance</i> ${orgao.orgao || 'Detalhes do Órgão'}`;
-    }
-    
-    // Preencher o corpo do modal
-    const modalBody = document.getElementById('modalOrgaoInfo');
-    modalBody.innerHTML = `
-        <div class="info-grid">
-            <div class="info-card primary">
-                <div class="info-label">Sigla</div>
-                <div class="info-value highlight">${orgao.sigla || 'Não informado'}</div>
-                <div class="info-label mt-2">Tipo</div>
-                <div class="info-value"><span class="badge-tipo ${tipoClasses[orgao.tipo] || 'badge-outros'}">${orgao.tipo || 'Não informado'}</span></div>
-            </div>
-            <div class="info-card">
-                <div class="info-label">Vinculação</div>
-                <div class="info-value">${orgao.vinculacao || 'Não informado'}</div>
-                <div class="info-label mt-2">Responsável Legal</div>
-                <div class="info-value">${orgao.responsavel_legal || 'Não informado'}</div>
-            </div>
-            <div class="info-card">
-                <div class="info-label">Telefone</div>
-                <div class="info-value">${orgao.telefone || 'Não informado'}</div>
-                <div class="info-label mt-2">Endereço</div>
-                <div class="info-value">${orgao.endereco || 'Não informado'}</div>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <div class="info-card">
-                    <div class="info-label">Competências</div>
-                    <div class="info-value">
-                        ${orgao.competencias ? 
-                            `<a href="${orgao.competencias}" target="_blank" style="color: var(--accent-red); text-decoration: none;">
-                                <i class="material-icons" style="font-size: 16px; vertical-align: middle;">link</i> Ver competências legais
-                            </a>` : 
-                            'Não informado'}
+        // ==================== MODAL DETALHES - CORRIGIDO ====================
+        window.abrirModalDetalhes = function(sigla) {
+            const orgao = orgaosData.find(o => o.sigla === sigla);
+            if (!orgao) { 
+                alert('Órgão não encontrado!'); 
+                return; 
+            }
+            
+            // ATUALIZAR O TÍTULO DO MODAL COM O NOME DO ÓRGÃO - CORRIGIDO
+            const modalTitle = document.getElementById('detailModalLabel');
+            if (modalTitle) {
+                modalTitle.innerHTML = `<i class="material-icons me-2">account_balance</i> ${orgao.orgao || 'Detalhes do Órgão'}`;
+            }
+            
+            // Preencher o corpo do modal - CORRIGIDO
+            const modalBody = document.getElementById('modalOrgaoInfo');
+            modalBody.innerHTML = `
+                <div class="info-grid">
+                    <div class="info-card primary">
+                        <div class="info-label">Sigla</div>
+                        <div class="info-value highlight">${orgao.sigla || 'Não informado'}</div>
+                        <div class="info-label mt-3">Tipo</div>
+                        <div class="info-value"><span class="badge-tipo ${tipoClasses[orgao.tipo] || 'badge-outros'}">${orgao.tipo || 'Não informado'}</span></div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Vinculação</div>
+                        <div class="info-value">${orgao.vinculacao || 'Não informado'}</div>
+                        <div class="info-label mt-3">Responsável Legal</div>
+                        <div class="info-value">${orgao.responsavel_legal || 'Não informado'}</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Telefone</div>
+                        <div class="info-value">${orgao.telefone || 'Não informado'}</div>
+                        <div class="info-label mt-3">Endereço</div>
+                        <div class="info-value">${orgao.endereco || 'Não informado'}</div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="info-card">
-                    <div class="info-label">Site do Órgão</div>
-                    <div class="info-value">
-                        ${orgao.site_orgao ? 
-                            `<a href="${orgao.site_orgao}" target="_blank" style="color: var(--accent-red); text-decoration: none;">
-                                <i class="material-icons" style="font-size: 16px; vertical-align: middle;">language</i> Acessar site oficial
-                            </a>` : 
-                            'Não informado'}
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="info-card">
+                            <div class="info-label">Competências</div>
+                            <div class="info-value">
+                                ${orgao.competencias ? 
+                                    `<a href="${orgao.competencias}" target="_blank" style="color: var(--accent-red); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                                        <i class="material-icons" style="font-size: 16px;">link</i> Ver competências legais
+                                    </a>` : 
+                                    'Não informado'}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-card">
+                            <div class="info-label">Site do Órgão</div>
+                            <div class="info-value">
+                                ${orgao.site_orgao ? 
+                                    `<a href="${orgao.site_orgao}" target="_blank" style="color: var(--accent-red); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                                        <i class="material-icons" style="font-size: 16px;">language</i> Acessar site oficial
+                                    </a>` : 
+                                    'Não informado'}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    `;
-    
-    // Abrir o modal
-    const modal = new bootstrap.Modal(document.getElementById('detailModal'));
-    modal.show();
-};
+            `;
+            
+            // Abrir o modal
+            const modal = new bootstrap.Modal(document.getElementById('detailModal'));
+            modal.show();
+        };
+        
         // ==================== DOWNLOAD ====================
         async function downloadFullCSV() {
             showLoading(true);
