@@ -2105,35 +2105,39 @@
         function showLoading(show) { document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none'; }
         function showError(msg) { alert(msg); }
 
-        // ==================== CORREÇÃO DO MODAL - ROLAGEM AUTOMÁTICA ====================
-// Melhorar a abertura do modal para garantir visibilidade
+        // ==================== CORREÇÃO DO MODAL - CENTRALIZADO NA VIEWPORT ====================
+// Melhorar a abertura do modal para garantir que fique centralizado na tela atual
 const originalAbrirModal = window.abrirModalDetalhes;
 window.abrirModalDetalhes = function(sigla) {
     // Chama a função original primeiro
     originalAbrirModal(sigla);
     
-    // Pequeno atraso para garantir que o modal seja aberto antes de rolar
+    // Pequeno atraso para garantir que o modal seja aberto
     setTimeout(() => {
-        const modalElement = document.getElementById('detailModal');
-        
-        // Verificar se o modal está aberto e visível
-        if (modalElement && modalElement.classList.contains('show')) {
-            
-            // Rolar suavemente para o modal
-            modalElement.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'center' 
-            });
-            
-            // Forçar atualização da altura do iframe após abrir o modal
-            setTimeout(() => {
-                if (typeof iframeUpdateHeight === 'function') {
-                    iframeUpdateHeight();
-                }
-            }, 300);
+        // NÃO rolar a página - apenas atualizar altura do iframe se necessário
+        if (typeof iframeUpdateHeight === 'function') {
+            iframeUpdateHeight();
         }
-    }, 100);
+    }, 300);
 };
+
+// Remover qualquer rolagem automática quando o modal for aberto
+const modalElement = document.getElementById('detailModal');
+if (modalElement) {
+    // Remover qualquer manipulador anterior
+    modalElement.removeEventListener('shown.bs.modal', modalElement._shownHandler);
+    
+    // Adicionar apenas atualização de altura, sem rolagem
+    modalElement._shownHandler = function() {
+        setTimeout(() => {
+            if (typeof iframeUpdateHeight === 'function') {
+                iframeUpdateHeight();
+            }
+        }, 300);
+    };
+    
+    modalElement.addEventListener('shown.bs.modal', modalElement._shownHandler);
+}
 
 // Também garantir que quando qualquer modal for aberto via Bootstrap, a altura seja atualizada
 document.addEventListener('shown.bs.modal', function(event) {
