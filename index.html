@@ -2106,6 +2106,7 @@
         function showError(msg) { alert(msg); }
 
         // ==================== CORREÇÃO DO MODAL - CENTRALIZADO NA VIEWPORT ====================
+
 // Melhorar a abertura do modal para garantir que fique centralizado na tela atual
 const originalAbrirModal = window.abrirModalDetalhes;
 window.abrirModalDetalhes = function(sigla) {
@@ -2114,31 +2115,29 @@ window.abrirModalDetalhes = function(sigla) {
     
     // Pequeno atraso para garantir que o modal seja aberto
     setTimeout(() => {
-        // NÃO rolar a página - apenas atualizar altura do iframe se necessário
+        // Apenas atualizar altura do iframe se necessário
         if (typeof iframeUpdateHeight === 'function') {
             iframeUpdateHeight();
         }
     }, 300);
 };
 
-// Remover qualquer rolagem automática quando o modal for aberto
-const modalElement = document.getElementById('detailModal');
-if (modalElement) {
-    // Remover qualquer manipulador anterior
-    modalElement.removeEventListener('shown.bs.modal', modalElement._shownHandler);
-    
-    // Adicionar apenas atualização de altura, sem rolagem
-    modalElement._shownHandler = function() {
+// Remover manipuladores antigos e adicionar apenas o necessário
+document.addEventListener('shown.bs.modal', function(event) {
+    // Verificar se é o modal de detalhes
+    if (event.target.id === 'detailModal') {
+        // NÃO usar scrollIntoView - o Bootstrap já centraliza automaticamente
+        
+        // Apenas atualizar altura do iframe
         setTimeout(() => {
             if (typeof iframeUpdateHeight === 'function') {
                 iframeUpdateHeight();
             }
         }, 300);
-    };
-    
-    modalElement.addEventListener('shown.bs.modal', modalElement._shownHandler);
-}
+    }
+});
 
+        
 // Também garantir que quando qualquer modal for aberto via Bootstrap, a altura seja atualizada
 document.addEventListener('shown.bs.modal', function(event) {
     if (event.target.id === 'detailModal') {
