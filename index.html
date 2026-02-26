@@ -12,6 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     
+    <!-- Bibliotecas para PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
@@ -20,9 +24,10 @@
 
     <style>
         body {
-    font-family: 'Montserrat', sans-serif;
-      } 
-               /* ==================== VARIÁVEIS DE CORES ==================== */
+            font-family: 'Montserrat', sans-serif;
+        } 
+        
+        /* ==================== VARIÁVEIS DE CORES ==================== */
         :root {
             --primary-dark: #29435A;
             --primary-darker: #132837;
@@ -43,15 +48,15 @@
             --button-red-hover: var(--primary-darker);
 
             /* Cores padronizadas para tipos de órgão - CORRIGIDAS */
-            --color-autonomo: #E83F6F;     /* Rosa claro vibrante */
-            --color-secretaria: #2C3E50;    /* Azul petróleo escuro */
-            --color-vinculado: #8E44AD;     /* Roxo vibrante */
-            --color-autarquia: #0E6655;     /* Verde garrafa (escuro) */
-            --color-empresa: #2874A6;       /* Azul médio */
-            --color-fundacao: #B7950B;      /* Dourado / Mostarda */
-            --color-outros: #E67E22;        /* Laranja */
-            --color-especial: #B03A2E;      /* Vermelho tijolo */
-        }
+                --color-autonomo: #E83F6F;     /* Rosa claro vibrante */
+    		--color-secretaria: #95A5A6;    /* CINZA (alterado) */
+    		--color-vinculado: #8E44AD;     /* Roxo vibrante */
+    		--color-autarquia: #0E6655;     /* Verde garrafa (escuro) */
+    		--color-empresa: #2874A6;       /* Azul médio */
+    		--color-fundacao: #E67E22;       /* LARANJA (alterado) */
+    		--color-outros: #E67E22;        /* Laranja */
+    		--color-especial: #B03A2E;      /* Vermelho tijolo */
+	}
         
         /* ==================== ESTILOS GERAIS ==================== */
         body {
@@ -77,51 +82,6 @@
             position: relative;
         }
 
-        /* ==================== HEADER PRINCIPAL ==================== */
-        .main-header {
-            background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 20px 0;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            border-bottom: 4px solid var(--accent-red);
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-bright) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 20px;
-            box-shadow: 0 3px 8px rgba(185, 60, 66, 0.25);
-        }
-        
-        .header-title {
-            font-weight: 700;
-            font-size: 22px;
-            margin: 0;
-            line-height: 1.2;
-        }
-        
-        .header-subtitle {
-            font-size: 14px;
-            opacity: 0.9;
-            margin: 5px 0 0 0;
-        }
 
         /* ==================== DATA ATUALIZAÇÃO CENTRALIZADA ==================== */
         .data-atualizacao-container {
@@ -314,7 +274,7 @@
         .table {
             margin: 0;
             width: 100%;
-            font-size: 15px;
+            font-size: 14px; /* Fonte padronizada */
             border-collapse: separate;
             border-spacing: 0;
             border: 1px solid #dee2e6;
@@ -323,10 +283,10 @@
         .table thead th {
             background-color: var(--primary-dark) !important;
             color: white !important;
-            font-weight: 600;
+            font-weight: 600; /* Apenas cabeçalho em negrito */
             border: none;
             padding: 12px 10px;
-            font-size: 15px;
+            font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 0.3px;
             cursor: pointer;
@@ -346,6 +306,16 @@
         
         .table thead th:last-child {
             border-right: none !important;
+        }
+        
+        .table tbody td {
+            font-weight: 400; /* Sem negrito no corpo */
+            padding: 12px 10px;
+            vertical-align: middle;
+            font-size: 14px;
+            white-space: normal; /* Permite quebra de linha */
+            word-wrap: break-word; /* Quebra palavras longas */
+            overflow-wrap: break-word;
         }
         
         .sort-icon {
@@ -401,12 +371,6 @@
             background-color: rgba(41, 67, 90, 0.04);
         }
         
-        .table tbody td {
-            padding: 12px 10px;
-            vertical-align: middle;
-            font-size: 15px;
-        }
-        
         .table tbody td.responsavel-legal {
             text-align: left !important;
             font-style: normal;
@@ -418,101 +382,44 @@
         }
         
         #visaoGeralTable tbody td {
-            text-align: center;
+            text-align: left;
+            font-weight: 400;
         }
         
         #visaoGeralTable tbody td:first-child {
             text-align: left;
         }
 
-        	/* ==================== AJUSTE DE LARGURA DAS COLUNAS - TABELA ÓRGÃOS ==================== */
-#orgaosTable {
-    table-layout: fixed;
-    width: 100%;
-}
+        /* ==================== AJUSTE DE LARGURA DAS COLUNAS ==================== */
+        #visaoGeralTable,
+        #orgaosTable {
+            table-layout: fixed;
+            width: 100%;
+        }
 
-/* Distribuição proporcional das colunas */
-#orgaosTable th:nth-child(1),  /* Órgão */
-#orgaosTable td:nth-child(1) {
-    width: 22%;
-    min-width: 180px;
-}
+        /* Colunas da Visão Geral */
+        #visaoGeralTable th:nth-child(1), #visaoGeralTable td:nth-child(1) { width: 30%; } /* Órgão */
+        #visaoGeralTable th:nth-child(2), #visaoGeralTable td:nth-child(2) { width: 10%; } /* Sigla */
+        #visaoGeralTable th:nth-child(3), #visaoGeralTable td:nth-child(3) { width: 15%; } /* Tipo */
+        #visaoGeralTable th:nth-child(4), #visaoGeralTable td:nth-child(4) { width: 20%; } /* Vinculação */
+        #visaoGeralTable th:nth-child(5), #visaoGeralTable td:nth-child(5) { width: 25%; } /* Responsável Legal */
 
-#orgaosTable th:nth-child(2),  /* Sigla */
-#orgaosTable td:nth-child(2) {
-    width: 8%;
-    min-width: 70px;
-}
+        /* Colunas da Tabela de Órgãos */
+        #orgaosTable th:nth-child(1), #orgaosTable td:nth-child(1) { width: 25%; } /* Órgão */
+        #orgaosTable th:nth-child(2), #orgaosTable td:nth-child(2) { width: 12%; } /* Sigla */
+        #orgaosTable th:nth-child(3), #orgaosTable td:nth-child(3) { width: 12%; } /* Tipo */
+        #orgaosTable th:nth-child(4), #orgaosTable td:nth-child(4) { width: 15%; } /* Vinculação */
+        #orgaosTable th:nth-child(5), #orgaosTable td:nth-child(5) { width: 18%; } /* Responsável Legal */
+        #orgaosTable th:nth-child(6), #orgaosTable td:nth-child(6) { width: 12%; } /* Telefone */
+        #orgaosTable th:nth-child(7), #orgaosTable td:nth-child(7) { width: 6%; } /* Ações */
 
-#orgaosTable th:nth-child(3),  /* Tipo */
-#orgaosTable td:nth-child(3) {
-    width: 12%;
-    min-width: 120px;
-}
-
-#orgaosTable th:nth-child(4),  /* Vinculação */
-#orgaosTable td:nth-child(4) {
-    width: 15%;
-    min-width: 150px;
-}
-
-#orgaosTable th:nth-child(5),  /* Responsável Legal */
-#orgaosTable td:nth-child(5) {
-    width: 25%;
-    min-width: 160px;
-}
-
-#orgaosTable th:nth-child(6),  /* Telefone - AUMENTADO */
-#orgaosTable td:nth-child(6) {
-    width: 12%;
-    min-width: 140px;
-    max-width: 180px;
-    letter-spacing: 0.5px;
-}
-
-#orgaosTable th:nth-child(7),  /* Ações - DIMINUÍDO */
-#orgaosTable td:nth-child(7) {
-    width: 8%;
-    min-width: 90px;
-    max-width: 100px;
-    text-align: center;
-}
-
-/* Garantir que o botão de ações fique bem centralizado */
-#orgaosTable td:nth-child(7) .action-buttons {
-    justify-content: center;
-    margin: 0 auto;
-}
-
-/* Ajuste para telas menores */
-@media (max-width: 1200px) {
-    #orgaosTable th:nth-child(1),
-    #orgaosTable td:nth-child(1) {
-        min-width: 160px;
-    }
-    
-    #orgaosTable th:nth-child(5),
-    #orgaosTable td:nth-child(5) {
-        min-width: 140px;
-    }
-}
-
-@media (max-width: 992px) {
-    #orgaosTable {
-        table-layout: auto; /* Volta para automático em telas menores */
-    }
-    
-    #orgaosTable th:nth-child(6),
-    #orgaosTable td:nth-child(6) {
-        min-width: 130px;
-    }
-    
-    #orgaosTable th:nth-child(7),
-    #orgaosTable td:nth-child(7) {
-        min-width: 85px;
-    }
-}
-     
+        /* Quebra de texto para células longas */
+        .table td {
+            white-space: normal !important;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
+            max-width: 0; /* Força a quebra */
+        }
         
         /* ==================== TAGS PADRONIZADAS PARA TIPOS DE ÓRGÃO ==================== */
         .badge-tipo {
@@ -535,9 +442,9 @@
         }
         
         .badge-secretaria {
-            background-color: rgba(44, 62, 80, 0.15);
+            background-color: rgba(149, 165, 166, 0.15);
             color: var(--color-secretaria);
-            border-color: rgba(44, 62, 80, 0.3);
+            border-color: rgba(149, 165, 166, 0.3);
         }
         
         .badge-vinculado {
@@ -559,9 +466,9 @@
         }
 
         .badge-fundacao {
-            background-color: rgba(183, 149, 11, 0.15);
+            background-color: rgba(230, 126, 34, 0.15);
             color: var(--color-fundacao);
-            border-color: rgba(183, 149, 11, 0.3);
+            border-color: rgba(230, 126, 34, 0.3);
         }
         
         .badge-outros {
@@ -578,7 +485,7 @@
         
         /* ==================== BOTÕES ==================== */
         .btn-primary-custom {
-            background: linear-gradient(to right, var(--accent-red), #A32C32);
+            background: linear-gradient(to right, var(--primary-darker), var(--primary-dark)); /* Invertido: azul */
             border: none;
             padding: 10px 20px;
             font-weight: 600;
@@ -593,9 +500,9 @@
         }
         
         .btn-primary-custom:hover {
-            background: linear-gradient(to right, var(--primary-darker), var(--primary-dark));
+            background: linear-gradient(to right, var(--accent-red), #A32C32); /* Vermelho no hover */
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(19, 40, 55, 0.2);
+            box-shadow: 0 4px 12px rgba(185, 60, 66, 0.2);
             color: white;
         }
         
@@ -740,7 +647,6 @@
             text-decoration: none;
         }
 
-       
         .link-share:hover, .facebook-share:hover, .twitter-share:hover, .linkedin-share:hover, .whatsapp-share:hover {
             background-color: var(--background-light);
             color: var(--accent-red);
@@ -858,8 +764,8 @@
             font-size: 1.4rem;
             display: flex;
             align-items: center;
-    	    gap: 10px;
-    	    color: white;
+            gap: 10px;
+            color: white;
         }
         
         .modal-creative .btn-close {
@@ -942,7 +848,7 @@
         }
         
         .actions-column {
-            width: 100px;
+            width: 80px;
             text-align: center;
         }
         
@@ -953,15 +859,29 @@
         }
         
         .btn-action {
-            padding: 4px 8px;
-            font-size: 11px;
+            padding: 6px 8px;
+            font-size: 0;
             border-radius: 4px;
             border: none;
             cursor: pointer;
             transition: all 0.2s ease;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 3px;
+            justify-content: center;
+            background-color: var(--primary-dark);
+            color: white;
+            width: 32px;
+            height: 32px;
+        }
+        
+        .btn-action i {
+            font-size: 18px;
+            margin: 0;
+        }
+        
+        .btn-action:hover {
+            background-color: var(--accent-red);
+            transform: translateY(-1px);
         }
         
         .btn-history {
@@ -971,27 +891,81 @@
         
         .btn-history:hover {
             background-color: var(--primary-darker);
-            transform: translateY(-1px);
         }
 
-.modal {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        .modal {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
 
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        /* ==================== PAGINAÇÃO ==================== */
+        .pagination .page-link {
+            color: var(--primary-dark);
+            border-color: #dee2e6;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            color: white;
+        }
+        
+        .pagination .page-link:hover {
+            color: var(--accent-red);
+            background-color: #f8f9fa;
+            border-color: #dee2e6;
+        }
+        
+        .pagination .page-item.active .page-link:hover {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+        
+        /* ==================== LINK CLICÁVEL ==================== */
+        .orgao-link {
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 400; /* Sem negrito */
+            cursor: pointer;
+            transition: color 0.2s ease;
+            display: inline-block;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 14px;
+            border: none;
+            outline: none;
+        }
 
-.modal.show {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
+        .orgao-link:hover {
+            color: var(--accent-red) !important;
+            text-decoration: none !important;
+            background-color: transparent !important;
+            border: none !important;
+            outline: none !important;
+        }
+
+        .orgao-link:focus {
+            outline: none;
+            border: none;
+        }
+
+        #visaoGeralTable .orgao-link {
+            padding: 4px 8px;
+            margin: -4px -8px;
+        }
         
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
@@ -1025,35 +999,11 @@
             .info-grid {
                 grid-template-columns: 1fr;
             }
-        }
-
-        /* ==================== LINK CLICÁVEL ==================== */
-        .orgao-link {
-            color: var(--primary-dark);
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-block;
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-size: 15px;
-        }
-
-        .orgao-link:hover {
-            color: var(--accent-red) !important;
-            background-color: rgba(185, 60, 66, 0.05);
-            transform: translateY(-1px);
-            text-decoration: none !important;
-        }
-
-        .orgao-link:active {
-            transform: translateY(0);
-        }
-
-        #visaoGeralTable .orgao-link {
-            padding: 4px 8px;
-            margin: -4px -8px;
+            
+            #visaoGeralTable,
+            #orgaosTable {
+                table-layout: auto; /* Volta para automático em mobile */
+            }
         }
     </style>
 </head>
@@ -1130,27 +1080,27 @@
                                 <i class="material-icons me-2">description</i> CSV
                             </button>
                             <button class="btn-export" id="printDashboard1">
-                                <i class="material-icons me-2">print</i>PDF
+                                <i class="material-icons me-2">print</i> PDF
                             </button>
-                            <!-- Botão de Compartilhar - CORRIGIDO -->
+                            <!-- Botão de Compartilhar - Dashboard 1 -->
                             <div class="share-dropdown">
                                 <button class="btn-share" id="shareButton1">
                                     <i class="material-icons me-2">share</i> Compartilhar
                                 </button>
                                 <div class="share-options" id="shareOptions1">
-                                    <a href="#" class="link-share" onclick="copiarLink(event)">
+                                    <a href="#" class="link-share" onclick="copiarLink(event, 1)">
                                         <i class="fas fa-link"></i> Copiar Link
                                     </a>
-                                    <a href="#" class="facebook-share" onclick="compartilharFacebook(event)">
+                                    <a href="#" class="facebook-share" onclick="compartilharFacebook(event, 1)">
                                         <i class="fab fa-facebook-f"></i> Facebook
                                     </a>
-                                    <a href="#" class="twitter-share" onclick="compartilharTwitter(event)">
+                                    <a href="#" class="twitter-share" onclick="compartilharTwitter(event, 1)">
                                         <i class="fab fa-twitter"></i> Twitter
                                     </a>
-                                    <a href="#" class="linkedin-share" onclick="compartilharLinkedIn(event)">
+                                    <a href="#" class="linkedin-share" onclick="compartilharLinkedIn(event, 1)">
                                         <i class="fab fa-linkedin-in"></i> LinkedIn
                                     </a>
-                                    <a href="#" class="whatsapp-share" onclick="compartilharWhatsApp(event)">
+                                    <a href="#" class="whatsapp-share" onclick="compartilharWhatsApp(event, 1)">
                                         <i class="fab fa-whatsapp"></i> WhatsApp
                                     </a>
                                 </div>
@@ -1259,27 +1209,27 @@
                                 <i class="material-icons me-2">description</i> CSV
                             </button>
                             <button class="btn-export" id="printDashboard2">
-                                <i class="material-icons me-2">print</i>PDF
+                                <i class="material-icons me-2">print</i> PDF
                             </button>
                             <!-- Botão de Compartilhar - Dashboard 2 -->
                             <div class="share-dropdown">
-                                <button class="btn-share" id="shareButton1">
+                                <button class="btn-share" id="shareButton2">
                                     <i class="material-icons me-2">share</i> Compartilhar
                                 </button>
-                                <div class="share-options" id="shareOptions1">
-                                    <a href="#" class="link-share" onclick="copiarLink(event)">
+                                <div class="share-options" id="shareOptions2">
+                                    <a href="#" class="link-share" onclick="copiarLink(event, 2)">
                                         <i class="fas fa-link"></i> Copiar Link
                                     </a>
-                                    <a href="#" class="facebook-share" onclick="compartilharFacebook(event)">
+                                    <a href="#" class="facebook-share" onclick="compartilharFacebook(event, 2)">
                                         <i class="fab fa-facebook-f"></i> Facebook
                                     </a>
-                                    <a href="#" class="twitter-share" onclick="compartilharTwitter(event)">
+                                    <a href="#" class="twitter-share" onclick="compartilharTwitter(event, 2)">
                                         <i class="fab fa-twitter"></i> Twitter
                                     </a>
-                                    <a href="#" class="linkedin-share" onclick="compartilharLinkedIn(event)">
+                                    <a href="#" class="linkedin-share" onclick="compartilharLinkedIn(event, 2)">
                                         <i class="fab fa-linkedin-in"></i> LinkedIn
                                     </a>
-                                    <a href="#" class="whatsapp-share" onclick="compartilharWhatsApp(event)">
+                                    <a href="#" class="whatsapp-share" onclick="compartilharWhatsApp(event, 2)">
                                         <i class="fab fa-whatsapp"></i> WhatsApp
                                     </a>
                                 </div>
@@ -1454,14 +1404,14 @@
         let currentSortDashboard2 = { column: 'orgao', order: 'asc' };
         let currentSearchTerm = '';
         
-        // Paleta de cores atualizada - Órgão Autônomo rosa claro, Autarquia verde escuro
+        // Paleta de cores atualizada
         const chartPalette = [
             '#E83F6F', // Órgão Autônomo - Rosa claro
-            '#2C3E50', // Secretaria - Azul petróleo
+            '#95A5A6', // Secretaria - Azul petróleo
             '#8E44AD', // Vinculado - Roxo
             '#0E6655', // Autarquia - Verde garrafa
             '#2874A6', // Empresa Pública - Azul médio
-            '#B7950B', // Fundação - Dourado
+            '#E67E22', // Fundação Pública - Laranja
             '#E67E22', // Outros - Laranja
             '#B03A2E', // Especial - Vermelho
             '#D97A30', // Cor extra 1
@@ -1469,14 +1419,14 @@
         ];
 
         const tipoColors = {
-            'Órgão Autônomo': '#E83F6F',  // Rosa claro
-            'Secretaria': '#2C3E50',      // Azul petróleo
-            'Vinculado': '#8E44AD',       // Roxo
-            'Autarquia': '#0E6655',       // Verde escuro
-            'Empresa Pública': '#2874A6', // Azul médio
-            'Fundação': '#B7950B',        // Dourado
-            'Outros': '#E67E22',          // Laranja
-            'Especial': '#B03A2E'         // Vermelho
+            'Órgão Autônomo': '#E83F6F',
+            'Secretaria': '#95A5A6',      // Cinza
+            'Vinculado': '#8E44AD',
+            'Autarquia': '#0E6655',
+            'Empresa Pública': '#2874A6',
+            'Fundação Pública': '#E67E22',         // Laranja
+            'Outros': '#E67E22',
+            'Especial': '#B03A2E'
         };
 
         const tipoClasses = {
@@ -1530,13 +1480,13 @@
             options.classList.toggle('show');
         }
 
-        function copiarLink(e) {
+        function copiarLink(e, id) {
             if (e) e.preventDefault();
             const currentUrl = window.location.href;
             navigator.clipboard.writeText(currentUrl).then(() => {
                 alert('Link copiado para a área de transferência!');
             }).catch(() => { copiarFallback(currentUrl); });
-            document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show'));
+            document.getElementById(`shareOptions${id}`).classList.remove('show');
         }
 
         function copiarFallback(texto) {
@@ -1551,28 +1501,28 @@
             document.body.removeChild(textarea);
         }
 
-        function compartilharFacebook(e) { 
+        function compartilharFacebook(e, id) { 
             e.preventDefault(); 
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank'); 
-            document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show')); 
+            document.getElementById(`shareOptions${id}`).classList.remove('show'); 
         }
         
-        function compartilharTwitter(e) { 
+        function compartilharTwitter(e, id) { 
             e.preventDefault(); 
             window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent('Estrutura Organizacional - Governo de Minas Gerais')}`, '_blank'); 
-            document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show')); 
+            document.getElementById(`shareOptions${id}`).classList.remove('show'); 
         }
         
-        function compartilharLinkedIn(e) { 
+        function compartilharLinkedIn(e, id) { 
             e.preventDefault(); 
             window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank'); 
-            document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show')); 
+            document.getElementById(`shareOptions${id}`).classList.remove('show'); 
         }
         
-        function compartilharWhatsApp(e) { 
+        function compartilharWhatsApp(e, id) { 
             e.preventDefault(); 
             window.open(`https://wa.me/?text=${encodeURIComponent('Confira a estrutura organizacional do Governo de Minas Gerais')}%20${encodeURIComponent(window.location.href)}`, '_blank'); 
-            document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show')); 
+            document.getElementById(`shareOptions${id}`).classList.remove('show'); 
         }
 
         // ==================== DATA ATUALIZAÇÃO ====================
@@ -1590,7 +1540,7 @@
             loadInitialData();
             updateDataAtualizacao();
             
-            // Dropdown compartilhamento - CORRIGIDO
+            // Dropdown compartilhamento
             document.getElementById('shareButton1')?.addEventListener('click', (e) => { 
                 e.preventDefault();
                 e.stopPropagation(); 
@@ -1619,9 +1569,9 @@
             document.getElementById('pesquisarOrgaos')?.addEventListener('click', () => applyFilters('dashboard2'));
             document.getElementById('limparFiltrosDashboard2')?.addEventListener('click', clearDashboard2Filters);
             document.getElementById('exportCSVDashboard1')?.addEventListener('click', () => exportToCSV('dashboard1'));
-            document.getElementById('printDashboard1')?.addEventListener('click', () => window.print());
+            document.getElementById('printDashboard1')?.addEventListener('click', () => exportToPDF('dashboard1'));
             document.getElementById('exportCSVDashboard2')?.addEventListener('click', () => exportToCSV('dashboard2'));
-            document.getElementById('printDashboard2')?.addEventListener('click', () => window.print());
+            document.getElementById('printDashboard2')?.addEventListener('click', () => exportToPDF('dashboard2'));
             document.getElementById('downloadCompleto')?.addEventListener('click', downloadFullCSV);
             
             document.getElementById('searchOrgaos')?.addEventListener('input', function(e) {
@@ -1810,7 +1760,7 @@
             container.innerHTML = `
                 <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Total de Órgãos</div><div class="metric-value">${total.toLocaleString('pt-BR')}</div><div><i class="material-icons" style="font-size:14px;">apartment</i> Órgãos registrados</div></div></div>
                 <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Órgãos Autônomos</div><div class="metric-value">${autonomos}</div><span class="badge" style="background: rgba(232,63,111,0.1); color: var(--color-autonomo);">${total>0?((autonomos/total*100).toFixed(1)):0}%</span></div></div>
-                <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Secretarias</div><div class="metric-value">${secretarias}</div><span class="badge" style="background: rgba(44,62,80,0.1); color: var(--color-secretaria);">${total>0?((secretarias/total*100).toFixed(1)):0}%</span></div></div>
+                <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Secretarias</div><div class="metric-value">${secretarias}</div><span class="badge" style="background: rgba(149,165,166,0.1); color: var(--color-secretaria);">${total>0?((secretarias/total*100).toFixed(1)):0}%</span></div></div>
                 <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Outros/Especiais</div><div class="metric-value">${outros}</div><span class="badge" style="background: rgba(230,126,34,0.1); color: var(--color-outros);">${vinculados} vinculados</span></div></div>
             `;
         }
@@ -1878,17 +1828,17 @@
             
             let items = Object.entries(grupos).map(([t,c])=>({tipo:t, count:c}));
             
-            // CORREÇÃO: Mapeamento com as novas cores
+            // Cores atualizadas
             const coresDoGrafico = items.map(item => {
                 const cores = {
-                    'Órgão Autônomo': '#E83F6F',  // Rosa claro
-                    'Secretaria': '#2C3E50',      // Azul petróleo
-                    'Vinculado': '#8E44AD',       // Roxo vibrante
-                    'Autarquia': '#0E6655',       // Verde garrafa
-                    'Empresa Pública': '#2874A6', // Azul médio
-                    'Fundação': '#B7950B',        // Dourado
-                    'Outros': '#E67E22',          // Laranja
-                    'Especial': '#B03A2E'         // Vermelho tijolo
+                    'Órgão Autônomo': '#E83F6F',
+                    'Secretaria': '#95A5A6',      // Cinza
+                    'Vinculado': '#8E44AD',
+                    'Autarquia': '#0E6655',
+                    'Empresa Pública': '#2874A6',
+                    'Fundação Pública': '#E67E22',         // Laranja
+                    'Outros': '#E67E22',
+                    'Especial': '#B03A2E'
                 };
                 return cores[item.tipo] || '#95A5A6';
             });
@@ -1965,7 +1915,7 @@
                 <td>${o.vinculacao}</td>
                 <td class="responsavel-legal">${o.responsavel_legal || 'Não informado'}</td>
                 <td>${o.telefone || 'Não informado'}</td>
-                <td class="actions-column"><div class="action-buttons"><button class="btn-action btn-history" onclick="abrirModalDetalhes('${o.sigla}');" title="Ver Detalhes"><i class="material-icons" style="font-size:14px;">visibility</i><span>Detalhes</span></button></div></td>
+                <td class="actions-column"><div class="action-buttons"><button class="btn-action btn-history" onclick="abrirModalDetalhes('${o.sigla}');" title="Ver Detalhes"><i class="material-icons" style="font-size:18px;">visibility</i></button></div></td>
             </tr>`).join('');
             document.getElementById('resumoCountDashboard2').innerHTML = `${total.toLocaleString('pt-BR')} órgãos`;
             document.getElementById('paginationInfoDashboard2').innerHTML = `Mostrando ${start+1}-${end} de ${total.toLocaleString('pt-BR')} registros`;
@@ -1999,7 +1949,7 @@
             updateOrgaosTable();
         };
 
-        // ==================== MODAL DETALHES - CORRIGIDO ====================
+        // ==================== MODAL DETALHES ====================
         window.abrirModalDetalhes = function(sigla) {
             const orgao = orgaosData.find(o => o.sigla === sigla);
             if (!orgao) { 
@@ -2007,13 +1957,11 @@
                 return; 
             }
             
-            // ATUALIZAR O TÍTULO DO MODAL COM O NOME DO ÓRGÃO - CORRIGIDO
             const modalTitle = document.getElementById('detailModalLabel');
             if (modalTitle) {
                 modalTitle.innerHTML = `<i class="material-icons me-2">account_balance</i> ${orgao.orgao || 'Detalhes do Órgão'}`;
             }
             
-            // Preencher o corpo do modal - CORRIGIDO
             const modalBody = document.getElementById('modalOrgaoInfo');
             modalBody.innerHTML = `
                 <div class="info-grid">
@@ -2064,11 +2012,10 @@
                 </div>
             `;
             
-            // Abrir o modal
             const modal = new bootstrap.Modal(document.getElementById('detailModal'));
             modal.show();
         };
-        
+
         // ==================== DOWNLOAD ====================
         async function downloadFullCSV() {
             showLoading(true);
@@ -2097,7 +2044,7 @@
             }
         };
 
-        // ==================== EXPORTAÇÃO ====================
+        // ==================== EXPORTAÇÃO CSV ====================
         function exportToCSV(source) {
             if (source === 'dashboard1') exportVisaoGeralCSV();
             else if (source === 'dashboard2') exportOrgaosCSV();
@@ -2127,70 +2074,177 @@
             link.click();
         }
 
+        // ==================== EXPORTAÇÃO PDF ====================
+        function exportToPDF(source) {
+            if (source === 'dashboard1') exportVisaoGeralPDF();
+            else if (source === 'dashboard2') exportOrgaosPDF();
+        }
+
+        function exportVisaoGeralPDF() {
+            if (!orgaosData.length) return;
+            
+            const title = 'Visão Geral da Estrutura Organizacional';
+            const headers = [['Órgão', 'Sigla', 'Tipo', 'Vinculação', 'Responsável Legal']];
+            const data = orgaosData.map(o => [
+                o.orgao || '', 
+                o.sigla || '', 
+                o.tipo || '', 
+                o.vinculacao || '', 
+                o.responsavel_legal || ''
+            ]);
+            
+            generatePDF(title, headers, data);
+        }
+
+        function exportOrgaosPDF() {
+            if (!filteredData.length) return;
+            
+            const title = 'Órgãos e Entidades - Estrutura Organizacional';
+            const headers = [['Órgão', 'Sigla', 'Tipo', 'Vinculação', 'Responsável Legal', 'Telefone']];
+            const data = filteredData.map(o => [
+                o.orgao || '',
+                o.sigla || '',
+                o.tipo || '',
+                o.vinculacao || '',
+                o.responsavel_legal || '',
+                o.telefone || ''
+            ]);
+            
+            generatePDF(title, headers, data);
+        }
+
+        function generatePDF(title, headers, data) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'landscape',
+                unit: 'mm'
+            });
+            
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const margin = 15;
+            
+            const siteName = 'Estrutura Organizacional - Governo de Minas Gerais';
+            const siteUrl = window.location.href;
+            
+            let pageNumber = 1;
+            
+            function addHeader() {
+                doc.setFontSize(14);
+                doc.setFont('helvetica', 'bold');
+                doc.text(siteName, margin, margin);
+                
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+                doc.text(siteUrl, margin, margin + 6);
+                
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'bold');
+                doc.text(title, pageWidth / 2, margin + 15, { align: 'center' });
+            }
+            
+            function addFooter() {
+                const dateTime = new Date().toLocaleString('pt-BR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                
+                doc.setFontSize(8);
+                doc.setFont('helvetica', 'italic');
+                
+                doc.text(`Impresso em: ${dateTime}`, margin, pageHeight - 8);
+                doc.text(`Página ${pageNumber}`, pageWidth - margin, pageHeight - 8, { align: 'right' });
+            }
+            
+            addHeader();
+            
+            doc.autoTable({
+                head: headers,
+                body: data,
+                startY: margin + 20,
+                margin: { top: margin + 25, bottom: margin + 12, left: margin, right: margin },
+                styles: {
+                    fontSize: 8,
+                    cellPadding: 2,
+                    overflow: 'linebreak',
+                    halign: 'left',
+                    valign: 'middle',
+                    lineColor: [221, 221, 221],
+                    lineWidth: 0.1
+                },
+                headStyles: {
+                    fillColor: [41, 67, 90],
+                    textColor: 255,
+                    fontStyle: 'bold',
+                    halign: 'center',
+                    lineColor: [255, 255, 255],
+                    lineWidth: 0.1
+                },
+                alternateRowStyles: {
+                    fillColor: [245, 245, 245]
+                },
+                didDrawPage: function(data) {
+                    addFooter();
+                    pageNumber++;
+                    
+                    if (data.pageNumber > 1) {
+                        doc.setFontSize(14);
+                        doc.setFont('helvetica', 'bold');
+                        doc.text(siteName, margin, margin);
+                        
+                        doc.setFontSize(10);
+                        doc.setFont('helvetica', 'normal');
+                        doc.text(siteUrl, margin, margin + 6);
+                        
+                        doc.setFontSize(12);
+                        doc.setFont('helvetica', 'bold');
+                        doc.text(title, pageWidth / 2, margin + 15, { align: 'center' });
+                    }
+                }
+            });
+            
+            const filename = title.toLowerCase().replace(/\s+/g, '_') + '.pdf';
+            doc.save(filename);
+        }
+
         function showLoading(show) { document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none'; }
         function showError(msg) { alert(msg); }
 
-        // ==================== CORREÇÃO DO MODAL - CENTRALIZADO NA VIEWPORT ====================
+        // ==================== CORREÇÃO DO MODAL ====================
+        const originalAbrirModal = window.abrirModalDetalhes;
+        window.abrirModalDetalhes = function(sigla) {
+            originalAbrirModal(sigla);
+            
+            setTimeout(() => {
+                if (typeof iframeUpdateHeight === 'function') {
+                    iframeUpdateHeight();
+                }
+            }, 300);
+        };
 
-// Melhorar a abertura do modal para garantir que fique centralizado na tela atual
-const originalAbrirModal = window.abrirModalDetalhes;
-window.abrirModalDetalhes = function(sigla) {
-    // Chama a função original primeiro
-    originalAbrirModal(sigla);
-    
-    // Pequeno atraso para garantir que o modal seja aberto
-    setTimeout(() => {
-        // Apenas atualizar altura do iframe se necessário
-        if (typeof iframeUpdateHeight === 'function') {
-            iframeUpdateHeight();
+        document.addEventListener('shown.bs.modal', function(event) {
+            if (event.target.id === 'detailModal') {
+                setTimeout(() => {
+                    if (typeof iframeUpdateHeight === 'function') {
+                        iframeUpdateHeight();
+                    }
+                }, 300);
+            }
+        });
+
+        const modalElement = document.getElementById('detailModal');
+        if (modalElement) {
+            modalElement.addEventListener('shown.bs.modal', function() {
+                this.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            });
         }
-    }, 300);
-};
-
-// Remover manipuladores antigos e adicionar apenas o necessário
-document.addEventListener('shown.bs.modal', function(event) {
-    // Verificar se é o modal de detalhes
-    if (event.target.id === 'detailModal') {
-        // NÃO usar scrollIntoView - o Bootstrap já centraliza automaticamente
-        
-        // Apenas atualizar altura do iframe
-        setTimeout(() => {
-            if (typeof iframeUpdateHeight === 'function') {
-                iframeUpdateHeight();
-            }
-        }, 300);
-    }
-});
-
-        
-// Também garantir que quando qualquer modal for aberto via Bootstrap, a altura seja atualizada
-document.addEventListener('shown.bs.modal', function(event) {
-    if (event.target.id === 'detailModal') {
-        // Rolar para o modal
-        event.target.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center' 
-        });
-        
-        // Atualizar altura do iframe
-        setTimeout(() => {
-            if (typeof iframeUpdateHeight === 'function') {
-                iframeUpdateHeight();
-            }
-        }, 300);
-    }
-});
-
-// Garantir que o modal seja rolado para visualização sempre que for exibido
-const modalElement = document.getElementById('detailModal');
-if (modalElement) {
-    modalElement.addEventListener('shown.bs.modal', function() {
-        this.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center' 
-        });
-    });
-}
     </script>
 </body>
 </html>
